@@ -112,6 +112,6 @@ public class AlbumController {
     public String deleteById(@RequestParam("id") Long id, RedirectAttributes redirect) {
         albumService.deleteById(id);
         redirect.addFlashAttribute("globalMessage", "Successfully deleted a category");
-        return "redirect:/admin/categories";
+        return "redirect:/admin/albums";
     }
 }

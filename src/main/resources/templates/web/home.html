@@ -48,39 +48,22 @@
                     Mới cập nhật
                 </div>
                 <div class="card-body">
-                    <ul class="list-unstyled">
+                    <ul class="list-unstyled" th:each="song : ${songs}">
                         <li class="media border-bottom py-2">
                             <div class="position-relative">
                                 <img src="./assets/images/1.jpeg" class="mr-3 rounded" width="85" alt="...">
                                 <img src="./assets/images/playing-s.gif" class="position-absolute" style="bottom: 5px; left: 5px;" alt="Playing">
                             </div>
                             <div class="media-body">
-                                <h5 class="mt-0 mb-1">Níu Duyên</h5>
-                                <small>Lê Bảo Bình</small>
-                            </div>
-                            <a href="/bai-hat/niu-duyen" class="px-2 py-1 mr-2 bg-success text-white" title="Play"><i class="fas fa-play"></i></a>
-                            <a href="#" class="px-2 py-1 bg-danger text-white" song-id="1" title="Thích"><i class="far fa-heart"></i></a>
-                        </li>
-                        <li class="media border-bottom py-2">
-                            <img src="./assets/images/2.jpeg" class="mr-3 rounded" width="85" alt="...">
-                            <div class="media-body">
-                                <h5 class="mt-0 mb-1">Trên Tình Bạn Dưới Tình Yêu</h5>
-                                <small>Min</small>
-                            </div>
-                            <a href="/bai-hat/niu-duyen" class="px-2 py-1 mr-2 bg-success text-white" title="Play"><i class="fas fa-play"></i></a>
-                            <a href="#" class="px-2 py-1 bg-danger text-white" song-id="1" title="Thích"><i class="far fa-heart"></i></a>
-                        </li>
-                        <li class="media border-bottom py-2">
-                            <img src="./assets/images/3.jpeg" class="mr-3 rounded" width="85" alt="...">
-                            <div class="media-body">
-                                <h5 class="mt-0 mb-1">Ngải Tình</h5>
-                                <small>Thủy Tiên</small>
+                                <h5 class="mt-0 mb-1" th:text="${song.name}">Níu Duyên</h5>
+                                <small th:text="${song.getSinger_id()}">Lê Bảo Bình</small>
                             </div>
                             <a href="/bai-hat/niu-duyen" class="px-2 py-1 mr-2 bg-success text-white" title="Play"><i class="fas fa-play"></i></a>
                             <a href="#" class="px-2 py-1 bg-danger text-white" song-id="1" title="Thích"><i class="far fa-heart"></i></a>
                         </li>
                     </ul>
                 </div>
+
             </div>
         </div>
         <!-- BXH -->
