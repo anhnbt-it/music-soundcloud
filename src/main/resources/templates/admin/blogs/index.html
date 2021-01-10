@@ -16,7 +16,7 @@
                 New</a>
         </div>
         <div class="card-body">
-            <div th:text="${globalMessage}"></div>
+            <div th:if="${globalMessage}" th:text="${globalMessage}"></div>
             <div class="clearfix">
                 <label>Show <select name="example_length">
                     <option value="10">10</option>

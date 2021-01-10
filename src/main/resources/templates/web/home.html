@@ -10,13 +10,23 @@
     <div class="row">
         <!--- menu left -->
         <div class="col-md-3 d-none d-md-block">
-            <div class="card">
+            <div class="card mb-2">
                 <div class="card-header">
                     Thể loại âm nhạc
                 </div>
                 <div class="card-body p-0">
                     <div class="list-group list-group-flush" th:each="category : ${categories}">
                         <a th:href="@{/category/{id}(id=${category.id})}" class="list-group-item list-group-item-action" th:text="${category.name}"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    Album
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush" th:each="album : ${albums}">
+                        <a th:href="@{/album/{id}(id=${album.id})}" class="list-group-item list-group-item-action" th:text="${album.name}"></a>
                     </div>
                 </div>
             </div>

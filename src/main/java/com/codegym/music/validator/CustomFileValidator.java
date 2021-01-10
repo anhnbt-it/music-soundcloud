@@ -1,5 +1,6 @@
 package com.codegym.music.validator;
 
+import com.codegym.music.model.Album;
 import com.codegym.music.model.Blog;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -22,8 +23,14 @@ public class CustomFileValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        Blog blog = (Blog) target;
-        MultipartFile file = blog.getImageData();
+        MultipartFile file = null;
+        if (target instanceof Blog) {
+            Blog blog = (Blog) target;
+            file = blog.getImageData();
+        } else if (target instanceof Album) {
+            Album album = (Album) target;
+            file = album.getImageData();
+        }
         if (file.isEmpty()) {
             errors.rejectValue("imageData", "label.upload.file.required");
         } else if (!contentTypes.contains(file.getContentType())) {

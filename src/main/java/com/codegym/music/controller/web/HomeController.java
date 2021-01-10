@@ -1,6 +1,8 @@
 package com.codegym.music.controller.web;
 
+import com.codegym.music.model.Album;
 import com.codegym.music.model.Category;
+import com.codegym.music.service.AlbumService;
 import com.codegym.music.service.CategoryService;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +17,17 @@ public class HomeController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private AlbumService albumService;
+
     @ModelAttribute("categories")
     public Iterable<Category> categories() {
         return categoryService.findAll();
+    }
+
+    @ModelAttribute("albums")
+    public Iterable<Album> albums() {
+        return albumService.findAll();
     }
 
     @GetMapping("/")
