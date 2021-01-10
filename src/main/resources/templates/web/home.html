@@ -30,6 +30,16 @@
                     </div>
                 </div>
             </div>
+            <div class="card">
+                <div class="card-header">
+                    Singer
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush" th:each="singer : ${singers}">
+                        <a th:href="@{/singer/{id}(id=${singer.id})}" class="list-group-item list-group-item-action" th:text="${singer.name}"></a>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- Moi cap nhat -->
         <div class="col-md-6">
