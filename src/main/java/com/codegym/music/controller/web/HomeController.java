@@ -35,6 +35,8 @@ public class HomeController {
         return albumService.findAll();
     }
 
+
+    // commit
     @GetMapping("/")
     public String index() {
         return "web/home";
