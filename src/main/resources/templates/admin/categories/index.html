@@ -16,7 +16,8 @@
         <div class="card-header">
             <i class="fa fa-bars"></i>
             <span th:text="#{title.blogs.index}"></span>
-            <a th:href="@{/admin/categories/create}" class="btn btn-primary btn-sm float-right" role="button" th:utext="#{button.add}"><i
+            <a th:href="@{/admin/categories/create}" class="btn btn-primary btn-sm float-right" role="button"
+               th:utext="#{button.add}"><i
                     class="fa fa-plus"></i> Add
                 New</a>
         </div>
@@ -115,7 +116,7 @@
             let modal = $(this);
             modal.find('.modal-body input').val(recipient)
         });
-        $('#pageSize').change(function() {
+        $('#pageSize').change(function () {
             pageSize = $(this).val();
             window.location.href = '/admin/categories?pageNo=' + pageNo + '&pageSize=' + pageSize + '&sortBy=' + sortBy
         });
