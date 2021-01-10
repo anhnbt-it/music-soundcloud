@@ -35,8 +35,11 @@ public class HomeController {
         return albumService.findAll();
     }
 
+    @ModelAttribute("singers")
+    public Iterable<Singer> sings() {
+        return singerService.findAll();
+    }
 
-    // commit
     @GetMapping("/")
     public String index() {
         return "web/home";
@@ -45,11 +48,6 @@ public class HomeController {
     @GetMapping("/403")
     public String accessDenied() {
         return "errors/403";
-    }
-
-    @ModelAttribute("singers")
-    public Iterable<Singer> sings() {
-        return singerService.findAll();
     }
 
 }
