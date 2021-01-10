@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface UserService extends UserDetailsService {
     User save(User user);
 
-    User findByUsername(String name);
+    User findByEmail(String email);
 
     Iterable<User> findAll();
 

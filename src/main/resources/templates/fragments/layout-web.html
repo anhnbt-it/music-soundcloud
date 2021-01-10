@@ -10,16 +10,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="#{title.home}">AnhNBT :: Spring Framework</title>
     <!-- Standard favicon -->
-    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
-    <link href="/assets/css/bootstrap.min.css" th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet">
-    <link href="/assets/fontawesome/css/all.min.css" th:href="@{/assets/fontawesome/css/all.min.css}" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/fontawesome/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
 <header>
     <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/" th:href="@{/}">
-            <img src="/assets/images/anhnbt-logo.png" th:src="@{/assets/images/anhnbt-logo.png}" th:alt="#{title.home}"
+        <a class="navbar-brand" href="/">
+            <img src="/assets/images/anhnbt-logo.png" th:alt="#{title.home}"
                  width="120px">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -36,27 +36,36 @@
                 </li>
             </ul>
             <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search post" aria-label="Search">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search ..." aria-label="Search">
                 <button class="btn btn-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
             </form>
-            <ul class="nav navbar-nav navbar-right">
-                <li sec:authorize="isAnonymous()" class="nav-item"
-                    th:classappend="${menu == 'register' ? 'active' : ''}">
-                    <a class="nav-link" href="/user/register" th:href="@{/user/register}"><i class="fas fa-user"></i>
+            <ul class="nav navbar-nav navbar-right" sec:authorize="isAnonymous()">
+                <li class="nav-item" th:classappend="${menu == 'register' ? 'active' : ''}">
+                    <a class="nav-link" href="/user/register"><i class="fas fa-user"></i>
                         <span th:text="#{label.navigation.registration.link}">Create account</span></a>
                 </li>
-                <li sec:authorize="isAnonymous()" class="nav-item">
-                    <a class="nav-link" href="/user/login" th:href="@{/user/login}"><i class="fas fa-sign-in-alt"></i> <span
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/login"><i class="fas fa-sign-in-alt"></i> <span
                             th:text="#{label.navigation.login.link}">Sign in</span></a>
                 </li>
-                <li th:if="${#authorization.expression('isAuthenticated()')}" class="nav-item">
-                    <a href="/user/logout" th:href="@{/user/logout}" class="nav-link">
-                        <i class="fas fa-sign-out-alt"></i>&nbsp;<span
-                            th:text="#{label.navigation.logout.link}">Logout</span>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" th:if="${#authorization.expression('isAuthenticated()')}">
+                <li class="nav-item">
+                    <a href="/user/upload" class="nav-link">Upload</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span sec:authentication="name">User</span>
                     </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/user/profile">Profile</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/user/logout">
+                            <i class="fas fa-sign-out-alt"></i>&nbsp;<span th:text="#{label.navigation.logout.link}">Logout</span>
+                        </a>
+                    </div>
                 </li>
             </ul>
-            <span class="navbar-text" sec:authorize="isAuthenticated()" sec:authentication="name">Signed in as</span>
         </div>
     </nav>
 </header>

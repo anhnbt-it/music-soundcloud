@@ -15,10 +15,8 @@
                     Thể loại âm nhạc
                 </div>
                 <div class="card-body p-0">
-                    <div class="list-group list-group-flush">
-                        <a href="/the-loai/nhac-viet" class="list-group-item list-group-item-action"> Nhạc Việt</a>
-                        <a href="/the-loai/nhac-au-my" class="list-group-item list-group-item-action"> Nhạc Âu-Mỹ</a>
-                        <a href="/the-loai/nhac-han" class="list-group-item list-group-item-action"> Nhạc Hàn</a>
+                    <div class="list-group list-group-flush" th:each="category : ${categories}">
+                        <a th:href="@{/category/{id}(id=${category.id})}" class="list-group-item list-group-item-action" th:text="${category.name}"></a>
                     </div>
                 </div>
             </div>

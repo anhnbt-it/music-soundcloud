@@ -11,8 +11,10 @@
     <title th:text="#{title.home}">AnhNBT :: Spring Framework</title>
     <!-- Standard favicon -->
     <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
-    <link href="/assets/css/bootstrap.min.css" th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet">
-    <link href="/assets/fontawesome/css/all.min.css" th:href="@{/assets/fontawesome/css/all.min.css}" rel="stylesheet">
+    <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/assets/fontawesome/css/all.min.css}" rel="stylesheet">
+    <script th:src="@{/assets/js/jquery-3.5.1.min.js}"></script>
+    <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
 </head>
 
 <body>
@@ -85,78 +87,5 @@
         <p th:text="${menu}"></p>
     </div>
 </footer>
-<script th:src="@{/assets/js/jquery-3.5.1.min.js}"></script>
-<script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
-<script th:if="${menu == 'blog'}">
-    $('#confirmModal').on('show.bs.modal', function (event) {
-        let button = $(event.relatedTarget); // Button that triggered the modal
-        let recipient = button.data('whatever'); // Extract info from data-* attributes
-        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        let modal = $(this);
-        modal.find('.modal-body input').val(recipient)
-    });
-
-    function findByTitleContains(searchKey) {
-        $.ajax({
-            type: 'GET',
-            url: '/admin/blogs/search?s=' + searchKey,
-            dataType: "json",
-            success: renderList
-        });
-    }
-
-    function loadPage(page, pageSize, sortBy) {
-        $.ajax({
-            type: 'GET',
-            url: '/admin/blogs/search?pageNo=' + page + '&pageSize=' + pageSize + '&sortBy=' + sortBy,
-            dataType: "json",
-            success: renderList
-        });
-    }
-
-    function renderList(data) {
-        let list = data == null ? [] : (data.content instanceof Array ? data.content : [data.content]);
-        $('#blogList tr').remove();
-        if (list.length > 0) {
-            $.each(list, function (index, blog) {
-                let data = `<tr>
-                    <th scope="row">${blog.id}</th>
-                    <td><img src="${'/admin/blogs/files/' + blog.imageURL}" width="85px"
-                             class="img-fluid img-thumbnail"></td>
-                    <td>${blog.title}</td>
-                    <td>${blog.category.name}</td>
-                    <td>
-                        <span class="${blog.active ? 'badge badge-success' : 'badge badge-danger'}">${blog.active ? 'Enabled' : 'Disabled'}</span>
-                    </td>
-                    <td>
-                        <a href="/admin/blogs/edit/${blog.id}" class="btn btn-success btn-sm">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <button type="button" data-toggle="modal" data-target="#confirmModal"
-                                data-whatever="${blog.id}" class="btn btn-danger btn-sm">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-        </tr>`;
-                $('#blogList').append(data);
-            });
-        } else {
-            $("#blogList").html("<tr><td colspan='6'>No data.</td></tr>");
-        }
-        if (data.totalPages > 1) {
-            console.log(data);
-            let prev = "";
-            let next = "";
-            if (!data.first) {
-                prev = '<button class="page-link" id="prev" type="button" onclick="loadPage(' + (data.pageable.pageNumber - 1) + ',' + data.pageable.pageSize + ', \'id\')">Prev</button>';
-            }
-            if (!data.last) {
-                next = '<button class="page-link" id="next" type="button" onclick="loadPage(' + (data.pageable.pageNumber + 1) + ',' + data.pageable.pageSize + ', \'id\')">Next</button>';
-            }
-            $("#pagination").html(prev + next);
-        }
-    }
-</script>
 </body>
 </html>

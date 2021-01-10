@@ -3,38 +3,39 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       th:replace="~{fragments/layout-web :: layout (~{::main}, 'login')}">
 <head>
-    <title>Please Log In</title>
+    <title th:text="#{label.login.title}">Please Log In</title>
 </head>
 <body>
 <main role="main" class="pb-3">
     <div class="clearfix">
-        <span th:text="#{label.navigation.login.link}">Sign in</span>
-        <div class="float-right">or <a th:href="@{/user/register}" th:text="#{label.navigation.registration.link}">create an account</a></div>
+        <span th:text="#{label.login}">Sign in</span>
+        <div class="float-right">or <a th:href="@{/user/register}" th:text="#{label.registration.link}">create an account</a></div>
     </div>
-    <div class="alert alert-danger" th:if="${param.error}">
+    <div class="alert alert-danger" th:if="${param.error}" th:text="#{login.failed}">
         Invalid username and password.
     </div>
-    <div class="alert alert-success" th:if="${param.logout}">
+    <div class="alert alert-success" th:if="${param.logout}" th:text="#{logout.success}">
         You have been logged out.
     </div>
+    <div class="alert alert-success" th:if="${globalMessage}" th:text="${globalMessage}"></div>
     <form id="loginForm" action="#" th:action="@{/user/login}" method="post">
         <fieldset>
             <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" class="form-control" name="username" id="username"
-                       placeholder="Username" autofocus="autofocus" required>
+                <label for="email" th:text="#{label.email}">Email:</label>
+                <input type="email" class="form-control" name="email" id="email"
+                       placeholder="Your email" autofocus="autofocus" required>
             </div>
             <div class="form-group">
-                <label for="password">Password:</label>
+                <label for="password" th:text="#{label.password}">Password:</label>
                 <input type="password" class="form-control" name="password" id="password"
-                       placeholder="Password" required>
+                       placeholder="Your Password" required>
             </div>
             <div class="form-group clearfix">
                 <label>
-                    <input type="checkbox" name="remember-me"> Remember Me
+                    <input type="checkbox" name="remember-me"> <span th:text="#{label.login.saved}"></span>
                 </label>
                 <div class="float-right">
-                    <button type="submit" class="btn btn-primary btn-block" th:text="#{label.navigation.login.link}">Sign in</button>
+                    <button type="submit" class="btn btn-primary btn-block" th:text="#{label.login}">Sign in</button>
                 </div>
             </div>
         </fieldset>

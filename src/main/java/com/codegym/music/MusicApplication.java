@@ -57,10 +57,9 @@ public class MusicApplication implements CommandLineRunner {
             log.info("Create ROLE_MEMBER");
         }
         log.info("-------------------------------");
-        if (userService.findByUsername("admin") == null) {
+        if (userService.findByEmail("admin@gmail.com") == null) {
             User admin = new User();
             admin.setName("Tuan Anh");
-            admin.setUsername("admin");
             admin.setEmail("admin@gmail.com");
             admin.setPassword(passwordEncoder.encode("admin"));
             HashSet<Role> roles = new HashSet<>();
@@ -71,10 +70,9 @@ public class MusicApplication implements CommandLineRunner {
             log.info("Create admin account 'admin' password: 'admin'");
         }
         log.info("-------------------------------");
-        if (userService.findByUsername("user") == null) {
+        if (userService.findByEmail("user@gmail.com") == null) {
             User user = new User();
             user.setName("Khoai Tay");
-            user.setUsername("user");
             user.setEmail("user@gmail.com");
             user.setPassword(passwordEncoder.encode("user"));
             HashSet<Role> roles = new HashSet<>();

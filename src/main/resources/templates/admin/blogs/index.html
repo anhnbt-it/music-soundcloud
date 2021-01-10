@@ -76,12 +76,15 @@
                 <nav aria-label="Page navigation" class="float-right">
                     <ul class="pagination" id="pagination">
                         <li class="page-item" th:if="${blogs.hasPrevious()}">
-                            <button type="button" class="page-link" th:onclick="|loadPage(${blogs.pageable.pageNumber - 1})|">
+                            <button type="button" class="page-link"
+                                    th:onclick="|loadPage(${blogs.pageable.pageNumber - 1})|">
                                 Previous
                             </button>
                         </li>
                         <li class="page-item" th:if="${blogs.hasNext()}">
-                            <button type="button" class="page-link" th:onclick="|loadPage(${blogs.pageable.pageNumber + 1}, ${blogs.pageable.pageSize}, 'id')|">Next
+                            <button type="button" class="page-link"
+                                    th:onclick="|loadPage(${blogs.pageable.pageNumber + 1}, ${blogs.pageable.pageSize}, 'id')|">
+                                Next
                             </button>
                         </li>
                     </ul>
@@ -111,6 +114,77 @@
             </div>
         </div>
     </div>
+    <script>
+        $('#confirmModal').on('show.bs.modal', function (event) {
+            let button = $(event.relatedTarget); // Button that triggered the modal
+            let recipient = button.data('whatever'); // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            let modal = $(this);
+            modal.find('.modal-body input').val(recipient)
+        });
+
+        function findByTitleContains(searchKey) {
+            $.ajax({
+                type: 'GET',
+                url: '/admin/blogs/search?s=' + searchKey,
+                dataType: "json",
+                success: renderList
+            });
+        }
+
+        function loadPage(page, pageSize, sortBy) {
+            $.ajax({
+                type: 'GET',
+                url: '/admin/blogs/search?pageNo=' + page + '&pageSize=' + pageSize + '&sortBy=' + sortBy,
+                dataType: "json",
+                success: renderList
+            });
+        }
+
+        function renderList(data) {
+            let list = data == null ? [] : (data.content instanceof Array ? data.content : [data.content]);
+            $('#blogList tr').remove();
+            if (list.length > 0) {
+                $.each(list, function (index, blog) {
+                    let data = `<tr>
+                    <th scope="row">${blog.id}</th>
+                    <td><img src="${'/admin/blogs/files/' + blog.imageURL}" width="85px"
+                             class="img-fluid img-thumbnail"></td>
+                    <td>${blog.title}</td>
+                    <td>${blog.category.name}</td>
+                    <td>
+                        <span class="${blog.active ? 'badge badge-success' : 'badge badge-danger'}">${blog.active ? 'Enabled' : 'Disabled'}</span>
+                    </td>
+                    <td>
+                        <a href="/admin/blogs/edit/${blog.id}" class="btn btn-success btn-sm">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <button type="button" data-toggle="modal" data-target="#confirmModal"
+                                data-whatever="${blog.id}" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+        </tr>`;
+                    $('#blogList').append(data);
+                });
+            } else {
+                $("#blogList").html("<tr><td colspan='6'>No data.</td></tr>");
+            }
+            if (data.totalPages > 1) {
+                console.log(data);
+                let prev = "";
+                let next = "";
+                if (!data.first) {
+                    prev = '<button class="page-link" id="prev" type="button" onclick="loadPage(' + (data.pageable.pageNumber - 1) + ',' + data.pageable.pageSize + ', \'id\')">Prev</button>';
+                }
+                if (!data.last) {
+                    next = '<button class="page-link" id="next" type="button" onclick="loadPage(' + (data.pageable.pageNumber + 1) + ',' + data.pageable.pageSize + ', \'id\')">Next</button>';
+                }
+                $("#pagination").html(prev + next);
+            }
+        }
+    </script>
 </main><!-- /.main -->
 </body>
 </html>
