@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      th:replace="~{fragments/layout-web :: layout (~{::main}, 'home')}">
+<head>
+    <title>Please Log In</title>
+</head>
+<body>
+<main role="main" class="pb-3">
+    <div class="row">
+        <!--- menu left -->
+        <div class="col-md-3 d-none d-md-block">
+            <div class="card">
+                <div class="card-header">
+                    Thể loại âm nhạc
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+                        <a href="/the-loai/nhac-viet" class="list-group-item list-group-item-action"> Nhạc Việt</a>
+                        <a href="/the-loai/nhac-au-my" class="list-group-item list-group-item-action"> Nhạc Âu-Mỹ</a>
+                        <a href="/the-loai/nhac-han" class="list-group-item list-group-item-action"> Nhạc Hàn</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Moi cap nhat -->
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-3">
+                <div class="card-header">
+                    Mới cập nhật
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="media border-bottom py-2">
+                            <div class="position-relative">
+                                <img src="./assets/images/1.jpeg" class="mr-3 rounded" width="85" alt="...">
+                                <img src="./assets/images/playing-s.gif" class="position-absolute" style="bottom: 5px; left: 5px;" alt="Playing">
+                            </div>
+                            <div class="media-body">
+                                <h5 class="mt-0 mb-1">Níu Duyên</h5>
+                                <small>Lê Bảo Bình</small>
+                            </div>
+                            <a href="/bai-hat/niu-duyen" class="px-2 py-1 mr-2 bg-success text-white" title="Play"><i class="fas fa-play"></i></a>
+                            <a href="#" class="px-2 py-1 bg-danger text-white" song-id="1" title="Thích"><i class="far fa-heart"></i></a>
+                        </li>
+                        <li class="media border-bottom py-2">
+                            <img src="./assets/images/2.jpeg" class="mr-3 rounded" width="85" alt="...">
+                            <div class="media-body">
+                                <h5 class="mt-0 mb-1">Trên Tình Bạn Dưới Tình Yêu</h5>
+                                <small>Min</small>
+                            </div>
+                            <a href="/bai-hat/niu-duyen" class="px-2 py-1 mr-2 bg-success text-white" title="Play"><i class="fas fa-play"></i></a>
+                            <a href="#" class="px-2 py-1 bg-danger text-white" song-id="1" title="Thích"><i class="far fa-heart"></i></a>
+                        </li>
+                        <li class="media border-bottom py-2">
+                            <img src="./assets/images/3.jpeg" class="mr-3 rounded" width="85" alt="...">
+                            <div class="media-body">
+                                <h5 class="mt-0 mb-1">Ngải Tình</h5>
+                                <small>Thủy Tiên</small>
+                            </div>
+                            <a href="/bai-hat/niu-duyen" class="px-2 py-1 mr-2 bg-success text-white" title="Play"><i class="fas fa-play"></i></a>
+                            <a href="#" class="px-2 py-1 bg-danger text-white" song-id="1" title="Thích"><i class="far fa-heart"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- BXH -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    Bảng xếp hạng
+                    <button type="button" class="btn btn-success">Việt Nam</button>
+                    <button type="button" class="btn btn-light">US/UK</button>
+                    <button type="button" class="btn btn-light">Châu Á</button>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="media border-bottom py-2">
+                            <img src="./assets/images/1.jpeg" class="mr-3 rounded" width="85" alt="...">
+                            <div class="media-body">
+                                <h5 class="mt-0 mb-1">Níu Duyên</h5>
+                                <small>Lê Bảo Bình</small>
+                            </div>
+                            <div class="display-4 text-danger">01</div>
+                        </li>
+                        <li class="media border-bottom py-2">
+                            <img src="./assets/images/2.jpeg" class="mr-3 rounded" width="85" alt="...">
+                            <div class="media-body">
+                                <h5 class="mt-0 mb-1">Trên Tình Bạn Dưới Tình Yêu</h5>
+                                <small>Min</small>
+                            </div>
+                            <div class="display-4 text-danger">02</div>
+                        </li>
+                        <li class="media border-bottom py-2">
+                            <img src="./assets/images/3.jpeg" class="mr-3 rounded" width="85" alt="...">
+                            <div class="media-body">
+                                <h5 class="mt-0 mb-1">Ngải Tình</h5>
+                                <small>Thủy Tiên</small>
+                            </div>
+                            <div class="display-4 text-danger">03</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

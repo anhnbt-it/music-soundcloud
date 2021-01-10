@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="~{fragments/layout-admin :: head}"/>
+<body>
+<nav th:replace="~{fragments/layout-admin :: nav}"/>
+<div class="jumbotron text-center">
+    <div class="container">
+        <a href="/" class="lang-logo">
+            <img th:src="@{/assets/images/anhnbt-logo.png}" alt="AnhNBT Logo" class="rounded mx-auto d-block mb-3"
+                 width="300px">
+        </a>
+        <h1>Giới thiệu ứng dụng Spring Boot Security và JWT</h1>
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+            industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+            scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
+            electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of
+            Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like
+            Aldus PageMaker including versions of Lorem Ipsum.</p>
+        <a class="btn btn-lg btn-light" th:href="@{/hello}"><i class="fas fa-play"></i> Getting Started</a>
+        <a class="btn btn-lg btn-primary" href="https://github.com/anhnbt-it/spring-boot-demo-jwt" target="_blank"><i
+                class="fab fa-github"></i> Source on GitHub</a>
+    </div>
+</div>
+<!--<div th:replace="~{fragments/footer :: ${#authentication.principal.isAdmin()} ? 'footer-admin' : 'footer'}"/>-->
+<div th:replace="~{fragments/layout-admin :: footer}"/>
+</body>
+</html>
