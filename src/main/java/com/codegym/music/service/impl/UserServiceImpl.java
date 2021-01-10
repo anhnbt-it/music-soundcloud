@@ -3,6 +3,8 @@ package com.codegym.music.service.impl;
 import com.codegym.music.model.User;
 import com.codegym.music.repository.UserRepository;
 import com.codegym.music.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -20,15 +22,17 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if (!user.isPresent()) {
             throw new UsernameNotFoundException(email);
         }
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
-                getAuthorities(user));
+        return new org.springframework.security.core.userdetails.User(user.get().getEmail(), user.get().getPassword(),
+                getAuthorities(user.get()));
     }
 
     private static Collection<? extends GrantedAuthority> getAuthorities(User user) {
@@ -43,7 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
