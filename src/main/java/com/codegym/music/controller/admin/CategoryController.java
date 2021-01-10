@@ -24,7 +24,7 @@ public class CategoryController {
     @GetMapping
     public ModelAndView index(@RequestParam("s") Optional<String> s,
                               @RequestParam(defaultValue = "0") Integer pageNo,
-                              @RequestParam(defaultValue = "10") Integer pageSize,
+                              @RequestParam(defaultValue = "3") Integer pageSize,
                               @RequestParam(defaultValue = "id") String sortBy) {
         Page<Category> categories;
         if (s.isPresent()) {
