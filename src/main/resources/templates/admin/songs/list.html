@@ -15,24 +15,13 @@
     <div class="card">
         <div class="card-header">
             <i class="fa fa-bars"></i>
-            <span th:text="#{title.songs}"></span>
-            <a th:href="@{/admin/songs/create}" class="btn btn-primary btn-sm float-right" role="button"><i
+            <span th:text="#{title.songs.list}"></span>
+            <a th:href="@{/admin/songs/create}" class="btn btn-primary btn-sm float-right" role="button"
+               th:utext="#{button.add}"><i
                     class="fa fa-plus"></i> Add
                 New</a>
         </div>
         <div class="card-body">
-            <div th:if="${globalMessage}" th:text="${globalMessage}"></div>
-            <div class="clearfix">
-                <form class="form-inline float-right" method="get">
-                    <div class="form-group mx-sm-3 mb-2">
-                        <label for="s" class="sr-only">Name</label>
-                        <input type="text" id="s" name="s" class="form-control"
-                               th:value="${txtSearch.isPresent()} ? ${txtSearch.get()}"
-                               placeholder="Enter album name">
-                    </div>
-                    <button type="submit" class="btn btn-primary mb-2"><i class="fa fa-search"></i></button>
-                </form>
-            </div>
             <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
@@ -44,31 +33,7 @@
                     <th>Create</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr th:each="song : ${songs}">
-                    <td th:text="${song.name}"></td>
-                    <td th:type="text" th:text="${song.create_at}"> ></td>
-                    <td><img th:src="@{${'/files/' + song.image}}" width="85px"
-                             class="img-fluid img-thumbnail"></td>
-                    <td th:text="${song.lyric}"></td>
-                    <td th:text="${song.url}"></td>
-                    <td th:text="${song.status}"></td>
-                    <td>
-                        <a th:href="@{/admin/songs/__${song.id}__ }" class="btn btn-secondary btn-sm">View</a>
-                        <a th:href="@{/admin/songs/edit/__${song.id}__ }" class="btn btn-info btn-sm">Edit</a>
-                        <button type="button" data-toggle="modal" data-target="#confirmModal"
-                                th:attr="data-whatever=${song.id}" class="btn btn-danger btn-sm">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-                </tbody>
             </table>
-            <div>
-                <a th:href="@{'/songs'(page=${songs.number - 1})}" th:if="${songs.hasPrevious()}">Previous</a>
-                <span th:text="${songs.number + 1}"></span>/<span th:text="${songs.totalPages}"></span>
-                <a th:href="@{'/songs'(page=${songs.number + 1})}" th:if="${songs.hasNext()}">Next</a>
-            </div>
         </div><!-- /.card-body -->
     </div><!-- /.card -->
     <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">

@@ -1,7 +1,5 @@
 package com.codegym.music.service.impl;
 
-
-
 import com.codegym.music.model.Song;
 import com.codegym.music.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,24 +19,20 @@ public class SongServiceImpl implements SongService {
 
 
     @Override
-    public Page<Song> findAllByNameContains(String name, Pageable pageable) {
-        return songService.findAllByNameContains(name, pageable);
+    public Page<Song> findAll(Integer pageNo, Integer pageSize, String sortBy) {
+//        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.DESC, sortBy));
+        return songService.findAll(pageNo, pageSize, sortBy);
     }
 
     @Override
-    public Page<Song> findAll(Pageable pageable) {
-        return songService.findAll(pageable);
+    public Page<Song> findAllByNameContains(String name, Integer pageNo, Integer pageSize, String sortBy) {
+//        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.DESC, sortBy));
+        return songService.findAllByNameContains(name, pageNo, pageSize, sortBy);
     }
 
     @Override
     public Iterable<Song> findAll() {
         return songService.findAll();
-    }
-
-    @Override
-    public Page<Song> findAll(Integer pageNo, Integer pageSize, String sortBy) {
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.DESC, sortBy));
-        return songService.findAll(paging);
     }
 
     @Override

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      th:replace="~{fragments/layout-admin :: layout (~{::main}, 'blog')}">
+      th:replace="~{fragments/layout-admin :: layout (~{::main}, 'songs')}">
 <head>
     <title>Add New Song :: AnhNBT</title>
 </head>
@@ -20,12 +20,12 @@
         </div>
         <div class="card-body">
             <div class="alert alert-success" th:if="${globalMessage}" th:text="${globalMessage}"></div>
-            <div th:if="${#fields.hasErrors('${album.*}')}" class="alert alert-danger">
+            <div th:if="${#fields.hasErrors('${song.*}')}" class="alert alert-danger">
                 <ul>
-                    <li th:each="err : ${#fields.errors('${album.*}')}" th:text="${err}">Input is incorrect</li>
+                    <li th:each="err : ${#fields.errors('${song.*}')}" th:text="${err}">Input is incorrect</li>
                 </ul>
             </div>
-            <form th:action="@{/admin/songs/save}" th:object="${songs}" method="post" enctype="multipart/form-data">
+            <form th:action="@{/admin/songs/save}" th:object="${song}" method="post" enctype="multipart/form-data">
                 <div class="row form-group">
                     <label class="col-form-label col-md-2">Song Name <span
                             class="text-danger">*</span>:</label>
@@ -37,12 +37,12 @@
                     </div>
                 </div>
                 <div class="row form-group">
-                    <label class="col-form-label col-md-2">Image <span
-                            class="text-danger">*</span>:</label>
+                    <label class="col-form-label col-md-2">Image:</label>
                     <div class="col-md-10">
-                        <textarea cols="50" rows="5" class="form-control" th:field="*{image}"
-                                  th:classappend="${#fields.hasErrors('name')}? 'is-invalid'"></textarea>
-                        <p th:if="${#fields.hasErrors('description')}" th:errors="*{image}" class="invalid-feedback">Image
+                        <input type="file" th:field="*{image}" class="form-control"
+                               th:classappend="${#fields.hasErrors('image')}? 'is-invalid'">
+                        <input type="hidden" th:field="*{image}">
+                        <p th:if="${#fields.hasErrors('image')}" th:errors="*{image}" class="invalid-feedback">Image
                             Error</p>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                             class="text-danger">*</span>:</label>
                     <div class="col-md-10">
                         <input type="file" th:field="*{lyric}" class="form-control">
-                        <p th:if="${#fields.hasErrors('imageData')}" th:errors="*{lyric}" class="invalid-feedback">Lyric
+                        <p th:if="${#fields.hasErrors('lyric')}" th:errors="*{lyric}" class="invalid-feedback">Lyric
                             Error</p>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                             class="text-danger">*</span>:</label>
                     <div class="col-md-10">
                         <input type="file" th:field="*{url}" class="form-control">
-                        <p th:if="${#fields.hasErrors('imageData')}" th:errors="*{url}" class="invalid-feedback">Url
+                        <p th:if="${#fields.hasErrors('url')}" th:errors="*{url}" class="invalid-feedback">Url
                             Error</p>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                             class="text-danger">*</span>:</label>
                     <div class="col-md-10">
                         <input type="file" th:field="*{status}" class="form-control">
-                        <p th:if="${#fields.hasErrors('imageData')}" th:errors="*{status}" class="invalid-feedback">Status
+                        <p th:if="${#fields.hasErrors('status')}" th:errors="*{status}" class="invalid-feedback">Status
                             Error</p>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                             class="text-danger">*</span>:</label>
                     <div class="col-md-10">
                         <input type="file" th:field="*{create_at}" class="form-control">
-                        <p th:if="${#fields.hasErrors('imageData')}" th:errors="*{create_at}" class="invalid-feedback">Create at Day
+                        <p th:if="${#fields.hasErrors('cteate_at')}" th:errors="*{create_at}" class="invalid-feedback">Create at Day
                             Error</p>
                     </div>
                 </div>

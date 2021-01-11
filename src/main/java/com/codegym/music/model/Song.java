@@ -1,11 +1,13 @@
 package com.codegym.music.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 
 @Entity
-@Table(name = "Songs")
+@Table(name = "songs")
 public class Song implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +24,7 @@ public class Song implements Serializable {
     @Column(name = "lyric",nullable = false,columnDefinition = "TEXT")
     private String lyric;
 
-    @Column(name = "image",nullable = false)
+    @Basic(optional = false)
     private String image;
 
     @Column(name = "url",nullable = false)
@@ -36,6 +38,9 @@ public class Song implements Serializable {
 
     public Song() {
     }
+
+    @Transient
+    private MultipartFile imageData;
 
     public Long getId() {
         return id;
@@ -107,5 +112,13 @@ public class Song implements Serializable {
 
     public void setCreate_at(Date create_at) {
         this.create_at = create_at;
+    }
+
+    public MultipartFile getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(MultipartFile imageData) {
+        this.imageData = imageData;
     }
 }
