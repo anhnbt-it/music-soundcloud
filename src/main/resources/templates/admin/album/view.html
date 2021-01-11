@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="album/layout :: head"></head>
+<head th:replace="/fragments/layout-admin :: head"></head>
 <body>
 <h3> View album</h3>
 <p>
-    <a th:href="@{/albums}">
+    <a th:href="@{/admin/albums}">
         Back to albums list
     </a>
 </p>
@@ -36,6 +36,6 @@
 
     </form>
 </div>
-<footer th:replace="album/layout :: footer"></footer>
+<footer th:replace="/fragments/layout-admin:: footer"></footer>
 </body>
 </html>
