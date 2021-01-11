@@ -20,20 +20,69 @@
         </div>
         <div class="card-body">
             <div class="alert alert-success" th:if="${globalMessage}" th:text="${globalMessage}"></div>
-            <div th:if="${#fields.hasErrors('${category.*}')}" class="alert alert-danger">
+            <div th:if="${#fields.hasErrors('${song.*}')}" class="alert alert-danger">
                 <ul>
-                    <li th:each="err : ${#fields.errors('${category.*}')}" th:text="${err}">Input is incorrect</li>
+                    <li th:each="err : ${#fields.errors('${song.*}')}" th:text="${err}">Input is incorrect</li>
                 </ul>
             </div>
-            <form action="#" th:action="@{/admin/songs/edit}" th:object="${song}" method="post">
+            <form th:action="@{/admin/songs/edit}" th:object="${song}" method="post">
                 <input type="hidden" th:field="*{id}">
                 <div class="row form-group">
-                    <label class="col-form-label col-md-2">Name <span
+                    <label class="col-form-label col-md-2">Song Name <span
                             class="text-danger">*</span>:</label>
                     <div class="col-md-10">
                         <input type="text" th:field="*{name}" class="form-control"
                                th:classappend="${#fields.hasErrors('name')}? 'is-invalid'">
-                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback">Name
+                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback">Song Name
+                            Error</p>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-form-label col-md-2">Image <span
+                            class="text-danger">*</span>:</label>
+                    <div class="col-md-10">
+                        <input type="file" th:field="*{image}" class="form-control">
+                        <p th:if="${#fields.hasErrors('imageData')}" th:errors="*{image}" class="invalid-feedback">Image
+                            Error</p>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-form-label col-md-2">Lyric <span
+                            class="text-danger">*</span>:</label>
+                    <div class="col-md-10">
+                        <input type="text" th:field="*{lyric}" class="form-control"
+                               th:classappend="${#fields.hasErrors('lyric')}? 'is-invalid'">
+                        <p th:if="${#fields.hasErrors('lyric')}" th:errors="*{lyric}" class="invalid-feedback">Song lyric
+                            Error</p>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-form-label col-md-2">Url <span
+                            class="text-danger">*</span>:</label>
+                    <div class="col-md-10">
+                        <input type="text" th:field="*{url}" class="form-control"
+                               th:classappend="${#fields.hasErrors('url')}? 'is-invalid'">
+                        <p th:if="${#fields.hasErrors('url')}" th:errors="*{url}" class="invalid-feedback">Url
+                            Error</p>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-form-label col-md-2">Status <span
+                            class="text-danger">*</span>:</label>
+                    <div class="col-md-10">
+                        <select th:field="*{status}" class="form-control">
+                            <option th:value="1" selected>Enabled</option>
+                            <option th:value="0">Disabled</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-form-label col-md-2">Create at <span
+                            class="text-danger">*</span>:</label>
+                    <div class="col-md-10">
+                        <input type="text" th:field ="*{create_at}" class="form-control"
+                               th:classappend="${#fields.hasErrors('create_at')}? 'is-invalid'">
+                        <p th:if="${#fields.hasErrors('create_at')}" th:errors="*{create_at}" class="invalid-feedback">Create Day
                             Error</p>
                     </div>
                 </div>

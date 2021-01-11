@@ -37,12 +37,11 @@
                     </div>
                 </div>
                 <div class="row form-group">
-                    <label class="col-form-label col-md-2">Image:</label>
+                    <label class="col-form-label col-md-2">Image <span
+                            class="text-danger">*</span>:</label>
                     <div class="col-md-10">
-                        <input type="file" th:field="*{image}" class="form-control"
-                               th:classappend="${#fields.hasErrors('image')}? 'is-invalid'">
-                        <input type="hidden" th:field="*{image}">
-                        <p th:if="${#fields.hasErrors('image')}" th:errors="*{image}" class="invalid-feedback">Image
+                        <input type="file" th:field="*{imageData}" class="form-control">
+                        <p th:if="${#fields.hasErrors('imageData')}" th:errors="*{imageData}" class="invalid-feedback">Image
                             Error</p>
                     </div>
                 </div>
@@ -50,8 +49,9 @@
                     <label class="col-form-label col-md-2">Lyric <span
                             class="text-danger">*</span>:</label>
                     <div class="col-md-10">
-                        <input type="file" th:field="*{lyric}" class="form-control">
-                        <p th:if="${#fields.hasErrors('lyric')}" th:errors="*{lyric}" class="invalid-feedback">Lyric
+                        <input type="text" th:field="*{lyric}" class="form-control"
+                               th:classappend="${#fields.hasErrors('lyric')}? 'is-invalid'">
+                        <p th:if="${#fields.hasErrors('lyric')}" th:errors="*{lyric}" class="invalid-feedback">Song lyric
                             Error</p>
                     </div>
                 </div>
@@ -59,7 +59,8 @@
                     <label class="col-form-label col-md-2">Url <span
                             class="text-danger">*</span>:</label>
                     <div class="col-md-10">
-                        <input type="file" th:field="*{url}" class="form-control">
+                        <input type="text" th:field="*{url}" class="form-control"
+                               th:classappend="${#fields.hasErrors('url')}? 'is-invalid'">
                         <p th:if="${#fields.hasErrors('url')}" th:errors="*{url}" class="invalid-feedback">Url
                             Error</p>
                     </div>
@@ -68,17 +69,19 @@
                     <label class="col-form-label col-md-2">Status <span
                             class="text-danger">*</span>:</label>
                     <div class="col-md-10">
-                        <input type="file" th:field="*{status}" class="form-control">
-                        <p th:if="${#fields.hasErrors('status')}" th:errors="*{status}" class="invalid-feedback">Status
-                            Error</p>
+                        <select th:field="*{status}" class="form-control">
+                            <option th:value="1" selected>Enabled</option>
+                            <option th:value="0">Disabled</option>
+                        </select>
                     </div>
                 </div>
                 <div class="row form-group">
                     <label class="col-form-label col-md-2">Create at <span
                             class="text-danger">*</span>:</label>
                     <div class="col-md-10">
-                        <input type="file" th:field="*{create_at}" class="form-control">
-                        <p th:if="${#fields.hasErrors('cteate_at')}" th:errors="*{create_at}" class="invalid-feedback">Create at Day
+                        <input type="text" th:field ="*{create_at}" class="form-control"
+                               th:classappend="${#fields.hasErrors('create_at')}? 'is-invalid'">
+                        <p th:if="${#fields.hasErrors('create_at')}" th:errors="*{create_at}" class="invalid-feedback">Create Day
                             Error</p>
                     </div>
                 </div>

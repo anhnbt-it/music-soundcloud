@@ -1,6 +1,8 @@
 package com.codegym.music.service.impl;
 
+import com.codegym.music.model.Category;
 import com.codegym.music.model.Song;
+import com.codegym.music.repository.SongRepository;
 import com.codegym.music.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,38 +17,38 @@ import java.util.Optional;
 public class SongServiceImpl implements SongService {
 
     @Autowired
-    private SongService songService;
+    private SongRepository songRepository;
 
 
     @Override
     public Page<Song> findAll(Integer pageNo, Integer pageSize, String sortBy) {
-//        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.DESC, sortBy));
-        return songService.findAll(pageNo, pageSize, sortBy);
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.ASC, sortBy));
+        return songRepository.findAll(paging);
     }
 
     @Override
     public Page<Song> findAllByNameContains(String name, Integer pageNo, Integer pageSize, String sortBy) {
-//        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.DESC, sortBy));
-        return songService.findAllByNameContains(name, pageNo, pageSize, sortBy);
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.ASC, sortBy));
+        return songRepository.findAllByNameContains(name, paging);
     }
 
     @Override
     public Iterable<Song> findAll() {
-        return songService.findAll();
+        return songRepository.findAll();
     }
 
     @Override
     public Optional<Song> findById(Long id) {
-        return songService.findById(id);
+        return songRepository.findById(id);
     }
 
     @Override
     public Song save(Song song) {
-        return songService.save(song);
+        return songRepository.save(song);
     }
 
     @Override
     public void deleteById(Long id) {
-        songService.deleteById(id);
+        songRepository.deleteById(id);
     }
 }

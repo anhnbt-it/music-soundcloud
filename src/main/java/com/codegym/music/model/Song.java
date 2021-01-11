@@ -1,5 +1,6 @@
 package com.codegym.music.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -34,7 +35,7 @@ public class Song implements Serializable {
     private boolean status;
 
     @Column(name = "create_at",nullable = false)
-    private Date create_at;
+    private String create_at;
 
     public Song() {
     }
@@ -106,11 +107,11 @@ public class Song implements Serializable {
         this.status = status;
     }
 
-    public Date getCreate_at() {
+    public String getCreate_at() {
         return create_at;
     }
 
-    public void setCreate_at(Date create_at) {
+    public void setCreate_at(String create_at) {
         this.create_at = create_at;
     }
 
