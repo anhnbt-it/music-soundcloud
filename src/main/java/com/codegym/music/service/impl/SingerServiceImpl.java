@@ -47,7 +47,8 @@ public class SingerServiceImpl implements SingerService {
 
     @Override
     public Page<Singer> findAllByNameContains(String name, Pageable pageable) {
-        return null;
+
+        return singerRepository.findAllByNameContains(name, pageable);
     }
 
     @Override

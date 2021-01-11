@@ -80,7 +80,7 @@ public class SingerController {
     public ModelAndView updateBlog(@ModelAttribute("singer") Singer singer) {
         singerService.save(singer);
         System.out.println(singer.toString());
-        ModelAndView modelAndView = new ModelAndView("singer/edit");
+        ModelAndView modelAndView = new ModelAndView("/admin/singer/edit");
         modelAndView.addObject("singer", singer);
         modelAndView.addObject("message", "Singer updated sucessfully");
         return modelAndView;
