@@ -10,9 +10,9 @@
 <h1>Delete singer</h1>
 <h2>Are you sure?</h2>
 <p>
-    <a href="/singers">Singer list</a>
+    <a href="/admin/singers">Singer list</a>
 </p>
-<form th:action="@{/singers/delete-singer}" th:object="${singer}" method="post">
+<form th:action="@{/admin/singers/delete-singer}" th:object="${singer}" method="post">
     <input type="hidden" name="id" th:field="*{id}">
     <table class="table table-striped table-hover">
         <tr>
