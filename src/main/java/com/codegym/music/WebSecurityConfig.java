@@ -48,6 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 )
                 .formLogin()
                 .loginPage("/user/login")
+                .usernameParameter("email")
                 .permitAll()
                 .and()
                 .logout(l -> l

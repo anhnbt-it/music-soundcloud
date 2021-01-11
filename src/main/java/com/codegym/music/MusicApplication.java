@@ -57,7 +57,7 @@ public class MusicApplication implements CommandLineRunner {
             log.info("Create ROLE_MEMBER");
         }
         log.info("-------------------------------");
-        if (userService.findByEmail("admin@gmail.com") == null) {
+        if (!userService.findByEmail("admin@gmail.com").isPresent()) {
             User admin = new User();
             admin.setName("Tuan Anh");
             admin.setEmail("admin@gmail.com");
@@ -70,7 +70,7 @@ public class MusicApplication implements CommandLineRunner {
             log.info("Create admin account 'admin' password: 'admin'");
         }
         log.info("-------------------------------");
-        if (userService.findByEmail("user@gmail.com") == null) {
+        if (!userService.findByEmail("user@gmail.com").isPresent()) {
             User user = new User();
             user.setName("Khoai Tay");
             user.setEmail("user@gmail.com");
