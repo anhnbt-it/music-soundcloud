@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      th:replace="~{fragments/layout-admin :: layout (~{::main}, 'songs')}">
+<head>
+    <title>List of Songs</title>
+</head>
+<body>
+<main role="main" class="pb-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+        </ol>
+    </nav>
+    <div class="card">
+        <div class="card-header">
+            <i class="fa fa-bars"></i>
+            <span th:text="#{title.songs}"></span>
+            <a th:href="@{/admin/songs/create}" class="btn btn-primary btn-sm float-right" role="button"><i
+                    class="fa fa-plus"></i> Add
+                New</a>
+        </div>
+        <div class="card-body">
+            <div th:if="${globalMessage}" th:text="${globalMessage}"></div>
+            <div class="clearfix">
+                <form class="form-inline float-right" method="get">
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label for="s" class="sr-only">Name</label>
+                        <input type="text" id="s" name="s" class="form-control"
+                               th:value="${txtSearch.isPresent()} ? ${txtSearch.get()}"
+                               placeholder="Enter album name">
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-2"><i class="fa fa-search"></i></button>
+                </form>
+            </div>
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Lyric</th>
+                    <th>Url</th>
+                    <th>Status</th>
+                    <th>Create</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="song : ${songs}">
+                    <td th:text="${song.name}"></td>
+                    <td th:type="text" th:text="${song.create_at}"> ></td>
+                    <td><img th:src="@{${'/files/' + song.image}}" width="85px"
+                             class="img-fluid img-thumbnail"></td>
+                    <td th:text="${song.lyric}"></td>
+                    <td th:text="${song.url}"></td>
+                    <td th:text="${song.status}"></td>
+                    <td>
+                        <a th:href="@{/admin/songs/__${song.id}__ }" class="btn btn-secondary btn-sm">View</a>
+                        <a th:href="@{/admin/songs/edit/__${song.id}__ }" class="btn btn-info btn-sm">Edit</a>
+                        <button type="button" data-toggle="modal" data-target="#confirmModal"
+                                th:attr="data-whatever=${song.id}" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div>
+                <a th:href="@{'/songs'(page=${songs.number - 1})}" th:if="${songs.hasPrevious()}">Previous</a>
+                <span th:text="${songs.number + 1}"></span>/<span th:text="${songs.totalPages}"></span>
+                <a th:href="@{'/songs'(page=${songs.number + 1})}" th:if="${songs.hasNext()}">Next</a>
+            </div>
+        </div><!-- /.card-body -->
+    </div><!-- /.card -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="#" th:action="@{/admin/songs/delete}" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmModalLabel">Please confirm</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete this item?</p>
+                        <input type="hidden" name="id" id="id">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" id="btnConfirm" class="btn btn-primary">Confirm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        $('#confirmModal').on('show.bs.modal', function (event) {
+            let button = $(event.relatedTarget); // Button that triggered the modal
+            let recipient = button.data('whatever'); // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            let modal = $(this);
+            modal.find('.modal-body input').val(recipient)
+        });
+    </script>
+</main><!-- /.main -->
+</body>
+</html>
