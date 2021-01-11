@@ -11,34 +11,15 @@ import java.sql.Date;
 public class Song implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
-
-    private Long album_id;
-
-    private Long singer_id;
-
-    @Column(name = "name",nullable = false)
     private String name;
-
-    @Column(name = "lyric",nullable = false,columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String lyric;
-
-    @Basic(optional = false)
     private String image;
-
-    @Column(name = "url",nullable = false)
     private String url;
-
-    @Column(name = "status",nullable = false)
     private boolean status;
-
-    @Column(name = "create_at",nullable = false)
-    private Date create_at;
-
-    public Song() {
-    }
-
+    @Column(name = "created_at")
+    private Date createdAt;
     @Transient
     private MultipartFile imageData;
 
@@ -48,22 +29,6 @@ public class Song implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getAlbum_id() {
-        return album_id;
-    }
-
-    public void setAlbum_id(Long album_id) {
-        this.album_id = album_id;
-    }
-
-    public Long getSinger_id() {
-        return singer_id;
-    }
-
-    public void setSinger_id(Long singer_id) {
-        this.singer_id = singer_id;
     }
 
     public String getName() {
@@ -106,12 +71,12 @@ public class Song implements Serializable {
         this.status = status;
     }
 
-    public Date getCreate_at() {
-        return create_at;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreate_at(Date create_at) {
-        this.create_at = create_at;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public MultipartFile getImageData() {
