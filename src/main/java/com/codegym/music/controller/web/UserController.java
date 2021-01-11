@@ -1,5 +1,6 @@
 package com.codegym.music.controller.web;
 
+import com.codegym.music.model.Song;
 import com.codegym.music.model.User;
 import com.codegym.music.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,4 +61,5 @@ class UserController {
         redirect.addFlashAttribute("globalMessage", "Register successfully.");
         return "redirect:/user/login";
     }
+
 }

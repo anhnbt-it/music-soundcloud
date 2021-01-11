@@ -44,24 +44,39 @@
         <!-- Moi cap nhat -->
         <div class="col-md-6">
             <div class="card shadow-sm mb-3">
-                <div class="card-header">
-                    Mới cập nhật
-                </div>
                 <div class="card-body">
-                    <ul class="list-unstyled" th:each="song:${songs}">
+                    <ul class="list-unstyled" th:object="${song}">
                         <li class="media border-bottom py-2">
                             <div class="position-relative">
-                                <a th:href="@{/music/{id}(id=${song.id})}">
-                                    <img th:src="'./files/' + ${song.image}" class="mr-3 rounded" width="85" alt="...">
-                                </a>
-                                <img src="./assets/images/playing-s.gif" class="position-absolute" style="bottom: 5px; left: 5px;" alt="Playing">
+                                <img th:src="${song.image}" class="mr-3 rounded" width="85" alt="...">
                             </div>
+                        </li>
+                        <li class="media border-bottom py-2">
                             <div class="media-body">
                                 <h5 class="mt-0 mb-1" th:text="${song.name}"></h5>
                                 <small th:text="${song.getSinger_id()}"></small>
                             </div>
-                            <a href="/bai-hat/niu-duyen" class="px-2 py-1 mr-2 bg-success text-white" title="Play"><i class="fas fa-play"></i></a>
-                            <a href="#" class="px-2 py-1 bg-danger text-white" song-id="1" title="Thích"><i class="far fa-heart"></i></a>
+                        </li>
+
+                        <li class="media border-bottom py-2">
+                            <div class="position-relative">
+                                <img th:src="${song.url}" class="mr-3 rounded" width="85" alt="...">
+                            </div>
+                        </li>
+                        <li class="media border-bottom py-2">
+                            <div class="position-relative">
+                                <img th:src="${song.lyric}" class="mr-3 rounded" width="85" alt="...">
+                            </div>
+                        </li>
+                        <li class="media border-bottom py-2">
+                            <div class="position-relative">
+                                <img th:src="${song.status}" class="mr-3 rounded" width="85" alt="...">
+                            </div>
+                        </li>
+                        <li class="media border-bottom py-2">
+                            <div class="position-relative">
+                                <img th:src="${song.create_at}" class="mr-3 rounded" width="85" alt="...">
+                            </div>
                         </li>
                     </ul>
                 </div>
