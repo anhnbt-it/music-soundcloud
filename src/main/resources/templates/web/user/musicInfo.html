@@ -45,37 +45,41 @@
         <div class="col-md-6">
             <div class="card shadow-sm mb-3">
                 <div class="card-body">
-                    <ul class="list-unstyled" th:object="${song}">
-                        <li class="media border-bottom py-2">
+                    <ul class="list-group" th:object="${song}">
+                        <li class="list-group-item">
                             <div class="position-relative">
-                                <img th:src="${song.image}" class="mr-3 rounded" width="85" alt="...">
+                                <img th:src="'/files/' + ${song.image}" class="mr-3 rounded" width="85" alt="...">
                             </div>
                         </li>
-                        <li class="media border-bottom py-2">
+                        <li class="list-group-item">
                             <div class="media-body">
                                 <h5 class="mt-0 mb-1" th:text="${song.name}"></h5>
                                 <small th:text="${song.getSinger_id()}"></small>
                             </div>
                         </li>
 
-                        <li class="media border-bottom py-2">
+                        <li class="list-group-item">
                             <div class="position-relative">
-                                <img th:src="${song.url}" class="mr-3 rounded" width="85" alt="...">
+                                <p>
+                                    <audio controls>
+                                        <source th:src="'/files/' + ${song.url}" src="horse.ogg" type="audio/mpeg">
+                                        Your browser does not support the audio element.
+                                    </audio>
                             </div>
                         </li>
-                        <li class="media border-bottom py-2">
+                        <li class="list-group-item">
                             <div class="position-relative">
-                                <img th:src="${song.lyric}" class="mr-3 rounded" width="85" alt="...">
+                                <p th:utext="${song.lyric}" class="mr-3 rounded" width="85" alt="...">
                             </div>
                         </li>
-                        <li class="media border-bottom py-2">
+                        <li class="list-group-item">
                             <div class="position-relative">
-                                <img th:src="${song.status}" class="mr-3 rounded" width="85" alt="...">
+                                <p th:text="${song.status}" class="mr-3 rounded" width="85" alt="...">
                             </div>
                         </li>
-                        <li class="media border-bottom py-2">
+                        <li class="list-group-item">
                             <div class="position-relative">
-                                <img th:src="${song.create_at}" class="mr-3 rounded" width="85" alt="...">
+                                <p th:text="${song.create_at}" class="mr-3 rounded" width="85" alt="...">
                             </div>
                         </li>
                     </ul>
@@ -94,7 +98,7 @@
                 </div>
                 <div class="card-body">
                     <ul class="list-unstyled">
-                        <li class="media border-bottom py-2">
+                        <li class="list-group-item">
                             <img src="./assets/images/1.jpeg" class="mr-3 rounded" width="85" alt="...">
                             <div class="media-body">
                                 <h5 class="mt-0 mb-1">Níu Duyên</h5>
@@ -102,7 +106,7 @@
                             </div>
                             <div class="display-4 text-danger">01</div>
                         </li>
-                        <li class="media border-bottom py-2">
+                        <li class="list-group-item">
                             <img src="./assets/images/2.jpeg" class="mr-3 rounded" width="85" alt="...">
                             <div class="media-body">
                                 <h5 class="mt-0 mb-1">Trên Tình Bạn Dưới Tình Yêu</h5>
@@ -110,7 +114,7 @@
                             </div>
                             <div class="display-4 text-danger">02</div>
                         </li>
-                        <li class="media border-bottom py-2">
+                        <li class="list-group-item">
                             <img src="./assets/images/3.jpeg" class="mr-3 rounded" width="85" alt="...">
                             <div class="media-body">
                                 <h5 class="mt-0 mb-1">Ngải Tình</h5>
