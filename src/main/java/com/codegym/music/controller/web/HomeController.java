@@ -62,9 +62,6 @@ public class HomeController {
         return songService.findAll();
     }
 
-    @ModelAttribute("singers")
-    public Iterable<Singer> sings() {
-        return singerService.findAll();
-    }
+
 
 }
