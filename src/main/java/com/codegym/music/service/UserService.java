@@ -13,4 +13,6 @@ public interface UserService extends UserDetailsService {
     Iterable<User> findAll();
 
     Optional<User> findById(Long id);
+
+    boolean existByEmail(String email);
 }
