@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -38,9 +40,11 @@ public class SongController {
     }
 
     @PostMapping("save")
-    public String save(@ModelAttribute("song") Song song, BindingResult result, RedirectAttributes redirect) {
+    public String save(@Valid @ModelAttribute("song") Song song, BindingResult result, RedirectAttributes redirect) {
         MultipartFile multipartFile = song.getImageData();
         String fileName = multipartFile.getOriginalFilename();
+        MultipartFile mp3File = song.getMp3Data();
+        String mp3Name = mp3File.getOriginalFilename();
         customFileValidator.validate(song, result);
         if (result.hasErrors()) {
             return "admin/songs/create";
@@ -48,8 +52,11 @@ public class SongController {
         try {
             storageService.store(multipartFile);
             song.setImage(fileName);
+            storageService.store(mp3File);
+            song.setUrl(mp3Name);
         } catch (StorageException e) {
             song.setImage("150.png");
+            song.setUrl("aaa");
         }
         songService.save(song);
         redirect.addFlashAttribute("globalMessage", "Successfully created a new song: " + song.getId());
@@ -93,13 +100,13 @@ public class SongController {
     }
 
     @PostMapping("edit")
-    public ModelAndView updateBlog(@ModelAttribute("song") Song song) {
+    public String updateBlog(@Validated @ModelAttribute("song") Song song) {
         songService.save(song);
 
         ModelAndView modelAndView = new ModelAndView("admin/songs/edit");
         modelAndView.addObject("song", song);
         modelAndView.addObject("message", "Song updated sucessfully");
-        return modelAndView;
+        return "redirect:/admin/songs";
     }
 
     @PostMapping("delete")

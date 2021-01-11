@@ -44,6 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                 .antMatchers("/", "/assets/**", "/files/**", "/favicon.ico").permitAll()
 //                        .antMatchers("/admin/**").hasRole("ADMIN")
                                 .antMatchers("/admin/**", "/user/**","/singers/**").permitAll()
+                                .antMatchers("/admin/**", "/user/**","/music/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin()

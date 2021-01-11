@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.sql.Date;
 
@@ -20,6 +21,7 @@ public class Song implements Serializable {
     private Long singer_id;
 
     @Column(name = "name",nullable = false)
+    @NotEmpty
     private String name;
 
     @Column(name = "lyric",nullable = false,columnDefinition = "TEXT")
@@ -42,6 +44,9 @@ public class Song implements Serializable {
 
     @Transient
     private MultipartFile imageData;
+
+    @Transient
+    private MultipartFile mp3Data;
 
     public Long getId() {
         return id;
@@ -121,5 +126,13 @@ public class Song implements Serializable {
 
     public void setImageData(MultipartFile imageData) {
         this.imageData = imageData;
+    }
+
+    public MultipartFile getMp3Data() {
+        return mp3Data;
+    }
+
+    public void setMp3Data(MultipartFile mp3Data) {
+        this.mp3Data = mp3Data;
     }
 }

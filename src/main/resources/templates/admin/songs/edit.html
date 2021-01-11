@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      th:replace="~{fragments/layout-admin :: layout (~{::main}, 'songs')}">
+      th:replace="~{admin/songs/layout-admin :: layout (~{::main}, 'songs')}">
 <head>
     <title>Edit Song :: AnhNBT</title>
 </head>
@@ -50,8 +50,8 @@
                     <label class="col-form-label col-md-2">Lyric <span
                             class="text-danger">*</span>:</label>
                     <div class="col-md-10">
-                        <input type="text" th:field="*{lyric}" class="form-control"
-                               th:classappend="${#fields.hasErrors('lyric')}? 'is-invalid'">
+                        <textarea th:field="*{lyric}" class="form-control"
+                                  th:classappend="${#fields.hasErrors('lyric')}? 'is-invalid'" cols="30" rows="10"></textarea>
                         <p th:if="${#fields.hasErrors('lyric')}" th:errors="*{lyric}" class="invalid-feedback">Song lyric
                             Error</p>
                     </div>
