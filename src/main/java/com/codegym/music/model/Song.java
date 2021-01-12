@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import java.util.Collection;
 
 @Entity
 @Table(name = "songs")
@@ -14,7 +15,11 @@ public class Song implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private Long album_id;
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinTable(name = "song_album",
+    joinColumns = @JoinColumn(name = "song_id"),
+    inverseJoinColumns = @JoinColumn(name = "album_id"))
+    private Collection<Album> albums;
 
     @ManyToOne
     @JoinColumn(name = "singer_id")
@@ -56,12 +61,12 @@ public class Song implements Serializable {
         this.id = id;
     }
 
-    public Long getAlbum_id() {
-        return album_id;
+    public Collection<Album> getAlbums() {
+        return albums;
     }
 
-    public void setAlbum_id(Long album_id) {
-        this.album_id = album_id;
+    public void setAlbums(Collection<Album> albums) {
+        this.albums = albums;
     }
 
     public Singer getSinger() {
