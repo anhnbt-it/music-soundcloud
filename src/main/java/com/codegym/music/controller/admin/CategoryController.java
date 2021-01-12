@@ -58,14 +58,23 @@ public class CategoryController {
 
     @GetMapping("edit/{id}")
     public String edit(@PathVariable("id") Long id, Model model, RedirectAttributes redirect) {
-        Optional<Category> category = categoryService.findById(id);
-        if (category.isPresent()) {
-            model.addAttribute("category", category.get());
-            return "admin/categories/edit";
-        } else {
-            redirect.addFlashAttribute("message", "Category with ID " + id + " not found.");
-            return "redirect:/admin/categories";
+        if (id == null) {
+            redirect.addFlashAttribute("Category Is NULL.");
+            return "errors/404";
         }
+
+        Optional<Category> category = categoryService.findById(id);
+
+        if (!category.isPresent()) {
+            redirect.addFlashAttribute("Category with ID \" + id + \" not found.");
+            return "errors/404";
+        }
+        model.addAttribute("category", category);
+        return "admin/categories/edit";
+    }
+
+    private String notFound(RedirectAttributes redirect) {
+        return "errors/404";
     }
 
     @PostMapping("edit")
