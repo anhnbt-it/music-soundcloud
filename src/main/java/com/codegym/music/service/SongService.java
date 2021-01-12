@@ -21,5 +21,9 @@ public interface SongService{
     void deleteById(Long id);
 
     Iterable<Song> findAllBySingerId(Long id);
+
+    Iterable<Song> findAllBy5BySingerId(Long singer_id,Long id);
+
+    Page<Song> findAll(Pageable pageable);
 }
 

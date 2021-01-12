@@ -11,6 +11,9 @@ import com.codegym.music.service.SongService;
 import com.codegym.music.service.SingerService;
 import com.codegym.music.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -61,6 +64,12 @@ public class HomeController {
     @ModelAttribute("songs")
     public Iterable<Song> songs() {
         return songService.findAll();
+    }
+
+    @ModelAttribute("bxh")
+    public Iterable<Song> bxhVn(){
+        Pageable pageable = PageRequest.of(0,5,Sort.by(Sort.Direction.DESC, "views"));
+        return songService.findAll(pageable);
     }
 }
 
