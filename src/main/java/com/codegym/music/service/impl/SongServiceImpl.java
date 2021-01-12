@@ -51,4 +51,9 @@ public class SongServiceImpl implements SongService {
     public void deleteById(Long id) {
         songRepository.deleteById(id);
     }
+
+    @Override
+    public Iterable<Song> findAllBySingerId(Long id) {
+        return songRepository.findAllBySingerId(id);
+    }
 }

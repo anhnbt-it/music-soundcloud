@@ -27,6 +27,12 @@
                                 <td><textarea cols="50" rows="5" th:type="text" th:field="*{description}" ></textarea></td>
 
                             </tr>
+                            <tr>
+                                <td>List of songs</td>
+                                <tr th:each="song : ${songs}">
+                                    <td th:text="${song.name}"></td>
+                                </tr>
+                            </tr>
 
                         </table>
 

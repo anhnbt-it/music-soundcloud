@@ -11,4 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface SongRepository extends PagingAndSortingRepository<Song, Long> {
     Page<Song> findAllByNameContains(String name, Pageable pageable);
 
+    Iterable<Song> findAllBySingerId(Long id);
+
+
 }

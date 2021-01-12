@@ -19,5 +19,7 @@ public interface SongService{
     Song save(Song song);
 
     void deleteById(Long id);
+
+    Iterable<Song> findAllBySingerId(Long id);
 }
 
