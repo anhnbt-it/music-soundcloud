@@ -86,7 +86,7 @@ public class AlbumController {
         return "admin/album/view";
     }
 
-    @GetMapping("edit-album/{id}")
+    @GetMapping("edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model, RedirectAttributes redirect) {
         Optional<Album> album = albumService.findById(id);
         if (album.isPresent()) {
@@ -98,14 +98,24 @@ public class AlbumController {
         }
     }
 
-    @PostMapping("edit-album")
-    public ModelAndView updateBlog(@ModelAttribute("album") Album album) {
-        albumService.save(album);
+    @PostMapping("edit")
+    public String updateAlbum(@ModelAttribute("album") Album album1 , BindingResult result, RedirectAttributes redirect) {
+        MultipartFile multipartFile1 = album1.getImageData();
+        String fileName = multipartFile1.getOriginalFilename();
+        customFileValidator.validate(album1, result);
+        if (result.hasErrors()) {
+            return "admin/album/edit";
+        }
+        try {
+            storageService.store(multipartFile1);
+            album1.setImageURL(fileName);
+        } catch (StorageException e) {
+            album1.setImageURL("150.png");
+        }
+        albumService.save(album1);
 
-        ModelAndView modelAndView = new ModelAndView("admin/album/edit");
-        modelAndView.addObject("album", album);
-        modelAndView.addObject("message", "Album updated sucessfully");
-        return modelAndView;
+        redirect.addFlashAttribute("globalMessage", "Successfully updated new album: " + album1.getId());
+        return "redirect:/admin/albums";
     }
 
     @PostMapping("delete")

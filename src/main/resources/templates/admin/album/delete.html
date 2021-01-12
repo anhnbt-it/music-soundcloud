@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head>
+<head th:replace="/fragments/layout-admin :: head">
     <meta charset="UTF-8">
     <title>Delete album</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
@@ -10,9 +10,9 @@
 <h1>Delete album</h1>
 <h2>Are you sure?</h2>
 <p>
-    <a href="/albums">Album list</a>
+    <a href="/admin/albums">Album list</a>
 </p>
-<form th:action="@{/albums/delete-album}" th:object="${album}" method="post">
+<form th:action="@{/admin/albums/delete-album}" th:object="${album}" method="post">
     <input type="hidden" name="id" th:field="*{id}">
     <table class="table table-striped table-hover">
         <tr>

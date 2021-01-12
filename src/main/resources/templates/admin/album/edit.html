@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head>
+<head th:replace="/fragments/layout-admin :: head">
     <meta charset="UTF-8">
     <title>Edit album</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
@@ -9,12 +9,12 @@
 <body>
 <h1>Edit album</h1>
 <p>
-    <a href="/albums">Album list</a>
+    <a href="/admin/albums">Album list</a>
 </p>
 <th:block th:if="${message}">
     <p th:text="${message}"></p>
 </th:block>
-<form th:action="@{/albums/edit-singer}" th:object="${album}" method="post">
+<form th:action="@{/admin/albums/edit}" th:object="${album}" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" th:field="*{id}">
     <table class="table table-striped table-hover">
         <tr>
@@ -28,8 +28,12 @@
         </tr>
         <tr>
             <td>Image</td>
-            <td>
-                <img width="150px" height="150px" th:src="${album.getImageURL()}">
+<!--            <td>-->
+<!--                <img width="150px" height="150px" th:src="${album.getImageURL()}">-->
+<!--            </td>-->
+
+            <td><img th:src="@{${'/files/' + album.imageURL}}" width="85px"
+                     class="img-fluid img-thumbnail">
             </td>
 
         </tr>
