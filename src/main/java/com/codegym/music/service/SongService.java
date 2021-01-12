@@ -13,6 +13,8 @@ public interface SongService {
 
     Page<Song> findAllByNameContains(String name, Integer pageNo, Integer pageSize, String sortBy);
 
+    Page<Song> findAll(Pageable pageable);
+
     Iterable<Song> findAll();
 
     Optional<Song> findById(Long id);
@@ -20,5 +22,7 @@ public interface SongService {
     Song save(Song song);
 
     void deleteById(Long id);
+
+    long count();
 }
 

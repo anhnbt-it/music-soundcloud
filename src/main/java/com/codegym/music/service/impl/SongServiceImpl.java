@@ -33,6 +33,11 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
+    public Page<Song> findAll(Pageable pageable) {
+        return songRepository.findAll(pageable);
+    }
+
+    @Override
     public Iterable<Song> findAll() {
         return songRepository.findAll();
     }
@@ -50,5 +55,10 @@ public class SongServiceImpl implements SongService {
     @Override
     public void deleteById(Long id) {
         songRepository.deleteById(id);
+    }
+
+    @Override
+    public long count() {
+        return songRepository.count();
     }
 }
