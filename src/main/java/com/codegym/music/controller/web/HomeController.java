@@ -58,17 +58,9 @@ public class HomeController {
         return "errors/403";
     }
 
-<<<<<<<<< Temporary merge branch 1
     @ModelAttribute("songs")
-    public Iterable<Song> songs(){
+    public Iterable<Song> songs() {
         return songService.findAll();
     }
-
-    @ModelAttribute("singers")
-    public Iterable<Singer> sings() {
-        return singerService.findAll();
-    }
-
-=========
->>>>>>>>> Temporary merge branch 2
 }
+
