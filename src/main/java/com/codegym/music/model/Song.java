@@ -1,12 +1,11 @@
 package com.codegym.music.model;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Collection;
 
 @Entity
 @Table(name = "songs")
@@ -16,9 +15,15 @@ public class Song implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private Long album_id;
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinTable(name = "song_album",
+    joinColumns = @JoinColumn(name = "song_id"),
+    inverseJoinColumns = @JoinColumn(name = "album_id"))
+    private Collection<Album> albums;
 
-    private Long singer_id;
+    @ManyToOne
+    @JoinColumn(name = "singer_id")
+    private Singer singer;
 
     @Column(name = "name",nullable = false)
     @NotEmpty
@@ -56,20 +61,20 @@ public class Song implements Serializable {
         this.id = id;
     }
 
-    public Long getAlbum_id() {
-        return album_id;
+    public Collection<Album> getAlbums() {
+        return albums;
     }
 
-    public void setAlbum_id(Long album_id) {
-        this.album_id = album_id;
+    public void setAlbums(Collection<Album> albums) {
+        this.albums = albums;
     }
 
-    public Long getSinger_id() {
-        return singer_id;
+    public Singer getSinger() {
+        return singer;
     }
 
-    public void setSinger_id(Long singer_id) {
-        this.singer_id = singer_id;
+    public void setSinger(Singer singer) {
+        this.singer = singer;
     }
 
     public String getName() {

@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.Collection;
 
 
 @Entity
@@ -28,6 +29,18 @@ public class Album {
     @ManyToOne
     @JoinColumn(name = "singer_id", referencedColumnName = "id")
     Singer singer;
+
+    @ManyToMany(mappedBy = "albums")
+    private Collection<Song> songs;
+
+
+    public Collection<Song> getSongs() {
+        return songs;
+    }
+
+    public void setSongs(Collection<Song> songs) {
+        this.songs = songs;
+    }
 
     public Long getId() {
         return id;
