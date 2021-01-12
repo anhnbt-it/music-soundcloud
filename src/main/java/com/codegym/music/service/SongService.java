@@ -4,6 +4,7 @@ package com.codegym.music.service;
 import com.codegym.music.model.Song;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.Optional;
 
@@ -19,5 +20,9 @@ public interface SongService{
     Song save(Song song);
 
     void deleteById(Long id);
+
+    Iterable<Song> findAllBy5BySingerId(Long singer_id,Long id);
+
+    Page<Song> findAll(Pageable pageable);
 }
 
