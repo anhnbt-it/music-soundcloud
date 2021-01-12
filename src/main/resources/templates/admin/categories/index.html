@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      th:replace="~{fragments/layout-admin :: layout (~{::main}, 'categories')}">
+      th:replace="~{fragments/layout-admin :: layout (~{::main}, 'Categories')}">
 <head>
     <title>List of Categories</title>
 </head>
@@ -14,13 +14,10 @@
                  th:replace="~{fragments/layout-nav :: breadcrumb('/admin/categories', 'Categories')}"/>
             <div class="card">
                 <div class="card-header">
-                    <i class="fa fa-bars"></i>
-                    <span th:text="#{title.categories.index}"></span>
+                    <span th:utext="'<i class=\'fa fa-bars\'></i> ' + #{title.categories.index}">List items</span>
                     <a th:href="@{/admin/categories/create}" class="btn btn-primary btn-sm float-right"
                        role="button"
-                       th:utext="#{button.add}"><i
-                            class="fa fa-plus"></i> Add
-                        New</a>
+                       th:utext="'<i class=\'fa fa-plus\'></i> ' + #{button.create}">Create New</a>
                 </div>
                 <div class="card-body">
                     <div class="alert alert-success" th:if="${message}" th:text="${message}"></div>
@@ -32,7 +29,7 @@
                             <option value="50" th:selected="${categories.pageable.pageSize} == 50">50</option>
                             <option value="100" th:selected="${categories.pageable.pageSize} == 100">100</option>
                         </select> entries</label>
-                        <form class="form-inline float-right" th:action="@{/admin/categories}" method="get">
+                        <form class="form-inline float-right" action="/admin/categories" method="get">
                             <div class="form-group mx-sm-3 mb-2">
                                 <label for="s" class="sr-only">Name</label>
                                 <input type="text" id="s" name="s" class="form-control"
@@ -56,13 +53,10 @@
                             <td th:text="${category.name}"></td>
                             <td>
                                 <a th:href="@{/admin/categories/edit/{id}(id=${category.id})}"
-                                   class="btn btn-success btn-sm">
-                                    <i class="fas fa-edit"></i>
-                                </a>
+                                   class="btn btn-success btn-sm"
+                                   th:utext="'<i class=\'fas fa-edit\'></i> ' + #{button.edit}">Edit</a>
                                 <button type="button" data-toggle="modal" data-target="#confirmModal"
-                                        th:attr="data-whatever=${category.id}" class="btn btn-danger btn-sm">
-                                    <i class="fas fa-trash"></i>
-                                </button>
+                                        th:attr="data-whatever=${category.id}" class="btn btn-danger btn-sm" th:utext="'<i class=\'fas fa-trash\'></i> ' + #{button.delete}">Delete</button>
                             </td>
                         </tr>
                         </tbody>

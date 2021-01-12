@@ -2,13 +2,13 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      th:fragment="layout (template, menu)">
+      th:fragment="layout (template, title)">
 <head>
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="#{title.home}">AnhNBT :: Spring Framework</title>
+    <title th:text="${title} + ' :: ' + #{title.home}">AnhNBT Spring Framework</title>
     <!-- Standard favicon -->
     <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
     <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet">
@@ -31,34 +31,34 @@
 
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" id="navbarSupportedContent">
                 <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item" th:classappend="${menu == 'home' ? 'active' : ''}">
-                        <a class="nav-link" href="#" th:href="@{/}" th:text="#{label.navigation.home.link}">Home <span
+                    <li class="nav-item" th:classappend="${title == 'Home' ? 'active' : ''}">
+                        <a class="nav-link" th:href="@{/admin}" th:text="#{title.dashboard}">Dashboard <span
                                 class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" th:href="@{/admin/blogs}" th:text="#{title.blogs}">Blogs</a>
+                    <li class="nav-item" th:classappend="${title == 'Blogs' ? 'active' : ''}">
+                        <a class="nav-link" th:href="@{/admin/blogs}" th:text="#{title.blogs}">Blogs</a>
+                    </li>
+                    <li class="nav-item" th:classappend="${title == 'Categories' ? 'active' : ''}">
+                        <a class="nav-link" th:href="@{/admin/categories}" th:text="#{title.categories}">Categories</a>
+                    </li>
+                    <li class="nav-item" th:classappend="${title == 'Albums' ? 'active' : ''}">
+                        <a class="nav-link" th:href="@{/admin/albums}" th:text="#{title.albums}">Albums</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" th:href="@{/admin/categories}" th:text="#{title.categories}">Categories</a>
+                        <a class="nav-link" th:href="@{/admin/songs}" th:text="#{title.songs}">Songs</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" th:href="@{/admin/album}" th:text="#{title.albums}">Albums</a>
-                    </li>
-<!--                    <li class="nav-item">-->
-<!--                        <a class="nav-link" href="#" th:href="@{/admin/songs}" th:text="#{title.songs}">Songs</a>-->
-<!--                    </li>-->
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li sec:authorize="isAnonymous()" class="nav-item">
                         <a href="/user/register" th:href="@{/user/register}" class="nav-link"
-                           th:text="#{label.navigation.registration.link}">Create user account</a>
+                           th:text="#{label.registration}">Create user account</a>
                     </li>
                     <li sec:authorize="isAnonymous()" class="nav-item">
-                        <a class="nav-link" th:href="@{/login}" th:text="#{label.navigation.login.link}">Sign in</a>
+                        <a class="nav-link" th:href="@{/login}" th:text="#{label.login}">Sign in</a>
                     </li>
                     <li th:if="${#authorization.expression('isAuthenticated()')}" class="nav-item">
                         <a href="/logout" th:href="@{#}" onclick="$('#form').submit();" class="nav-link"
-                           th:text="#{label.navigation.logout.link}">
+                           th:text="#{label.logout}">
                             <i class="fas fa-sign-out-alt"></i>&nbsp;Logout
                         </a>
                         <form style="visibility: hidden" id="form" method="post" action="#"
@@ -93,7 +93,14 @@
             </p>
         </div>
         <p>© 2021 by <a href="https://anhnbt.com/">AnhNBT</a>. All rights reversed.</p>
-        <p th:text="${menu}"></p>
+        <form method="get" class="form-horizontal">
+            <label for="locale">Language</label>
+            <select name="locale" id="locale" onchange="this.form.submit();">
+                <option value="">--Select Language--</option>
+                <option value="vi_VN" th:selected="${#strings.equals('vi_VN', #locale)}" th:text="#{lang.vi}"></option>
+                <option value="en_US" th:selected="${#strings.equals('en_US', #locale)}" th:text="#{lang.en}"></option>
+            </select>
+        </form>
     </div>
 </footer>
 </body>

@@ -42,11 +42,11 @@
             <ul class="nav navbar-nav navbar-right" sec:authorize="isAnonymous()">
                 <li class="nav-item" th:classappend="${menu == 'register' ? 'active' : ''}">
                     <a class="nav-link" href="/user/register"><i class="fas fa-user"></i>
-                        <span th:text="#{label.navigation.registration.link}">Create account</span></a>
+                        <span th:text="#{label.registration}">Create account</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/user/login"><i class="fas fa-sign-in-alt"></i> <span
-                            th:text="#{label.navigation.login.link}">Sign in</span></a>
+                            th:text="#{label.login}">Sign in</span></a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right" th:if="${#authorization.expression('isAuthenticated()')}">
@@ -61,7 +61,7 @@
                         <a class="dropdown-item" href="/user/profile">Profile</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/user/logout">
-                            <i class="fas fa-sign-out-alt"></i>&nbsp;<span th:text="#{label.navigation.logout.link}">Logout</span>
+                            <i class="fas fa-sign-out-alt"></i>&nbsp;<span th:text="#{label.logout}">Logout</span>
                         </a>
                     </div>
                 </li>
