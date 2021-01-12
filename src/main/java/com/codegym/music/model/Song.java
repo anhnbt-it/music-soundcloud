@@ -1,12 +1,10 @@
 package com.codegym.music.model;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
-import java.sql.Date;
 
 @Entity
 @Table(name = "songs")
@@ -18,7 +16,9 @@ public class Song implements Serializable {
 
     private Long album_id;
 
-    private Long singer_id;
+    @ManyToOne
+    @JoinColumn(name = "singer_id")
+    private Singer singer;
 
     @Column(name = "name",nullable = false)
     @NotEmpty
@@ -64,12 +64,12 @@ public class Song implements Serializable {
         this.album_id = album_id;
     }
 
-    public Long getSinger_id() {
-        return singer_id;
+    public Singer getSinger() {
+        return singer;
     }
 
-    public void setSinger_id(Long singer_id) {
-        this.singer_id = singer_id;
+    public void setSinger(Singer singer) {
+        this.singer = singer;
     }
 
     public String getName() {
