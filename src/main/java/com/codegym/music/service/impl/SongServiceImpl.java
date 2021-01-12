@@ -61,4 +61,14 @@ public class SongServiceImpl implements SongService {
     public long count() {
         return songRepository.count();
     }
+
+    @Override
+    public Iterable<Song> findAllBySingerId(Long id) {
+        return songRepository.findAllBySingerId(id);
+    }
+
+    @Override
+    public Iterable<Song> findAllBy5BySingerId(Long singer_id ,Long id){
+        return songRepository.findFirst5BySingerIdAndIdNot(singer_id,id);
+    }
 }

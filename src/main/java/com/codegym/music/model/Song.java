@@ -44,6 +44,17 @@ public class Song implements Serializable {
     @Column(name = "create_at",nullable = false)
     private String create_at;
 
+    @Column
+    private Integer views;
+
+    public Integer getViews() {
+        return views;
+    }
+
+    public void setViews(Integer views) {
+        this.views = views;
+    }
+
     public Song() {
     }
 

@@ -3,6 +3,7 @@ package com.codegym.music.controller.admin;
 
 import com.codegym.music.model.Singer;
 import com.codegym.music.service.SingerService;
+import com.codegym.music.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,9 @@ import java.util.Optional;
 @Controller
 @RequestMapping("admin/singers")
 public class SingerController {
+
+    @Autowired
+    private SongService songService;
 
     @Autowired
     private SingerService singerService;
@@ -54,6 +58,7 @@ public class SingerController {
         }
         ModelAndView modelAndView = new ModelAndView("admin/singer/list");
         modelAndView.addObject("singers", singers);
+
         return modelAndView;
     }
 
@@ -61,6 +66,7 @@ public class SingerController {
     public String show(@PathVariable Long id, Model model) {
         Singer singers = singerService.findById(id).get();
         model.addAttribute("singer", singers);
+        model.addAttribute("songs",songService.findAllBySingerId(id));
         return "admin/singer/view";
     }
 

@@ -1,6 +1,8 @@
 package com.codegym.music.controller.admin;
 
 import com.codegym.music.model.*;
+import com.codegym.music.service.AlbumService;
+import com.codegym.music.service.SingerService;
 import com.codegym.music.service.SongService;
 import com.codegym.music.storage.StorageException;
 import com.codegym.music.storage.StorageService;
@@ -30,7 +32,22 @@ public class SongController {
     private StorageService storageService;
 
     @Autowired
+    private SingerService singerService;
+
+    @Autowired
+    private AlbumService albumService;
+    @Autowired
     private CustomFileValidator customFileValidator;
+
+    @ModelAttribute("singers")
+    public Iterable<Singer> singers(){
+        return singerService.findAll();
+    }
+
+    @ModelAttribute("albums")
+    public Iterable<Album> albums(){
+        return albumService.findAll();
+    }
 
     @GetMapping("create")
     public ModelAndView showCreateForm() {
@@ -58,6 +75,7 @@ public class SongController {
             song.setImage("150.png");
             song.setUrl("aaa");
         }
+        song.setViews(0);
         songService.save(song);
         redirect.addFlashAttribute("globalMessage", "Successfully created a new song: " + song.getId());
         return "redirect:/admin/songs/create";
@@ -100,7 +118,24 @@ public class SongController {
     }
 
     @PostMapping("edit")
-    public String updateBlog(@Validated @ModelAttribute("song") Song song) {
+    public String updateBlog(@Validated @ModelAttribute("song") Song song, BindingResult result) {
+        MultipartFile multipartFile = song.getImageData();
+        String fileName = multipartFile.getOriginalFilename();
+        MultipartFile mp3File = song.getMp3Data();
+        String mp3Name = mp3File.getOriginalFilename();
+        customFileValidator.validate(song, result);
+        if (result.hasErrors()) {
+            return "admin/songs/edit";
+        }
+        try {
+            storageService.store(multipartFile);
+            song.setImage(fileName);
+            storageService.store(mp3File);
+            song.setUrl(mp3Name);
+        } catch (StorageException e) {
+            song.setImage("150.png");
+            song.setUrl("aaa");
+        }
         songService.save(song);
 
         ModelAndView modelAndView = new ModelAndView("admin/songs/edit");
