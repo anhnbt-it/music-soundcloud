@@ -16,4 +16,6 @@ public interface IService<E> {
     E save(E entity);
 
     void deleteById(Long id);
+
+    long count();
 }

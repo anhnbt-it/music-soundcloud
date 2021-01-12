@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="col-md-3" th:fragment="admin">
+    <div class="card">
+        <div class="card-header">Menu</div>
+        <div class="card-body p-0">
+            <div class="media p-3">
+                <img src="/assets/images/avatar.jpeg" class="mr-3" alt="Avatar">
+                <div class="media-body">
+                    <h5 class="mt-0 mb-1">Admin</h5>
+                    <a href="/user/logout">
+                        <i class="fas fa-sign-out-alt"></i>&nbsp;<span th:text="#{label.navigation.logout.link}">Logout</span>
+                    </a>
+                </div>
+            </div>
+            <ul class="list-group list-group-flush">
+                <a href="/admin/categories" class="list-group-item">Categories</a>
+                <a href="/admin/blogs" class="list-group-item">Blogs</a>
+                <a href="/admin/albums" class="list-group-item">Albums</a>
+                <a href="/admin/singers" class="list-group-item">Singers</a>
+                <a href="/admin/songs" class="list-group-item">Songs</a>
+            </ul>
+        </div>
+    </div>
+</div><!-- /.col-md-3 -->
+<nav aria-label="breadcrumb" th:fragment="breadcrumb(pageURL, pageName)">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+        <li class="breadcrumb-item"><a th:href="${pageURL}" th:text="${pageName}">Categories</a></li>
+    </ol>
+</nav>
+</body>
+</html>

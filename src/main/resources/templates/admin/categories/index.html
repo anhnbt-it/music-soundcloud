@@ -7,81 +7,88 @@
 </head>
 <body>
 <main role="main" class="pb-3">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/admin" th:text="#{title.dashboard}">Dashboard</a></li>
-        </ol>
-    </nav>
-    <div class="card">
-        <div class="card-header">
-            <i class="fa fa-bars"></i>
-            <span th:text="#{title.blogs.index}"></span>
-            <a th:href="@{/admin/categories/create}" class="btn btn-primary btn-sm float-right" role="button"
-               th:utext="#{button.add}"><i
-                    class="fa fa-plus"></i> Add
-                New</a>
-        </div>
-        <div class="card-body">
-            <div class="alert alert-success" th:if="${globalMessage}" th:text="${globalMessage}"></div>
-            <div class="clearfix">
-                <label>Show <select name="pageSize" id="pageSize" th:switch="${categories.pageable.pageSize}">
-                    <option value="10" th:selected="${categories.pageable.pageSize} == 10">10</option>
-                    <option value="25" th:selected="${categories.pageable.pageSize} == 25">25</option>
-                    <option value="50" th:selected="${categories.pageable.pageSize} == 50">50</option>
-                    <option value="100" th:selected="${categories.pageable.pageSize} == 100">100</option>
-                </select> entries</label>
-                <form class="form-inline float-right" th:action="@{/admin/categories}" method="get">
-                    <div class="form-group mx-sm-3 mb-2">
-                        <label for="s" class="sr-only">Name</label>
-                        <input type="text" id="s" name="s" class="form-control"
-                               th:value="${txtSearch.isPresent()} ? ${txtSearch.get()}"
-                               placeholder="Enter Name">
+    <div class="row">
+        <div class="col-md-3" th:replace="~{fragments/layout-nav :: admin}"></div>
+        <div class="col-md-9">
+            <nav aria-label="breadcrumb"
+                 th:replace="~{fragments/layout-nav :: breadcrumb('/admin/categories', 'Categories')}"/>
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-bars"></i>
+                    <span th:text="#{title.categories.index}"></span>
+                    <a th:href="@{/admin/categories/create}" class="btn btn-primary btn-sm float-right"
+                       role="button"
+                       th:utext="#{button.add}"><i
+                            class="fa fa-plus"></i> Add
+                        New</a>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-success" th:if="${message}" th:text="${message}"></div>
+                    <div class="clearfix">
+                        <label>Show <select name="pageSize" id="pageSize"
+                                            th:switch="${categories.pageable.pageSize}">
+                            <option value="10" th:selected="${categories.pageable.pageSize} == 10">10</option>
+                            <option value="25" th:selected="${categories.pageable.pageSize} == 25">25</option>
+                            <option value="50" th:selected="${categories.pageable.pageSize} == 50">50</option>
+                            <option value="100" th:selected="${categories.pageable.pageSize} == 100">100</option>
+                        </select> entries</label>
+                        <form class="form-inline float-right" th:action="@{/admin/categories}" method="get">
+                            <div class="form-group mx-sm-3 mb-2">
+                                <label for="s" class="sr-only">Name</label>
+                                <input type="text" id="s" name="s" class="form-control"
+                                       th:value="${txtSearch.isPresent()} ? ${txtSearch.get()}"
+                                       placeholder="Enter Name">
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-2"><i class="fa fa-search"></i></button>
+                        </form>
                     </div>
-                    <button type="submit" class="btn btn-primary mb-2"><i class="fa fa-search"></i></button>
-                </form>
-            </div>
-            <table class="table table-bordered">
-                <thead class="thead-light">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Actions</th>
-                </tr>
-                </thead>
-                <tbody id="categoryList" th:unless="${#lists.isEmpty(categories)}">
-                <tr th:each="category : ${categories}">
-                    <th scope="row" th:text="${category.id}"></th>
-                    <td th:text="${category.name}"></td>
-                    <td>
-                        <a th:href="@{/admin/categories/edit/{id}(id=${category.id})}" class="btn btn-success btn-sm">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <button type="button" data-toggle="modal" data-target="#confirmModal"
-                                th:attr="data-whatever=${category.id}" class="btn btn-danger btn-sm">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <div class="clearfix">
-                <span th:text="${'Showing ' + categories.numberOfElements + ' to ' + categories.pageable.pageSize + ' of ' + categories.totalElements + ' entries'}"></span>
-                <nav aria-label="Page navigation" class="float-right">
-                    <ul class="pagination" id="pagination">
-                        <li class="page-item" th:if="${categories.hasPrevious()}">
-                            <a class="page-link" th:href="'?pageNo=' + ${categories.pageable.pageNumber - 1}">
-                                Previous
-                            </a>
-                        </li>
-                        <li class="page-item" th:if="${categories.hasNext()}">
-                            <a class="page-link" th:href="'?pageNo=' + ${categories.pageable.pageNumber + 1}">Next
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div><!-- /.card-body -->
-    </div><!-- /.card -->
+                    <table class="table table-bordered">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody id="categoryList" th:unless="${#lists.isEmpty(categories)}">
+                        <tr th:each="category : ${categories}">
+                            <th scope="row" th:text="${category.id}"></th>
+                            <td th:text="${category.name}"></td>
+                            <td>
+                                <a th:href="@{/admin/categories/edit/{id}(id=${category.id})}"
+                                   class="btn btn-success btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <button type="button" data-toggle="modal" data-target="#confirmModal"
+                                        th:attr="data-whatever=${category.id}" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="clearfix">
+                        <span th:text="${'Showing ' + categories.numberOfElements + ' to ' + categories.pageable.pageSize + ' of ' + categories.totalElements + ' entries'}"></span>
+                        <nav aria-label="Page navigation" class="float-right">
+                            <ul class="pagination" id="pagination">
+                                <li class="page-item" th:if="${categories.hasPrevious()}">
+                                    <a class="page-link"
+                                       th:href="'?pageNo=' + ${categories.pageable.pageNumber - 1}">
+                                        Previous
+                                    </a>
+                                </li>
+                                <li class="page-item" th:if="${categories.hasNext()}">
+                                    <a class="page-link"
+                                       th:href="'?pageNo=' + ${categories.pageable.pageNumber + 1}">Next
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div><!-- /.card-body -->
+            </div><!-- /.card -->
+        </div><!-- /.col-md-9 -->
+    </div><!-- /.row -->
     <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

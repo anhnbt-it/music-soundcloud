@@ -31,8 +31,7 @@ public class CustomFileValidator implements Validator {
         } else if (target instanceof Album) {
             Album album = (Album) target;
             file = album.getImageData();
-        }
-        else if (target instanceof Song){
+        } else if (target instanceof Song) {
             Song song = (Song) target;
             file = song.getImageData();
         }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -39,48 +40,53 @@ public class CategoryController {
     }
 
     @GetMapping("create")
-    public ModelAndView showCreateForm() {
+    public ModelAndView create() {
         ModelAndView modelAndView = new ModelAndView("admin/categories/create");
         modelAndView.addObject("category", new Category());
         return modelAndView;
     }
 
-    @PostMapping("save")
-    public String saveFormCreate(@ModelAttribute("category") Category category, BindingResult result, RedirectAttributes redirect) {
+    @PostMapping("create")
+    public String create(@Valid @ModelAttribute("category") Category category, BindingResult result, RedirectAttributes redirect) {
         if (result.hasErrors()) {
             return "admin/categories/create";
         }
-        Category save = categoryService.save(category);
-        redirect.addFlashAttribute("globalMessage", "Created category successfully");
-        return "redirect:/admin/categories/create";
-    }
-
-    @PostMapping("edit")
-    public String saveFormUpdate(@ModelAttribute("category") Category category, BindingResult result, RedirectAttributes redirect) {
-        if (result.hasErrors()) {
-            return "admin/categories/edit";
-        }
-        Category save = categoryService.save(category);
-        redirect.addFlashAttribute("globalMessage", "Updated category successfully");
-        return "redirect:/admin/categories/edit/" + category.getId();
-    }
-
-    @PostMapping("delete")
-    public String deleteById(@RequestParam("id") Long id, RedirectAttributes redirect) {
-        categoryService.deleteById(id);
-        redirect.addFlashAttribute("globalMessage", "Successfully deleted a category");
+        categoryService.save(category);
+        redirect.addFlashAttribute("message", "Created category successfully");
         return "redirect:/admin/categories";
     }
 
     @GetMapping("edit/{id}")
-    public String findById(@PathVariable("id") Long id, Model model, RedirectAttributes redirect) {
+    public String edit(@PathVariable("id") Long id, Model model, RedirectAttributes redirect) {
         Optional<Category> category = categoryService.findById(id);
         if (category.isPresent()) {
             model.addAttribute("category", category.get());
             return "admin/categories/edit";
         } else {
-            redirect.addFlashAttribute("Category with ID " + id + " not found.");
+            redirect.addFlashAttribute("message", "Category with ID " + id + " not found.");
             return "redirect:/admin/categories";
         }
+    }
+
+    @PostMapping("edit")
+    public String edit(@Valid @ModelAttribute("category") Category category, BindingResult result, RedirectAttributes redirect) {
+        if (result.hasErrors()) {
+            return "admin/categories/edit";
+        }
+        categoryService.save(category);
+        redirect.addFlashAttribute("message", "Updated category successfully");
+        return "redirect:/admin/categories";
+    }
+
+    @PostMapping("delete")
+    public String delete(@RequestParam("id") Long id, RedirectAttributes redirect) {
+        Optional<Category> category = categoryService.findById(id);
+        if (category.isPresent()) {
+            categoryService.deleteById(id);
+            redirect.addFlashAttribute("message", "Successfully deleted a category");
+        } else {
+            redirect.addFlashAttribute("message", "Category with ID " + id + " not found.");
+        }
+        return "redirect:/admin/categories";
     }
 }

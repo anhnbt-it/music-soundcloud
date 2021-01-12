@@ -36,6 +36,27 @@
                             Error</p>
                     </div>
                 </div>
+
+                <div class="row form-group">
+                    <label class="col-form-label col-md-2">Singers <span
+                            class="text-danger">*</span>:</label>
+                    <div class="col-md-10">
+                        <select th:field="*{singer}" class="form-control">
+                            <option th:each="singer : ${singers}" th:value="${singer.id}" th:text="${singer.name}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <label class="col-form-label col-md-2">Albums <span
+                            class="text-danger">*</span>:</label>
+                    <div class="col-md-10">
+                        <select th:field="*{albums}" class="form-control">
+                            <option th:each="album : ${albums}" th:value="${album.id}" th:text="${album.name}"></option>
+                        </select>
+                    </div>categories
+                </div>
+
                 <div class="row form-group">
                     <label class="col-form-label col-md-2">Image <span
                             class="text-danger">*</span>:</label>
