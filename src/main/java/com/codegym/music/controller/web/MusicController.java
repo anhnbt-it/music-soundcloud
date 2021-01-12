@@ -19,6 +19,9 @@ public class MusicController {
     @GetMapping("{id}")
     public String SongInfo(@PathVariable Long id, Model model){
         Song song = songService.findById(id).get();
+        song.setViews(song.getViews()+1);
+        songService.save(song);
+        System.out.println(song.getViews());
         model.addAttribute("song",song);
         return "web/user/musicInfo";
     }
