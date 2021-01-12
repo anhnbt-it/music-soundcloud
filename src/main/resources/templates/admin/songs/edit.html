@@ -52,7 +52,7 @@
                     <label class="col-form-label col-md-2">Albums <span
                             class="text-danger">*</span>:</label>
                     <div class="col-md-10">
-                        <select th:field="*{albums}" class="form-control">
+                        <select th:field="*{albums}" class="form-control" multiple>
                             <option th:each="album : ${albums}" th:value="${album.id}" th:text="${album.name}"></option>
                         </select>
                     </div>categories
