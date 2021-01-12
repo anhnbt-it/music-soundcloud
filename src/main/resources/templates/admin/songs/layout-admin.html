@@ -34,7 +34,7 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" id="navbarSupportedContent">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item" th:classappend="${menu == 'home' ? 'active' : ''}">
-                        <a class="nav-link" href="#" th:href="@{/}" th:text="#{label.navigation.home.link}">Home <span
+                        <a class="nav-link" href="#" th:href="@{/}" th:text="#{title.dashboard}">Home <span
                                 class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
@@ -53,14 +53,14 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li sec:authorize="isAnonymous()" class="nav-item">
                         <a href="/user/register" th:href="@{/user/register}" class="nav-link"
-                           th:text="#{label.navigation.registration.link}">Create user account</a>
+                           th:text="#{label.registration}">Create user account</a>
                     </li>
                     <li sec:authorize="isAnonymous()" class="nav-item">
-                        <a class="nav-link" th:href="@{/login}" th:text="#{label.navigation.login.link}">Sign in</a>
+                        <a class="nav-link" th:href="@{/login}" th:text="#{label.login}">Sign in</a>
                     </li>
                     <li th:if="${#authorization.expression('isAuthenticated()')}" class="nav-item">
                         <a href="/logout" th:href="@{#}" onclick="$('#form').submit();" class="nav-link"
-                           th:text="#{label.navigation.logout.link}">
+                           th:text="#{label.logout}">
                             <i class="fas fa-sign-out-alt"></i>&nbsp;Logout
                         </a>
                         <form style="visibility: hidden" id="form" method="post" action="#"
