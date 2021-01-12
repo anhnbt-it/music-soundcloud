@@ -2,6 +2,7 @@ package com.codegym.music.validator;
 
 import com.codegym.music.model.Album;
 import com.codegym.music.model.Blog;
+import com.codegym.music.model.Song;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -13,7 +14,7 @@ import java.util.List;
 @Component
 public class CustomFileValidator implements Validator {
 
-    private static final List<String> contentTypes = Arrays.asList("image/png", "image/jpeg", "image/gif");
+    private static final List<String> contentTypes = Arrays.asList("image/png", "image/jpg", "image/jpeg", "image/gif","audio/mpeg");
     public static final long TEN_MB_IN_BYTES = 10485760; // 10 MB
 
     @Override
@@ -30,6 +31,10 @@ public class CustomFileValidator implements Validator {
         } else if (target instanceof Album) {
             Album album = (Album) target;
             file = album.getImageData();
+        }
+        else if (target instanceof Song){
+            Song song = (Song) target;
+            file = song.getImageData();
         }
         if (file.isEmpty()) {
             errors.rejectValue("imageData", "label.upload.file.required");

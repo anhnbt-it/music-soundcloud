@@ -1,28 +1,38 @@
 package com.codegym.music.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Collection;
 
 @Entity
-@Table(name = "Songs")
+@Table(name = "songs")
 public class Song implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private Long album_id;
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinTable(name = "song_album",
+    joinColumns = @JoinColumn(name = "song_id"),
+    inverseJoinColumns = @JoinColumn(name = "album_id"))
+    private Collection<Album> albums;
 
-    private Long singer_id;
+    @ManyToOne
+    @JoinColumn(name = "singer_id")
+    private Singer singer;
 
     @Column(name = "name",nullable = false)
+    @NotEmpty
     private String name;
 
     @Column(name = "lyric",nullable = false,columnDefinition = "TEXT")
     private String lyric;
 
-    @Column(name = "image",nullable = false)
+    @Basic(optional = false)
     private String image;
 
     @Column(name = "url",nullable = false)
@@ -32,10 +42,16 @@ public class Song implements Serializable {
     private boolean status;
 
     @Column(name = "create_at",nullable = false)
-    private Date create_at;
+    private String create_at;
 
     public Song() {
     }
+
+    @Transient
+    private MultipartFile imageData;
+
+    @Transient
+    private MultipartFile mp3Data;
 
     public Long getId() {
         return id;
@@ -45,20 +61,20 @@ public class Song implements Serializable {
         this.id = id;
     }
 
-    public Long getAlbum_id() {
-        return album_id;
+    public Collection<Album> getAlbums() {
+        return albums;
     }
 
-    public void setAlbum_id(Long album_id) {
-        this.album_id = album_id;
+    public void setAlbums(Collection<Album> albums) {
+        this.albums = albums;
     }
 
-    public Long getSinger_id() {
-        return singer_id;
+    public Singer getSinger() {
+        return singer;
     }
 
-    public void setSinger_id(Long singer_id) {
-        this.singer_id = singer_id;
+    public void setSinger(Singer singer) {
+        this.singer = singer;
     }
 
     public String getName() {
@@ -101,11 +117,27 @@ public class Song implements Serializable {
         this.status = status;
     }
 
-    public Date getCreate_at() {
+    public String getCreate_at() {
         return create_at;
     }
 
-    public void setCreate_at(Date create_at) {
+    public void setCreate_at(String create_at) {
         this.create_at = create_at;
+    }
+
+    public MultipartFile getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(MultipartFile imageData) {
+        this.imageData = imageData;
+    }
+
+    public MultipartFile getMp3Data() {
+        return mp3Data;
+    }
+
+    public void setMp3Data(MultipartFile mp3Data) {
+        this.mp3Data = mp3Data;
     }
 }

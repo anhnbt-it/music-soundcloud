@@ -1,13 +1,23 @@
 package com.codegym.music.service;
 
-import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.codegym.music.model.Song;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-public interface SongService<E> {
-    List<E> findAll();
-    E findById(Long id);
-    E save(E obj);
-    void delete(Long id);
+import java.util.Optional;
+
+public interface SongService{
+    Page<Song> findAll(Integer pageNo, Integer pageSize, String sortBy);
+
+    Page<Song> findAllByNameContains(String name, Integer pageNo, Integer pageSize, String sortBy);
+
+    Iterable<Song> findAll();
+
+    Optional<Song> findById(Long id);
+
+    Song save(Song song);
+
+    void deleteById(Long id);
 }
 
