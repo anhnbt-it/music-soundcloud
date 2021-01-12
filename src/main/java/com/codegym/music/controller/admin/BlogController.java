@@ -24,6 +24,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Optional;
 
 @Controller
@@ -116,6 +119,8 @@ public class BlogController {
             blog.setImageURL("150.png");
             log.info("ANHNBT: ", e);
         }
+        blog.setCreatedAt(LocalDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh")));
+        blog.setUpdatedAt(LocalDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh")));
         blog = blogService.save(blog);
         log.info("Create Blog: " + blog.toString());
         redirect.addFlashAttribute("globalMessage", "Successfully created a new blog: " + blog.getId());

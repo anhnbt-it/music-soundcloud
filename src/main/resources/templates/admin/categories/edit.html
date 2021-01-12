@@ -7,43 +7,47 @@
 </head>
 <body>
 <main role="main" class="pb-3">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="/admin/categories">Categories</a></li>
-        </ol>
-    </nav>
-    <div class="card">
-        <div class="card-header">
-            <span>Edit Category</span>
-            <a href="/admin/categories" class="btn btn-link btn-sm float-right">Back</a>
-        </div>
-        <div class="card-body">
-            <div class="alert alert-success" th:if="${globalMessage}" th:text="${globalMessage}"></div>
-            <div th:if="${#fields.hasErrors('${category.*}')}" class="alert alert-danger">
-                <ul>
-                    <li th:each="err : ${#fields.errors('${category.*}')}" th:text="${err}">Input is incorrect</li>
-                </ul>
-            </div>
-            <form action="#" th:action="@{/admin/categories/edit}" th:object="${category}" method="post">
-                <input type="hidden" th:field="*{id}">
-                <div class="row form-group">
-                    <label class="col-form-label col-md-2">Name <span
-                            class="text-danger">*</span>:</label>
-                    <div class="col-md-10">
-                        <input type="text" th:field="*{name}" class="form-control"
-                               th:classappend="${#fields.hasErrors('name')}? 'is-invalid'">
-                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback">Name
-                            Error</p>
+    <div class="row">
+        <div class="col-md-3" th:replace="~{fragments/layout-nav :: admin}"></div>
+        <div class="col-md-9">
+            <nav aria-label="breadcrumb"
+                 th:replace="~{fragments/layout-nav :: breadcrumb('/admin/categories', 'Categories')}"/>
+            <div class="card">
+                <div class="card-header">
+                    <span>Edit Category</span>
+                    <a href="/admin/categories" class="btn btn-link btn-sm float-right">Back</a>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-success" th:if="${globalMessage}" th:text="${globalMessage}"></div>
+                    <div th:if="${#fields.hasErrors('${category.*}')}" class="alert alert-danger">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('${category.*}')}" th:text="${err}">Input is incorrect
+                            </li>
+                        </ul>
                     </div>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Save</button>
-                    <a href="/admin/categories" class="btn btn-link">Cancel</a>
-                </div>
-            </form>
-        </div><!-- /.card-body -->
-    </div><!-- /.card -->
+                    <form action="#" th:action="@{/admin/categories/edit}" th:object="${category}" method="post">
+                        <input type="hidden" th:field="*{id}">
+                        <div class="row form-group">
+                            <label class="col-form-label col-md-2">Name <span
+                                    class="text-danger">*</span>:</label>
+                            <div class="col-md-10">
+                                <input type="text" th:field="*{name}" class="form-control"
+                                       th:classappend="${#fields.hasErrors('name')}? 'is-invalid'">
+                                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback">
+                                    Name
+                                    Error</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <a href="/admin/categories" class="btn btn-link">Cancel</a>
+                        </div>
+                    </form>
+                </div><!-- /.card-body -->
+            </div><!-- /.card -->
+        </div><!-- /.col-md-9 -->
+    </div><!-- /.row -->
+</main>
 </main>
 </body>
 </html>

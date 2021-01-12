@@ -1,9 +1,7 @@
 package com.codegym.music.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -13,13 +11,19 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
-    @Size(min = 2, max = 30)
+    @Size(min = 2, max = 30, message = "{label.title.size}")
+    @NotEmpty(message = "{label.title.empty}")
     private String name;
     @Email
+    @NotEmpty
     @Column(nullable = false, unique = true)
     private String email;
+
+    @NotEmpty
     private String password;
+
+    @Transient
+    private String confirmPassword;
     @ManyToMany
     @JoinTable(
             name = "user_role",
@@ -66,5 +70,13 @@ public class User implements Serializable {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }

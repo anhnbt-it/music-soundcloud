@@ -1,16 +1,19 @@
 package com.codegym.music.service;
 
-
 import com.codegym.music.model.Song;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.Optional;
 
-public interface SongService{
+public interface SongService {
     Page<Song> findAll(Integer pageNo, Integer pageSize, String sortBy);
 
     Page<Song> findAllByNameContains(String name, Integer pageNo, Integer pageSize, String sortBy);
+
+    Page<Song> findAll(Pageable pageable);
 
     Iterable<Song> findAll();
 
@@ -20,10 +23,10 @@ public interface SongService{
 
     void deleteById(Long id);
 
+    long count();
+
     Iterable<Song> findAllBySingerId(Long id);
 
     Iterable<Song> findAllBy5BySingerId(Long singer_id,Long id);
-
-    Page<Song> findAll(Pageable pageable);
 }
 

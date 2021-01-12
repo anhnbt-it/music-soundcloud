@@ -33,6 +33,11 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
+    public Page<Song> findAll(Pageable pageable) {
+        return songRepository.findAll(pageable);
+    }
+
+    @Override
     public Iterable<Song> findAll() {
         return songRepository.findAll();
     }
@@ -53,6 +58,11 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
+    public long count() {
+        return songRepository.count();
+    }
+
+    @Override
     public Iterable<Song> findAllBySingerId(Long id) {
         return songRepository.findAllBySingerId(id);
     }
@@ -60,10 +70,5 @@ public class SongServiceImpl implements SongService {
     @Override
     public Iterable<Song> findAllBy5BySingerId(Long singer_id ,Long id){
         return songRepository.findFirst5BySingerIdAndIdNot(singer_id,id);
-    }
-
-    @Override
-    public Page<Song> findAll( Pageable pageable) {
-        return songRepository.findAll(pageable);
     }
 }
