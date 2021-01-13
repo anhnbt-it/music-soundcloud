@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      th:replace="~{fragments/layout-admin :: layout (~{::main}, 'Edit Category')}">
+      th:replace="~{fragments/layout-admin :: layout (~{::main}, ${title})}">
 <head>
     <title>Edit Category</title>
 </head>
@@ -20,7 +20,7 @@
             </nav>
             <div class="card">
                 <div class="card-header">
-                    <span>Edit Category</span>
+                    <span th:text="${title}">Edit Category</span>
                     <a href="/admin/categories" class="btn btn-secondary btn-sm float-right" th:text="#{button.index}">Back</a>
                 </div>
                 <div class="card-body">
@@ -47,7 +47,7 @@
                             <label class="col-form-label col-md-2">Parent:</label>
                             <div class="col-md-10">
                                 <select class="form-control" th:field="*{parent}"
-                                        th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'">
+                                        th:classappend="${#fields.hasErrors('parent')} ? 'is-invalid'">
                                     <option value="">--Parent--</option>
                                     <option th:each="c : ${categories}"
                                             th:value="${c.id}"

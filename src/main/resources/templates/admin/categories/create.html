@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      th:replace="~{fragments/layout-admin :: layout (~{::main}, 'Add New Category')}">
+      th:replace="~{fragments/layout-admin :: layout (~{::main}, ${title})}">
 <head>
     <title>Add New Category :: AnhNBT</title>
 </head>
@@ -19,7 +19,7 @@
             </nav>
             <div class="card">
                 <div class="card-header">
-                    <span>Add New Category</span>
+                    <span th:text="${title}"></span>
                     <a href="/admin/categories" class="btn btn-secondary btn-sm float-right" th:text="#{button.index}">Back</a>
                 </div>
                 <div class="card-body">
@@ -32,20 +32,19 @@
                     </div>
                     <form action="#" th:action="@{/admin/categories/create}" th:object="${category}" method="post">
                         <div class="row form-group">
-                            <label class="col-form-label col-md-2">Name <span class="text-danger">*</span>:</label>
+                            <label class="col-form-label col-md-2" th:text="#{model.category.name}">Name</label>
                             <div class="col-md-10">
                                 <input type="text" class="form-control" th:field="*{name}"
                                        th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'">
-                                <p class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
-                                    Name Error</p>
+                                <p class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
                             </div>
                         </div>
                         <div class="row form-group">
-                            <label class="col-form-label col-md-2">Parent: </label>
+                            <label class="col-form-label col-md-2" th:text="#{model.category.parent}">Parent</label>
                             <div class="col-md-10">
                                 <select class="form-control" th:field="*{parent}"
-                                        th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'">
-                                    <option value="">--Parent--</option>
+                                        th:classappend="${#fields.hasErrors('parent')} ? 'is-invalid'">
+                                    <option value="" th:text="#{form.select.option}">-- Select --</option>
                                     <option th:each="category : ${categories}" th:value="${category.id}"
                                             th:text="${category.name}"></option>
                                 </select>

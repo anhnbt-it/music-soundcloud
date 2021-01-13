@@ -1,13 +1,10 @@
 package com.codegym.music.controller.admin;
 
-import com.codegym.music.model.Blog;
 import com.codegym.music.model.Category;
 import com.codegym.music.service.CategoryService;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -50,6 +47,7 @@ public class CategoryController {
         }
         ModelAndView modelAndView = new ModelAndView("admin/categories/index");
         modelAndView.addObject("categories", categories);
+        modelAndView.addObject("title", messageSource.getMessage("title.categories.index", null, Locale.getDefault()));
         modelAndView.addObject("txtSearch", s);
         return modelAndView;
     }
@@ -58,6 +56,7 @@ public class CategoryController {
     public ModelAndView create() {
         ModelAndView modelAndView = new ModelAndView("admin/categories/create");
         modelAndView.addObject("category", new Category());
+        modelAndView.addObject("title", messageSource.getMessage("title.categories.add", null, Locale.getDefault()));
         return modelAndView;
     }
 
@@ -88,6 +87,7 @@ public class CategoryController {
             return "redirect:/admin/categories";
         }
         model.addAttribute("category", category.get());
+        model.addAttribute("title", messageSource.getMessage("title.categories.edit", new Object[]{category.get().getName()}, Locale.getDefault()));
         return "admin/categories/edit";
     }
 

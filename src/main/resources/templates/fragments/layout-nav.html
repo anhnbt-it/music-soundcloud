@@ -19,44 +19,25 @@
             </div>
         </div><!-- /.card-body -->
     </div><!-- /.card -->
-    <div class="accordion" id="accordionExample">
-        <div class="card">
-            <div class="card-header" id="headingTwo">
-                <h2 class="mb-0">
-                    <a class="btn btn-link btn-block text-left" href="/admin/categories" data-toggle="collapse"
-                       data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"
-                       th:text="#{title.categories}">
-                        Categories
-                    </a>
-                </h2>
+    <div class="card">
+        <div class="card-body">
+            <div class="list-group list-group-flush">
+                <a href="/admin/categories" class="list-group-item list-group-item-action"
+                   th:classappend="${title == 'Categories' ? 'active' : ''}"
+                   th:text="#{title.categories}">Categories</a>
+                <a href="/admin/blogs" class="list-group-item list-group-item-action"
+                   th:classappend="${title == 'Blogs' ? 'active' : ''}"
+                   th:text="#{title.blogs}">Blogs</a>
+                <a href="/admin/albums" class="list-group-item list-group-item-action"
+                   th:classappend="${title == 'Albums' ? 'active' : ''}" th:text="#{title.albums}">Albums</a>
+                <a href="/admin/singers" class="list-group-item list-group-item-action"
+                   th:classappend="${title == 'Singers' ? 'active' : ''}" th:text="#{title.singers}">Singers</a>
+                <a href="/admin/songs" class="list-group-item list-group-item-action"
+                   th:classappend="${title == 'Songs' ? 'active' : ''}"
+                   th:text="#{title.songs}">Songs</a>
             </div>
-            <div id="collapseOne" class="collapse"
-                 th:classappend="${title == 'Categories' ? 'show' : ''}" aria-labelledby="headingTwo"
-                 data-parent="#accordionExample">
-                <div class="card-body">
-                    <div class="list-group list-group-flush">
-                        <a href="/admin/categories" class="list-group-item list-group-item-action"
-                           th:classappend="${title == 'Categories' ? 'active' : ''}">All
-                            Categories</a>
-                        <a href="/admin/categories/create" class="list-group-item list-group-item-action"
-                           th:text="#{button.create}">Add New</a>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.card -->
-        <div class="card">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item"><a href="/admin/blogs" class="list-group-item"
-                                               th:classappend="${title == 'Blogs' ? 'active' : ''}">Blogs</a></li>
-                <li class="list-group-item"><a href="/admin/albums" class="list-group-item"
-                                               th:classappend="${title == 'Albums' ? 'active' : ''}">Albums</a></li>
-                <li class="list-group-item"><a href="/admin/singers" class="list-group-item"
-                                               th:classappend="${title == 'Singers' ? 'active' : ''}">Singers</a></li>
-                <li class="list-group-item"><a href="/admin/songs" class="list-group-item"
-                                               th:classappend="${title == 'Songs' ? 'active' : ''}">Songs</a></li>
-            </ul>
-        </div>
-    </div><!-- /.accordion -->
+        </div><!-- /.card-body -->
+    </div><!-- /.card -->
 </div><!-- /.col-md-3 -->
 <nav aria-label="breadcrumb" th:fragment="breadcrumb(pageURL, pageName)">
     <ol class="breadcrumb">
