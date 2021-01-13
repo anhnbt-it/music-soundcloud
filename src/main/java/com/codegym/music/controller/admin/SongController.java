@@ -40,12 +40,12 @@ public class SongController {
     private CustomFileValidator customFileValidator;
 
     @ModelAttribute("singers")
-    public Iterable<Singer> singers(){
+    public Iterable<Singer> singers() {
         return singerService.findAll();
     }
 
     @ModelAttribute("albums")
-    public Iterable<Album> albums(){
+    public Iterable<Album> albums() {
         return albumService.findAll();
     }
 
@@ -123,7 +123,15 @@ public class SongController {
         String fileName = multipartFile.getOriginalFilename();
         MultipartFile mp3File = song.getMp3Data();
         String mp3Name = mp3File.getOriginalFilename();
-        customFileValidator.validate(song, result);
+        Optional<Song> oldSong = songService.findById(song.getId());
+
+        if (song.getViews() == null) {
+            song.setViews(oldSong.get().getViews());
+        }
+        if (!song.getImageData().isEmpty() && !song.getMp3Data().isEmpty()){
+
+            customFileValidator.validate(song, result);
+        }
         if (result.hasErrors()) {
             return "admin/songs/edit";
         }
@@ -133,9 +141,16 @@ public class SongController {
             storageService.store(mp3File);
             song.setUrl(mp3Name);
         } catch (StorageException e) {
-            song.setImage("150.png");
-            song.setUrl("aaa");
+//            song.setImage("150.png");
+//            song.setUrl("aaa");
+            if (song.getImageData().isEmpty()) {
+                song.setImage(oldSong.get().getImage());
+            }
+            if (song.getMp3Data().isEmpty()) {
+                song.setUrl(oldSong.get().getUrl());
+            }
         }
+
         songService.save(song);
 
         ModelAndView modelAndView = new ModelAndView("admin/songs/edit");

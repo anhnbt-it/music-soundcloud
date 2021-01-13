@@ -51,10 +51,12 @@ public class HotSongController {
 
     @GetMapping("music")
     public String list(Model model){
-        Pageable pageable = PageRequest.of(0,5, Sort.by(Sort.Direction.DESC, "views"));
-        Page<Song> songs = songService.findAll(pageable);
-        model.addAttribute("hot",songs);
+        Pageable pageable = PageRequest.of(0,10, Sort.by(Sort.Direction.DESC, "views"));
+        Page<Song> hotSongs = songService.findAll(pageable);
+        Pageable pageable1 = PageRequest.of(0,5, Sort.by(Sort.Direction.DESC, "views"));
+        Page<Song> songs = songService.findAll(pageable1);
+        model.addAttribute("hot",hotSongs);
         model.addAttribute("bxh",songs);
-        return "web/user/hotSong";
+        return "web/music/hotSong";
     }
 }

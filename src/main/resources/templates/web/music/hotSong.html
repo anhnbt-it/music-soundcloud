@@ -24,7 +24,7 @@
                 <div class="card-header font-weight-bold bg-dark text-white">
                     Album
                 </div>
-                <div class="card-body p-0">
+                    <div class="card-body p-0">
                     <div class="list-group list-group-flush" th:each="album : ${albums}">
                         <a th:href="@{/album/{id}(id=${album.id})}" class="list-group-item list-group-item-action" th:text="${album.name}"></a>
                     </div>
@@ -52,9 +52,12 @@
                         <li class="media border-bottom py-2">
                             <div class="position-relative">
                                 <a th:href="@{/music/{id}(id=${song.id})}">
-                                    <img th:src="'./files/' + ${song.image}" class="mr-3 rounded" width="85" alt="...">
+                                    <img th:src="'/files/' + ${song.image}" class="mr-3 rounded" width="85" alt="...">
+
+
+                                    <small class="position-relative badge badge-danger" style="bottom: -29px;left: -71px;" th:utext="'<i class=\'fas fa-fire-alt\'></i> ' + ${song.views}"></small>
                                 </a>
-                                <img src="./assets/images/playing-s.gif" class="position-absolute" style="bottom: 5px; left: 5px;" alt="Playing">
+                                <img src="/assets/images/playing-s.gif" class="position-absolute" style="bottom: 5px; left: 5px;" alt="Playing">
                             </div>
                             <div class="media-body">
                                 <h5 class="mt-0 mb-1" th:text="${song.name}"></h5>
@@ -82,7 +85,7 @@
                         <li class="media border-bottom py-2">
                             <div class="position-relative">
                                 <a th:href="@{/music/{id}(id=${song.id})}">
-                                    <img th:src="'./files/' + ${song.image}" class="mr-3 rounded" width="85" alt="...">
+                                    <img th:src="'/files/' + ${song.image}" class="mr-3 rounded" width="85" alt="...">
                                 </a>
                                 <small class="position-absolute badge badge-dark text-white" style="bottom: 5px; left: 5px;" th:utext="'<i class=\'fas fa-eye\'></i> ' + ${song.views}">
                                 </small>

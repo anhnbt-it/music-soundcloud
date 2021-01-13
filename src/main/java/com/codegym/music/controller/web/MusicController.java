@@ -64,6 +64,6 @@ public class MusicController {
         model.addAttribute("song",song);
         model.addAttribute("concerning_songs", concerning_song);
         model.addAttribute("bxh",songs);
-        return "web/user/musicInfo";
+        return "web/music/musicInfo";
     }
 }
