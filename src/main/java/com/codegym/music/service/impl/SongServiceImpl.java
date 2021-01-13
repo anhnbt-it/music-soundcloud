@@ -1,5 +1,6 @@
 package com.codegym.music.service.impl;
 
+import com.codegym.music.model.Album;
 import com.codegym.music.model.Category;
 import com.codegym.music.model.Song;
 import com.codegym.music.repository.SongRepository;
@@ -71,4 +72,11 @@ public class SongServiceImpl implements SongService {
     public Iterable<Song> findAllBy5BySingerId(Long singer_id ,Long id){
         return songRepository.findFirst5BySingerIdAndIdNot(singer_id,id);
     }
+
+    @Override
+    public Iterable<Song> findAllByAlbums(Album album) {
+        return songRepository.findAllByAlbums(album);
+    }
+
+
 }

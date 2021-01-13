@@ -1,5 +1,6 @@
 package com.codegym.music.service;
 
+import com.codegym.music.model.Album;
 import com.codegym.music.model.Song;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,5 +29,10 @@ public interface SongService {
     Iterable<Song> findAllBySingerId(Long id);
 
     Iterable<Song> findAllBy5BySingerId(Long singer_id,Long id);
+
+    Iterable<Song> findAllByAlbums(Album album);
+
+
+
 }
 
