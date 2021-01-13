@@ -16,7 +16,7 @@ public class ErrorController {
     @ExceptionHandler(Throwable.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String exception(final Throwable throwable, final Model model) {
-        logger.error("AnhNBT Exception: " + throwable.getMessage());
+        logger.error("AnhNBT Exception: ", throwable);
         String errorMessage = (throwable != null ? throwable.getMessage() : "Unknown error");
         model.addAttribute("errorMessage", errorMessage);
         return "errors/error";

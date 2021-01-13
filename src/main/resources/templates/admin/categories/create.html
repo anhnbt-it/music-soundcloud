@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      th:replace="~{fragments/layout-admin :: layout (~{::main}, 'Categories')}">
+      th:replace="~{fragments/layout-admin :: layout (~{::main}, 'Add New Category')}">
 <head>
     <title>Add New Category :: AnhNBT</title>
 </head>
@@ -10,14 +10,15 @@
     <div class="row">
         <div class="col-md-3" th:replace="~{fragments/layout-nav :: admin}"></div>
         <div class="col-md-9">
-            <nav aria-label="breadcrumb" th:replace="~{fragments/layout-nav :: breadcrumb('/admin/categories', 'Categories')}"/>
+            <nav aria-label="breadcrumb"
+                 th:replace="~{fragments/layout-nav :: breadcrumb('/admin/categories', 'Categories')}"/>
             <div class="card">
                 <div class="card-header">
                     <span>Add New Category</span>
                     <a href="/admin/categories" class="btn btn-link btn-sm float-right">Back</a>
                 </div>
                 <div class="card-body">
-                    <div class="alert alert-success" th:if="${globalMessage}" th:text="${globalMessage}"></div>
+                    <div class="alert alert-success" th:if="${message}" th:text="${message}"></div>
                     <div th:if="${#fields.hasErrors('${category.*}')}" class="alert alert-danger">
                         <ul>
                             <li th:each="err : ${#fields.errors('${category.*}')}" th:text="${err}">Input is incorrect
@@ -30,10 +31,23 @@
                                     class="text-danger">*</span>:</label>
                             <div class="col-md-10">
                                 <input type="text" th:field="*{name}" class="form-control"
-                                       th:classappend="${#fields.hasErrors('name')}? 'is-invalid'">
+                                       th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'">
                                 <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback">
                                     Name
                                     Error</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-form-label col-md-2">Parent: </label>
+                            <div class="col-md-10">
+                                <select th:field="*{parent}" class="form-control"
+                                        th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'">
+                                    <option value="0">--Parent--</option>
+                                    <option th:each="category : ${categories}" th:value="${category.id}"
+                                            th:text="${category.name}"></option>
+                                </select>
+                                <p th:if="${#fields.hasErrors('parent')}" th:errors="*{parent}"
+                                   class="invalid-feedback"></p>
                             </div>
                         </div>
                         <div class="form-group">
