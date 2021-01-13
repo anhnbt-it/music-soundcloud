@@ -5,6 +5,7 @@ import com.codegym.music.model.Category;
 import com.codegym.music.service.CategoryService;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Optional;
 
 @Controller
@@ -24,6 +26,9 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private MessageSource messageSource;
 
     @ModelAttribute("categories")
     public Iterable<Category> categories() {
@@ -64,22 +69,23 @@ public class CategoryController {
         category.setCreatedAt(LocalDateTime.now());
         category.setUpdatedAt(LocalDateTime.now());
         categoryService.save(category);
-        redirect.addFlashAttribute("message", "Created category successfully");
+
+        redirect.addFlashAttribute("message", "<div class=\"alert alert-success\">" + messageSource.getMessage("alert.created", new Object[] {category.getName()}, Locale.getDefault()) + "</div>");
         return "redirect:/admin/categories";
     }
 
     @GetMapping("edit/{id}")
     public String edit(@PathVariable("id") Long id, Model model, RedirectAttributes redirect) {
         if (id == null) {
-            redirect.addFlashAttribute("Category Is NULL.");
-            return "errors/404";
+            redirect.addFlashAttribute("message", "<div class=\"alert alert-danger\">" + messageSource.getMessage("alert.null", null, Locale.getDefault()) + "</div>");
+            return "redirect:/admin/categories";
         }
 
         Optional<Category> category = categoryService.findById(id);
 
         if (!category.isPresent()) {
-            redirect.addFlashAttribute("Category with ID \" + id + \" not found.");
-            return "errors/404";
+            redirect.addFlashAttribute("message", "<div class=\"alert alert-danger\">" + messageSource.getMessage("alert.notfound", new Object[]{id}, Locale.getDefault()) + "</div>");
+            return "redirect:/admin/categories";
         }
         model.addAttribute("category", category.get());
         return "admin/categories/edit";
@@ -96,7 +102,7 @@ public class CategoryController {
         }
         category.setUpdatedAt(LocalDateTime.now());
         categoryService.save(category);
-        redirect.addFlashAttribute("message", "Updated category successfully");
+        redirect.addFlashAttribute("message", "<div class=\"alert alert-success\">" + messageSource.getMessage("alert.updated", new Object[] {category.getName()}, Locale.getDefault()) + "</div>");
         return "redirect:/admin/categories";
     }
 
@@ -104,10 +110,10 @@ public class CategoryController {
     public String delete(@RequestParam("id") Long id, RedirectAttributes redirect) {
         Optional<Category> category = categoryService.findById(id);
         if (category.isPresent()) {
+            redirect.addFlashAttribute("message", "<div class=\"alert alert-success\">" + messageSource.getMessage("alert.deleted", new Object[] {category.get().getName()}, Locale.getDefault()) + "</div>");
             categoryService.deleteById(id);
-            redirect.addFlashAttribute("message", "Successfully deleted a category");
         } else {
-            redirect.addFlashAttribute("message", "Category with ID " + id + " not found.");
+            redirect.addFlashAttribute("message", "<div class=\"alert alert-danger\">" + messageSource.getMessage("alert.notfound", new Object[]{id}, Locale.getDefault()) + "</div>");
         }
         return "redirect:/admin/categories";
     }
