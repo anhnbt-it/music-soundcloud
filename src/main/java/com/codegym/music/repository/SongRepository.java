@@ -20,4 +20,6 @@ public interface SongRepository extends PagingAndSortingRepository<Song, Long> {
 
     Iterable<Song> findAllByAlbums(Album album);
 
+    Iterable<Song> findAllByStatusTrue();
+
 }

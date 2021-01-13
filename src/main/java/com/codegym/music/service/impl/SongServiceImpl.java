@@ -78,5 +78,8 @@ public class SongServiceImpl implements SongService {
         return songRepository.findAllByAlbums(album);
     }
 
-
+    @Override
+    public Iterable<Song> findAllByStatusTrue() {
+        return songRepository.findAllByStatusTrue();
+    }
 }

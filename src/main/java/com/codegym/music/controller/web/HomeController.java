@@ -63,7 +63,7 @@ public class HomeController {
 
     @ModelAttribute("songs")
     public Iterable<Song> songs() {
-        return songService.findAll();
+        return songService.findAllByStatusTrue();
     }
 
     @ModelAttribute("bxh")

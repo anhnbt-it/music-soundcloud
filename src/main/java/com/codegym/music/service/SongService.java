@@ -32,7 +32,7 @@ public interface SongService {
 
     Iterable<Song> findAllByAlbums(Album album);
 
-
+    Iterable<Song> findAllByStatusTrue();
 
 }
 
