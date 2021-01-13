@@ -1,6 +1,7 @@
 package com.codegym.music.service;
 
 import com.codegym.music.model.Album;
+import com.codegym.music.model.Singer;
 import com.codegym.music.model.Song;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,7 +33,15 @@ public interface SongService {
 
     Iterable<Song> findAllByAlbums(Album album);
 
+    Page<Song> findAllByNameContainsOrAlbumsContainsOrSingerContains(String name, Album album, Singer singer, Pageable pageable);
 
+    Page<Song> findAllByNameContainsOrAlbumsContains(String name, Album album, Pageable pageable);
+
+    Page<Song> findAllByNameContainsOrSingerContains(String name, Singer singer, Pageable pageable);
+
+    Page<Song> findAllByNameContains(String name, Pageable pageable);
+
+    Optional<Song> findByNameContains(String name);
 
 }
 

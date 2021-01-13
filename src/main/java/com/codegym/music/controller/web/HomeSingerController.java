@@ -1,7 +1,9 @@
 package com.codegym.music.controller.web;
 
+import com.codegym.music.model.Album;
 import com.codegym.music.model.Singer;
 import com.codegym.music.model.Song;
+import com.codegym.music.service.AlbumService;
 import com.codegym.music.service.SingerService;
 import com.codegym.music.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +27,12 @@ public class HomeSingerController {
     @Autowired
     SongService songService;
 
-    @ModelAttribute("singers")
-    public Iterable<Singer> sings() {
-        return singerService.findAll();
+    @Autowired
+    AlbumService albumService;
+
+    @ModelAttribute("albums")
+    public Iterable<Album> albums() {
+        return albumService.findAll();
     }
 
 
@@ -35,8 +40,10 @@ public class HomeSingerController {
     public String show(@PathVariable Long id, Model model) {
         Singer singers = singerService.findById(id).get();
         Pageable pageable = PageRequest.of(0,5, Sort.by(Sort.Direction.DESC, "views"));
+        Iterable<Album> albums = albumService.findAll();
         Page<Song> songs = songService.findAll(pageable);
         model.addAttribute("singer", singers);
+        model.addAttribute("albums",albums);
         model.addAttribute("songs",songService.findAllBySingerId(id));
         model.addAttribute("bxh",songs);
         return "web/singers/listofsongs";

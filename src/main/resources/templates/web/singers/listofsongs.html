@@ -10,33 +10,13 @@
     <div class="row">
         <!--- menu left -->
         <div class="col-md-3 d-none d-md-block">
-<!--            <div class="card mb-2">-->
-<!--                <div class="card-header font-weight-bold bg-dark text-white">-->
-<!--                    Thể loại âm nhạc-->
-<!--                </div>-->
-<!--                <div class="card-body p-0">-->
-<!--                    <div class="list-group list-group-flush" th:each="category : ${categories}">-->
-<!--                        <a th:href="@{/category/{id}(id=${category.id})}" class="list-group-item list-group-item-action" th:text="${category.name}"></a>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="card">-->
-<!--                <div class="card-header font-weight-bold bg-dark text-white">-->
-<!--                    Album-->
-<!--                </div>-->
-<!--                <div class="card-body p-0">-->
-<!--                    <div class="list-group list-group-flush" th:each="album : ${albums}">-->
-<!--                        <a th:href="@{/album/{id}(id=${album.id})}" class="list-group-item list-group-item-action" th:text="${album.name}"></a>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
             <div class="card">
                 <div class="card-header font-weight-bold bg-dark text-white">
-                    Singer
+                    List of albums
                 </div>
                 <div class="card-body p-0">
-                    <div class="list-group list-group-flush" th:each="singer : ${singers}">
-                        <a th:href="@{/singer/{id}(id=${singer.id})}" class="list-group-item list-group-item-action" th:text="${singer.name}"></a>
+                    <div class="list-group list-group-flush" th:each="album : ${albums}">
+                        <a th:href="@{/album/{id}(id=${album.id})}" class="list-group-item list-group-item-action" th:text="${album.name}"></a>
                     </div>
                 </div>
             </div>
