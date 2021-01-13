@@ -29,41 +29,48 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/hot/music}"><i class="fab fa-hotjar"></i> Bài hát HOT</a>
+                    <a class="nav-link" href="/hot/music" th:utext="'<i class=\'fab fa-hotjar\'></i> ' + #{nav.hot}">Bài hát HOT</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/the-loai"><i class="fas fa-music"></i> Thể loại</a>
+                    <a class="nav-link" href="/category" th:utext="'<i class=\'fas fa-music\'></i> ' + #{nav.categories}">Thể loại</a>
                 </li>
             </ul>
             <form class="form-inline">
                 <input class="form-control mr-sm-2" name="SearchName" type="search" placeholder="Search ..." aria-label="Search">
                 <button class="btn btn-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
             </form>
-            <ul class="nav navbar-nav navbar-right" sec:authorize="isAnonymous()">
-                <li class="nav-item" th:classappend="${menu == 'register' ? 'active' : ''}">
-                    <a class="nav-link" href="/user/register"><i class="fas fa-user"></i>
-                        <span th:text="#{label.registration}">Create account</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/user/login"><i class="fas fa-sign-in-alt"></i> <span
-                            th:text="#{label.login}">Sign in</span></a>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right" th:if="${#authorization.expression('isAuthenticated()')}">
-                <li class="nav-item">
-                    <a href="/user/upload" class="nav-link">Upload</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span sec:authentication="name">User</span>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/user/profile">Profile</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/user/logout">
-                            <i class="fas fa-sign-out-alt"></i>&nbsp;<span th:text="#{label.logout}">Logout</span>
+            <ul class="nav navbar-nav navbar-right">
+                <th:block sec:authorize="isAnonymous()">
+                    <li class="nav-item" th:classappend="${menu == 'register' ? 'active' : ''}">
+                        <a class="nav-link" href="/user/register" th:utext="'<i class=\'fas fa-user\'></i> ' + #{label.registration}">Create account</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/login" th:utext="'<i class=\'fas fa-sign-in-alt\'></i> ' + #{label.login}">Sign in</a>
+                    </li>
+                </th:block>
+                <th:block th:if="${#authorization.expression('isAuthenticated()')}">
+                    <li class="nav-item">
+                        <a href="/user/upload" class="nav-link">Upload</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span sec:authentication="name">User</span>
                         </a>
-                    </div>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/user/profile">Profile</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/user/logout">
+                                <i class="fas fa-sign-out-alt"></i>&nbsp;<span th:text="#{label.logout}">Logout</span>
+                            </a>
+                        </div>
+                    </li>
+                </th:block>
+                <li class="nav-item" th:if="${#strings.equals(#locale, 'en_US')}">
+                    <a href="?locale=vi_VN" class="nav-link"><img src="/assets/images/vn.png" alt="vi_VN"></a>
+                </li>
+                <li class="nav-item" th:if="${#strings.equals(#locale, 'vi_VN')}">
+                    <a href="?locale=en_US" class="nav-link"><img src="/assets/images/us.png" alt="en_US"></a>
                 </li>
             </ul>
         </div>
