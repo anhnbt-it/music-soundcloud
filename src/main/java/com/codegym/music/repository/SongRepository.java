@@ -1,4 +1,5 @@
 package com.codegym.music.repository;
+import com.codegym.music.model.Album;
 import com.codegym.music.model.Category;
 import com.codegym.music.model.Song;
 import org.springframework.data.domain.Page;
@@ -17,5 +18,6 @@ public interface SongRepository extends PagingAndSortingRepository<Song, Long> {
 
     Iterable<Song> findAllBySingerId(Long id);
 
+    Iterable<Song> findAllByAlbums(Album album);
 
 }
