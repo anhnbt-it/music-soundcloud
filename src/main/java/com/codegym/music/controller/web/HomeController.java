@@ -60,10 +60,10 @@ public class HomeController {
         return "errors/403";
     }
 
-//    @ModelAttribute("songs")
-//    public Iterable<Song> songs() {
-//        return songService.findAll();
-//    }
+    @ModelAttribute("songs")
+    public Iterable<Song> songs() {
+        return songService.findAllByStatusTrue();
+    }
 
     @GetMapping("/")
     public ModelAndView listSongs(@RequestParam("SearchName") Optional<String> search, Pageable pageable) {
@@ -98,6 +98,4 @@ public class HomeController {
         Pageable pageable = PageRequest.of(0,5,Sort.by(Sort.Direction.DESC, "views"));
         return songService.findAll(pageable);
     }
-
-
 }

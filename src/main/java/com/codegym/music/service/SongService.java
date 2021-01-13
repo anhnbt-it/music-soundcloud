@@ -42,6 +42,7 @@ public interface SongService {
     Page<Song> findAllByNameContains(String name, Pageable pageable);
 
     Optional<Song> findByNameContains(String name);
+    Iterable<Song> findAllByStatusTrue();
 
 }
 
