@@ -2,6 +2,7 @@ package com.codegym.music.service.impl;
 
 import com.codegym.music.model.Album;
 import com.codegym.music.model.Category;
+import com.codegym.music.model.Singer;
 import com.codegym.music.model.Song;
 import com.codegym.music.repository.SongRepository;
 import com.codegym.music.service.SongService;
@@ -78,5 +79,33 @@ public class SongServiceImpl implements SongService {
         return songRepository.findAllByAlbums(album);
     }
 
+    @Override
+    public Iterable<Song> findAllByStatusTrue() {
+        return songRepository.findAllByStatusTrue();
+    }
+    @Override
+    public Page<Song> findAllByNameContainsOrAlbumsContainsOrSingerContains(String name, Album album, Singer singer, Pageable pageable) {
+        return songRepository.findAllByNameContainsOrAlbumsContainsOrSingerContains(name, album, singer, pageable);
+    }
+
+    @Override
+    public Page<Song> findAllByNameContainsOrAlbumsContains(String name, Album album, Pageable pageable) {
+        return songRepository.findAllByNameContainsOrAlbumsContains(name, album, pageable);
+    }
+
+    @Override
+    public Page<Song> findAllByNameContainsOrSingerContains(String name, Singer singer, Pageable pageable) {
+        return songRepository.findAllByNameContainsOrSingerContains(name, singer, pageable);
+    }
+
+    @Override
+    public Page<Song> findAllByNameContains(String name, Pageable pageable) {
+        return songRepository.findAllByNameContains(name, pageable);
+    }
+
+    @Override
+    public Optional<Song> findByNameContains(String name) {
+        return songRepository.findByNameContains(name);
+    }
 
 }

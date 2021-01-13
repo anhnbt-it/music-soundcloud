@@ -1,11 +1,16 @@
 package com.codegym.music.service.impl;
 
+import com.codegym.music.model.Song;
 import com.codegym.music.model.User;
+import com.codegym.music.repository.SongRepository;
 import com.codegym.music.repository.UserRepository;
+import com.codegym.music.service.SongService;
 import com.codegym.music.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +26,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    SongRepository songRepository;
 
     private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
@@ -64,5 +72,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean existByEmail(String email) {
         return userRepository.existsByEmail(email);
+    }
+
+    @Override
+    public Page<Song> findAll(Pageable pageable) {
+        return songRepository.findAll(pageable);
     }
 }

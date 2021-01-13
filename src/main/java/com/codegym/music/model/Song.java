@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "songs")
@@ -47,6 +48,7 @@ public class Song implements Serializable {
     @Column
     private Integer views;
 
+
     public Integer getViews() {
         return views;
     }
@@ -54,6 +56,8 @@ public class Song implements Serializable {
     public void setViews(Integer views) {
         this.views = views;
     }
+
+
 
     public Song() {
     }
