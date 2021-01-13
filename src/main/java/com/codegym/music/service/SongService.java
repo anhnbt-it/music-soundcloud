@@ -33,11 +33,11 @@ public interface SongService {
 
     Iterable<Song> findAllByAlbums(Album album);
 
-    Page<Song> findAllByNameContainsOrAlbumsContainsOrSingerContains(String name, Album album, Singer singer, Pageable pageable);
+    Page<Song> findAllByNameContainsOrAlbumsContainsSingerNameContains(String name, Album album, String singer, Pageable pageable);
 
     Page<Song> findAllByNameContainsOrAlbumsContains(String name, Album album, Pageable pageable);
 
-    Page<Song> findAllByNameContainsOrSingerContains(String name, Singer singer, Pageable pageable);
+    Page<Song> findAllByNameContainsOrSingerNameContains(String name, String singer, Pageable pageable);
 
     Page<Song> findAllByNameContains(String name, Pageable pageable);
 
