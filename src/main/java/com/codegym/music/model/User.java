@@ -11,15 +11,18 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Size(min = 2, max = 30, message = "{label.title.size}")
-    @NotEmpty(message = "{label.title.empty}")
+
+    @Size(min = 2, max = 30, message = "{user.name.length}")
+    @NotEmpty(message = "{name.required}")
     private String name;
+
     @Email
-    @NotEmpty
+    @NotEmpty(message = "{user.email.empty}")
     @Column(nullable = false, unique = true)
     private String email;
 
-    @NotEmpty
+    @Size(min = 6, max = 25, message = "{user.password.length}")
+    @NotEmpty(message = "{user.password.empty}")
     private String password;
 
     @Transient
