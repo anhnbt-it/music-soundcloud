@@ -1,7 +1,6 @@
 package com.codegym.music.controller.admin;
 
 
-import com.codegym.music.model.Category;
 import com.codegym.music.model.Singer;
 import com.codegym.music.service.SingerService;
 import com.codegym.music.service.SongService;
@@ -9,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
