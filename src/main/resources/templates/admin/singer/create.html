@@ -28,11 +28,9 @@
             </div>
             <div class="alert alert-primary" th:if="${message}" th:text="${message}"></div>
 
-            <form th:action="@{/admin/singers/create}" th:object="${singer}" method="post" >
+            <form th:action="@{/admin/singers/create}" th:object="${singer}" method="post" enctype="multipart/form-data">
                 <div class="row form-group">
-                    <label class="col-form-label col-md-2 " th:text="#{title.singername}">Singer name <span class="text-danger">*
-
-                    </span>:
+                    <label class="col-form-label col-md-2 " th:text="#{title.singername}">Singer name</span>:
 
                     </label>
                     <div class="col-md-10">
@@ -54,6 +52,28 @@
 
                         </textarea>
                         <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="invalid-feedback">Description
+                            Error</p>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <label class="col-form-label col-md-2">Avatar:</label>
+                    <div class="col-md-10">
+                        <input type="file" th:field="*{imageData}" class="form-control"
+                               th:classappend="${#fields.hasErrors('imageData')}? 'is-invalid'">
+                        <input type="hidden" th:field="*{avatarURL}">
+                        <p th:if="${#fields.hasErrors('imageData')}" th:errors="*{imageData}" class="invalid-feedback">Image
+                            Error</p>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <label class="col-form-label col-md-2">Cover:</label>
+                    <div class="col-md-10">
+                        <input type="file" th:field="*{coverFile}" class="form-control"
+                               th:classappend="${#fields.hasErrors('coverFile')}? 'is-invalid'">
+                        <input type="hidden" th:field="*{coverURL}">
+                        <p th:if="${#fields.hasErrors('coverFile')}" th:errors="*{coverFile}" class="invalid-feedback">Image
                             Error</p>
                     </div>
                 </div>

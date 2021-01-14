@@ -24,9 +24,11 @@
         <!-- Moi cap nhat -->
         <div class="col-md-6">
             <div class="card shadow-sm mb-3">
-                <div class="card-header">
-                    <h1 th:text="${singer.name}"></h1>
+                <div class="position-relative">
+                    <img th:src="'/files/' + ${singer.coverURL}" class="card-img-top" alt="...">
+                    <h1 class="position-absolute display-1 text-white font-weight-bold" style="left: 15px; bottom: 15px; text-shadow: 2px 2px 4px #000000;" th:text="${singer.name}"></h1>
                 </div>
+                <div class="card-header">Latest</div>
                 <div class="card-body">
                     <ul class="list-unstyled" th:each="song:${songs}">
                         <li class="media border-bottom py-2">
