@@ -64,21 +64,42 @@
                             <button type="button" th:onclick="|likeBtn(this, ${song.id})|" class="px-2 py-1 btn btn-danger text-white " song-id="1" title="Thích"><i class="far fa-heart"></i><span th:text="${song.getLikeCount()}"></span></button>
                         </li>
                     </ul>
+                    <!-- phan trang-->
+                    <div class="clearfix">
+                        <span th:text="${'Showing ' + songs.numberOfElements + ' to ' + songs.pageable.pageSize + ' of ' + songs.totalElements + ' entries'}"></span>
+                        <nav aria-label="Page navigation" class="float-right">
+                            <ul class="pagination" id="pagination">
+                                <li class="page-item" th:if="${songs.hasPrevious()}">
+                                    <a class="page-link"
+                                       th:href="'?page=' + ${songs.pageable.pageNumber - 1}"
+                                       th:text="#{button.previous}">
+                                        Previous
+                                    </a>
+                                </li>
+                                <li class="page-item" th:if="${songs.hasNext()}">
+                                    <a class="page-link"
+                                       th:href="'?page=' + ${songs.pageable.pageNumber + 1}"
+                                       th:text="#{button.next}">Next
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
-
             </div>
         </div>
+
         <!-- BXH -->
 
         <div class="col-md-3">
             <div class="card">
                 <div class="card-header">
                     Bảng xếp hạng
-                    <button type="button" class="btn btn-success">Việt Nam</button>
-                    <button type="button" class="btn btn-light">US/UK</button>
-                    <button type="button" class="btn btn-light">Châu Á</button>
+                    <button th:onclick="|bxh(1)|" type="button" class="btn btn-light">US/UK</button>
+                    <button th:onclick="|bxh(2)|" type="button" class="btn btn-success">Việt Nam</button>
+                    <button th:onclick="|bxh(3)|" type="button" class="btn btn-light">Châu Á</button>
                 </div>
-                <div class="card-body">
+                <div class="card-body" id="bxhList">
                     <ul class="list-unstyled" th:each="song, rowStat :${bxh}">
                         <li class="media border-bottom py-2">
                             <div class="position-relative">
@@ -99,6 +120,22 @@
             </div>
         </div>
     </div>
+    <script th:inline="javascript">
+        let pageNo = [[${songs.pageable.pageNumber}]];
+        let pageSize = [[${songs.pageable.pageSize}]]
+        $('#confirmModal').on('show.bs.modal', function (event) {
+            let button = $(event.relatedTarget); // Button that triggered the modal
+            let recipient = button.data('whatever'); // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            let modal = $(this);
+            modal.find('.modal-body input').val(recipient)
+        });
+        $('#pageSize').change(function () {
+            pageSize = $(this).val();
+            window.location.href = '/?page=' + pageNo
+        });
+    </script>
 </main>
 </body>
 </html>

@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -39,4 +40,11 @@ public class HomeAlbumcontroller {
 
         return "web/albums/listsongofalbum";
     }
+
+    @ModelAttribute("bxh")
+    public Iterable<Song> bxhVn(){
+        Pageable pageable = PageRequest.of(0,5, Sort.by(Sort.Direction.DESC, "views"));
+        return songService.findAll(pageable);
+    }
+
 }

@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Controller
@@ -79,6 +80,8 @@ public class UserSongController {
             song.setUrl("aaa");
         }
         song.setViews(0);
+        song.setStatus(false);
+        song.setCreate_at(LocalDateTime.now());
         songService.save(song);
         redirect.addFlashAttribute("globalMessage", "Successfully created a new song: " + song.getId());
         return "redirect:/web/user/create";

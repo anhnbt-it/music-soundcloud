@@ -23,6 +23,8 @@ public interface SongRepository extends PagingAndSortingRepository<Song, Long> {
 
     Iterable<Song> findAllByAlbums(Album album);
 
+    Page<Song> findAllByAlbums(Album album,Pageable pageable);
+
     Iterable<Song> findAllByStatusTrue();
 
     Page<Song> findAllByNameContainsOrAlbumsContainsOrSingerContains(String name, Album album, String singer, Pageable pageable);

@@ -8,18 +8,31 @@
 <body>
 <main role="main" class="pb-3">
     <div class="row">
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-header">Play List</div>
-                <div class="card-body p-0">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item" th:each="song : ${songs}">
-                            <a th:href="@{/music/{id}(id=${song.id})}" th:text="${song.name}"></a>
-                        </li>
-                    </ul>
+    <div class="col-md-3">
+        <div class="card mb-2">
+            <div class="card-body p-0">
+                <div class="media p-3">
+                    <img src="/assets/images/1.jpeg" width="90" class="mr-3" alt="Avatar">
+                    <div class="media-body">
+                        <h5 class="mt-0 mb-1" th:text="${user.name}"></h5>
+                        <p><a href="/user/profile"><i class="fas fa-user-circle"></i> Profile</a></p>
+                        <a href="/user/logout">
+                            <i class="fas fa-sign-out-alt"></i>&nbsp;<span th:text="#{logout}">Logout</span>
+                        </a>
+                    </div>
                 </div>
-            </div>
-        </div><!-- /.col-md-3 -->
+            </div><!-- /.card-body -->
+        </div><!-- /.card -->
+        <div class="card">
+            <div class="card-body">
+                <div class="list-group list-group-flush">
+                    <a href="/user/songs" class="list-group-item list-group-item-action"
+                       th:classappend="${title == 'Songs' ? 'active' : ''}"
+                       th:text="#{title.songs}">Songs</a>
+                </div>
+            </div><!-- /.card-body -->
+        </div><!-- /.card -->
+    </div>
         <div class="col-md-9">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">

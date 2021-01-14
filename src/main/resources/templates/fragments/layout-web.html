@@ -32,7 +32,7 @@
                     <a class="nav-link" href="/hot/music" th:utext="'<i class=\'fab fa-hotjar\'></i> ' + #{nav.hot}">Bài hát HOT</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/categories" th:utext="'<i class=\'fas fa-music\'></i> ' + #{nav.categories}">Thể loại</a>
+                    <a class="nav-link" href="/category" th:utext="'<i class=\'fas fa-music\'></i> ' + #{nav.categories}">Thể loại</a>
                 </li>
             </ul>
             <form class="form-inline">
@@ -101,6 +101,7 @@
 </footer>
 <script th:src="@{/assets/js/jquery-3.5.1.min.js}"></script>
 <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets/js/bhx.js}"></script>
 <script th:src="@{/assets/js/like.js}"></script>
 </body>
 </html>
