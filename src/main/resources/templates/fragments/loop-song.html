@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul class="list-unstyled" th:fragment="loop (songs)">
+    <li class="media border-bottom py-2" th:each="song : ${songs}">
+        <div class="position-relative">
+            <a th:href="@{/music/{id}(id=${song.id})}">
+                <img th:src="'./files/' + ${song.image}" class="mr-3 rounded" width="85" alt="...">
+            </a>
+            <img src="./assets/images/playing-s.gif" class="position-absolute" style="bottom: 5px; left: 5px;"
+                 alt="Playing">
+        </div>
+        <div class="media-body">
+            <h5><a class="mt-0 mb-1" th:href="@{/music/{id}(id=${song.id})}" th:text="${song.name}"></a></h5>
+            <a th:href="@{/singer/{id}(id=${song.singer.id})}" th:text="${song.singer.name}"></a>
+        </div>
+        <a th:href="@{/music/{id}(id=${song.id})}" class="px-2 py-1 mr-2 bg-success text-white" title="Play"><i
+                class="fas fa-play"></i></a>
+        <a href="#" class="px-2 py-1 bg-danger text-white" song-id="1" title="Thích"><i class="far fa-heart"></i></a>
+    </li>
+</ul>
+</body>
+</html>
