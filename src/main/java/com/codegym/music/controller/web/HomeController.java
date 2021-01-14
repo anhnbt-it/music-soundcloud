@@ -4,25 +4,21 @@ import com.codegym.music.model.Album;
 import com.codegym.music.model.Category;
 import com.codegym.music.model.Song;
 import com.codegym.music.model.Singer;
-import com.codegym.music.model.Song;
 import com.codegym.music.service.AlbumService;
 import com.codegym.music.service.CategoryService;
 import com.codegym.music.service.SongService;
 import com.codegym.music.service.SingerService;
-import com.codegym.music.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -75,11 +71,11 @@ public class HomeController {
 
             if (album.isPresent() && singer.isPresent()) {
                 // Kiểm tra xem nếu Parameter search được truyền vào thì gọi service có 2 tham số
-                songs = songService.findAllByNameContainsOrAlbumsContainsOrSingerContains(search.get(), album.get(), singer.get(), pageable);
+                songs = songService.findAllByNameContainsOrAlbumsContainsSingerNameContains(search.get(), album.get(), search.get(), pageable);
             } else if (album.isPresent()) {
                 songs = songService.findAllByNameContainsOrAlbumsContains(search.get(), album.get(), pageable);
             } else if (singer.isPresent()) {
-                songs = songService.findAllByNameContainsOrSingerContains(search.get(), singer.get(), pageable);
+                songs = songService.findAllByNameContainsOrSingerNameContains(search.get(), search.get(), pageable);
             } else {
                 songs = songService.findAllByNameContains(search.get(), pageable);
             }

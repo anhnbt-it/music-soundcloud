@@ -21,7 +21,6 @@ public class User implements Serializable {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Size(min = 6, max = 25, message = "{user.password.length}")
     @NotEmpty(message = "{user.password.empty}")
     private String password;
 

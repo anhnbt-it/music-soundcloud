@@ -25,11 +25,11 @@ public interface SongRepository extends PagingAndSortingRepository<Song, Long> {
 
     Iterable<Song> findAllByStatusTrue();
 
-    Page<Song> findAllByNameContainsOrAlbumsContainsOrSingerContains(String name, Album album, Singer singer, Pageable pageable);
+    Page<Song> findAllByNameContainsOrAlbumsContainsOrSingerContains(String name, Album album, String singer, Pageable pageable);
 
     Page<Song> findAllByNameContainsOrAlbumsContains(String name, Album album, Pageable pageable);
 
-    Page<Song> findAllByNameContainsOrSingerContains(String name, Singer singer, Pageable pageable);
+    Page<Song> findAllByNameContainsOrSingerNameContains(String name, String singer, Pageable pageable);
 
     Optional<Song> findByNameContains(String name);
 

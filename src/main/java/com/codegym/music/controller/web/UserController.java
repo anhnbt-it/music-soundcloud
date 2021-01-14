@@ -1,21 +1,12 @@
 package com.codegym.music.controller.web;
 
-import com.codegym.music.model.Album;
-import com.codegym.music.model.Singer;
 import com.codegym.music.model.Song;
 import com.codegym.music.model.User;
 import com.codegym.music.repository.SongRepository;
-import com.codegym.music.service.AlbumService;
-import com.codegym.music.service.SingerService;
-import com.codegym.music.service.SongService;
 import com.codegym.music.service.UserService;
-import com.codegym.music.storage.StorageException;
-import com.codegym.music.storage.StorageService;
-import com.codegym.music.validator.CustomFileValidator;
 import com.codegym.music.validator.RegisterValidator;
 import com.codegym.music.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,14 +16,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
