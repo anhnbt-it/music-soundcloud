@@ -16,7 +16,7 @@
                 <div class="card-body">
                     <div class="alert alert-info" th:if="${#lists.isEmpty(categories)}">No data.</div>
                     <ul class="list-group list-group-flush" th:each="category : ${categories}">
-                        <a class="media border-bottom py-2" th:href="@{/categories/{id}(id=${category.id})}" th:text="${category.name}"></a>
+                        <a class="media border-bottom py-2" th:href="@{/category/details(id=${category.id})}" th:text="${category.name}"></a>
                     </ul>
                 </div><!-- /.card-body -->
             </div><!-- /.card -->
