@@ -8,7 +8,9 @@ import com.codegym.music.storage.StorageException;
 import com.codegym.music.storage.StorageService;
 import com.codegym.music.validator.CustomFileValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +21,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Optional;
 
 @Controller
@@ -36,8 +40,12 @@ public class SongController {
 
     @Autowired
     private AlbumService albumService;
+
     @Autowired
     private CustomFileValidator customFileValidator;
+
+    @Autowired
+    private MessageSource messageSource;
 
     @ModelAttribute("singers")
     public Iterable<Singer> singers() {
@@ -53,6 +61,8 @@ public class SongController {
     public ModelAndView showCreateForm() {
         ModelAndView modelAndView = new ModelAndView("admin/songs/create");
         modelAndView.addObject("song", new Song());
+        modelAndView.addObject("title", messageSource.getMessage("title.songs.add", null, Locale.getDefault()));
+
         return modelAndView;
     }
 
@@ -76,7 +86,9 @@ public class SongController {
             song.setUrl("aaa");
         }
         song.setViews(0);
+        song.setCreate_at(LocalDateTime.now());
         songService.save(song);
+        redirect.addFlashAttribute("message", "<div class=\"alert alert-success\">" + messageSource.getMessage("alert.created", new Object[]{song.getName()}, Locale.getDefault()) + "</div>");
         redirect.addFlashAttribute("globalMessage", "Successfully created a new song: " + song.getId());
         return "redirect:/admin/songs/create";
     }
@@ -85,24 +97,34 @@ public class SongController {
     public ModelAndView index(@RequestParam("s") Optional<String> s,
                               @RequestParam(defaultValue = "0") Integer pageNo,
                               @RequestParam(defaultValue = "10") Integer pageSize,
-                              @RequestParam(defaultValue = "id") String sortBy) {
+                              @RequestParam(defaultValue = "id") String sortBy, @RequestParam("SearchName") Optional<String> search, Pageable pageable) {
         Page<Song> songs;
-        if (s.isPresent()) {
+        ModelAndView modelAndView = new ModelAndView("admin/songs/list");
+        if (s.isPresent() && search.isPresent()) {
             songs = songService.findAllByNameContains(s.get(), pageNo, pageSize, sortBy);
+            Optional<Song> song = songService.findByNameContains(search.get());
+            if (song.isPresent()){
+                songs = songService.findAllByNameContains(search.get(),pageable);
+            }
         } else {
             songs = songService.findAll(pageNo, pageSize, sortBy);
         }
-        ModelAndView modelAndView = new ModelAndView("admin/songs/list");
         modelAndView.addObject("songs", songs);
         modelAndView.addObject("txtSearch", s);
+        modelAndView.addObject("title", messageSource.getMessage("title.songs.list", null, Locale.getDefault()));
+
         return modelAndView;
     }
 
     @GetMapping("{id}")
-    public String show(@PathVariable Long id, Model model) {
+    public ModelAndView show(@PathVariable Long id, Model model) {
+        ModelAndView modelAndView = new ModelAndView("admin/songs/view");
         Song song = songService.findById(id).get();
-        model.addAttribute("song", song);
-        return "admin/songs/view";
+        modelAndView.addObject("song",song);
+        modelAndView.addObject("title", messageSource.getMessage("title.songs.view", null, Locale.getDefault()));
+
+        return modelAndView;
+
     }
 
     @GetMapping("edit/{id}")
@@ -110,6 +132,7 @@ public class SongController {
         Optional<Song> song = songService.findById(id);
         if (song.isPresent()) {
             model.addAttribute("song", song.get());
+            model.addAttribute("title", messageSource.getMessage("title.songs.edit", new Object[]{song.get().getName()}, Locale.getDefault()));
             return "admin/songs/edit";
         } else {
             redirect.addFlashAttribute("message", "Song not found!");
@@ -124,11 +147,10 @@ public class SongController {
         MultipartFile mp3File = song.getMp3Data();
         String mp3Name = mp3File.getOriginalFilename();
         Optional<Song> oldSong = songService.findById(song.getId());
-
         if (song.getViews() == null) {
             song.setViews(oldSong.get().getViews());
         }
-        if (!song.getImageData().isEmpty() && !song.getMp3Data().isEmpty()){
+        if (!song.getImageData().isEmpty() && !song.getMp3Data().isEmpty()) {
 
             customFileValidator.validate(song, result);
         }
@@ -150,9 +172,7 @@ public class SongController {
                 song.setUrl(oldSong.get().getUrl());
             }
         }
-
         songService.save(song);
-
         ModelAndView modelAndView = new ModelAndView("admin/songs/edit");
         modelAndView.addObject("song", song);
         modelAndView.addObject("message", "Song updated sucessfully");

@@ -12,9 +12,11 @@
                 <img src="/assets/images/1.jpeg" width="90" class="mr-3" alt="Avatar">
                 <div class="media-body">
                     <h5 class="mt-0 mb-1">Admin</h5>
-                    <p><a href="/user/profile"><i class="fas fa-user-circle"></i> Profile</a></p>
+                    <a href="/user/profile">
+                        <i class="fas fa-user-circle"></i> <span th:text="#{profile}"></span>
+                    </a><br>
                     <a href="/user/logout">
-                        <i class="fas fa-sign-out-alt"></i>&nbsp;<span th:text="#{label.logout}">Logout</span>
+                        <i class="fas fa-sign-out-alt"></i>&nbsp;<span th:text="#{logout}"></span>
                     </a>
                 </div>
             </div>

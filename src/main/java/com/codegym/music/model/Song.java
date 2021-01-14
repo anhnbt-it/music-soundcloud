@@ -5,8 +5,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.List;
 
 @Entity
 @Table(name = "songs")
@@ -43,7 +43,7 @@ public class Song implements Serializable {
     private boolean status;
 
     @Column(name = "create_at",nullable = false)
-    private String create_at;
+    private LocalDateTime create_at;
 
     @Column
     private Integer views;
@@ -132,11 +132,11 @@ public class Song implements Serializable {
         this.status = status;
     }
 
-    public String getCreate_at() {
+    public LocalDateTime getCreate_at() {
         return create_at;
     }
 
-    public void setCreate_at(String create_at) {
+    public void setCreate_at(LocalDateTime create_at) {
         this.create_at = create_at;
     }
 
