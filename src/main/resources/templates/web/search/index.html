@@ -27,7 +27,6 @@
                 </div>
                 <div class="card-body">
                     <div class="alert alert-info" th:if="${title.isPresent()}" th:utext="'Từ khoá <strong class=\'text-danger\'>' + ${title.get()} + '</strong> có ' + ${songs.totalElements} + ' kết quả'"></div>
-                    <div class="alert alert-info" th:utext="'Từ khoá <strong class=\'text-danger\'>' + ${#request.getParameter('q')} + '</strong> có ' + ${songs.totalElements} + ' kết quả'" th:unless="${#request.getParameter('q') == null}"></div>
                     <ul class="list-unstyled" th:replace="fragments/loop-song :: loop (${songs})"></ul>
                 </div>
 
