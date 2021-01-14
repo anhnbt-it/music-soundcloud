@@ -6,61 +6,41 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.List;
 
 @Entity
 @Table(name = "songs")
 public class Song implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinTable(name = "song_album",
-    joinColumns = @JoinColumn(name = "song_id"),
-    inverseJoinColumns = @JoinColumn(name = "album_id"))
-    private Collection<Album> albums;
-
-    @ManyToOne
-    @JoinColumn(name = "singer_id")
-    private Singer singer;
-
-    @Column(name = "name",nullable = false)
     @NotEmpty
     private String name;
 
-    @Column(name = "lyric",nullable = false,columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String lyric;
 
     @Basic(optional = false)
     private String image;
 
-    @Column(name = "url",nullable = false)
     private String url;
-
-    @Column(name = "status",nullable = false)
     private boolean status;
 
-    @Column(name = "create_at",nullable = false)
-    private String create_at;
+    @Column(name = "create_at", nullable = false)
+    private String createAt;
 
-    @Column
     private Integer views;
+    private Integer likeCount;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "song_album",
+            joinColumns = @JoinColumn(name = "song_id"),
+            inverseJoinColumns = @JoinColumn(name = "album_id"))
+    private Collection<Album> albums;
 
-    public Integer getViews() {
-        return views;
-    }
-
-    public void setViews(Integer views) {
-        this.views = views;
-    }
-
-
-
-    public Song() {
-    }
+    @ManyToOne
+    @JoinColumn(name = "singer_id")
+    private Singer singer;
 
     @Transient
     private MultipartFile imageData;
@@ -74,22 +54,6 @@ public class Song implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Collection<Album> getAlbums() {
-        return albums;
-    }
-
-    public void setAlbums(Collection<Album> albums) {
-        this.albums = albums;
-    }
-
-    public Singer getSinger() {
-        return singer;
-    }
-
-    public void setSinger(Singer singer) {
-        this.singer = singer;
     }
 
     public String getName() {
@@ -132,12 +96,44 @@ public class Song implements Serializable {
         this.status = status;
     }
 
-    public String getCreate_at() {
-        return create_at;
+    public String getCreateAt() {
+        return createAt;
     }
 
-    public void setCreate_at(String create_at) {
-        this.create_at = create_at;
+    public void setCreateAt(String createAt) {
+        this.createAt = createAt;
+    }
+
+    public Integer getViews() {
+        return views;
+    }
+
+    public void setViews(Integer views) {
+        this.views = views;
+    }
+
+    public Integer getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(Integer like) {
+        this.likeCount = like;
+    }
+
+    public Collection<Album> getAlbums() {
+        return albums;
+    }
+
+    public void setAlbums(Collection<Album> albums) {
+        this.albums = albums;
+    }
+
+    public Singer getSinger() {
+        return singer;
+    }
+
+    public void setSinger(Singer singer) {
+        this.singer = singer;
     }
 
     public MultipartFile getImageData() {

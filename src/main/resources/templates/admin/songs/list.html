@@ -78,7 +78,7 @@
                             <td th:utext="${song.singer.name}"></td>
                             <td th:text="${song.albums}"></td>
                             <td th:text="${song.status}"></td>
-                            <td th:text="${{song.create_at}}"></td>
+                            <td th:text="${{song.createAt}}"></td>
                             <td>
                                 <a th:href="@{/admin/songs/edit/{id}(id=${song.id})}" class="btn btn-success btn-sm">
                                     <i class="fas fa-edit"></i>

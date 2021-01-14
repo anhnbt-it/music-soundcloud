@@ -2,20 +2,33 @@ package com.codegym.music.controller.web;
 
 
 import com.codegym.music.model.Song;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import com.codegym.music.service.SongService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("like")
 public class LikeController {
+
+    @Autowired
+    SongService songService;
+
     @GetMapping
-    public String like(@RequestParam("id") Long id){
+    public Integer like(@RequestParam("id") Long id) {
+       // xuất hiện errol vì khai báo tên thuộc tính trùng từ khóa
+        Optional<Song> song = songService.findById(id);
 
-        return "hoang";
-
+        if (song.isPresent()) {
+            song.get().setLikeCount(song.get().getLikeCount() + 1);
+            songService.save(song.get());
+        } else {
+            return 0;
+        }
+        return song.get().getLikeCount();
     }
 }
