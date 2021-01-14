@@ -72,7 +72,7 @@ public class MusicController {
         song.get().setViews(song.get().getViews() + 1);
         songService.save(song.get());
 
-        model.addAttribute("song", song);
+        model.addAttribute("song", song.get());
         model.addAttribute("concerning_songs", concerning_song);
         model.addAttribute("bxh", songs);
         return "web/music/musicInfo";
