@@ -10,10 +10,6 @@ import com.codegym.music.storage.StorageException;
 import com.codegym.music.storage.StorageService;
 import com.codegym.music.validator.CustomFileValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +19,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("user/songs")
@@ -81,7 +76,7 @@ public class UserSongController {
         }
         song.setViews(0);
         song.setStatus(false);
-        song.setCreate_at(LocalDateTime.now());
+        song.setCreateAt(LocalDateTime.now());
         songService.save(song);
         redirect.addFlashAttribute("globalMessage", "Successfully created a new song: " + song.getId());
         return "redirect:/web/user/create";

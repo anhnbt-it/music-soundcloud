@@ -58,7 +58,7 @@
                                 </th:block>
                             </td>
                             <td th:text="${song.status} ? #{true} : #{false}" th:class="${song.status} ? 'text-success' : 'text-danger'"></td>
-                            <td th:text="${{song.create_at}}"></td>
+                            <td th:text="${{song.createAt}}"></td>
                             <td>
                                 <a th:href="@{/admin/songs/edit/{id}(id=${song.id})}" class="btn btn-success btn-sm">
                                     <i class="fas fa-edit"></i>

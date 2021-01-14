@@ -86,7 +86,8 @@ public class SongController {
             song.setUrl("aaa");
         }
         song.setViews(0);
-        song.setCreate_at(LocalDateTime.now());
+        song.setLikeCount(0);
+        song.setCreateAt(LocalDateTime.now());
         songService.save(song);
         redirect.addFlashAttribute("message", "<div class=\"alert alert-success\">" + messageSource.getMessage("alert.created", new Object[]{song.getName()}, Locale.getDefault()) + "</div>");
         redirect.addFlashAttribute("globalMessage", "Successfully created a new song: " + song.getId());

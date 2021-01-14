@@ -23,7 +23,8 @@
         <div class="card-body">
             <form th:action="@{/admin/singers/edit-singer}" th:object="${singer}" method="post"
                   enctype="multipart/form-data">
-                <input type="hidden" name="id" th:field="*{id}">
+                <input type="hidden" th:field="*{id}">
+                <input type="hidden" th:field="*{createdAt}">
                 <div class="row form-group">
                     <label class="col-form-label col-md-2">Singer Name<span
                             class="text-danger">*</span>:</label>

@@ -1,7 +1,5 @@
 package com.codegym.music.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -9,7 +7,6 @@ import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.List;
 
 @Entity
 @Table(name = "songs")
@@ -45,8 +42,8 @@ public class Song implements Serializable {
     @Column(name = "status",nullable = false)
     private boolean status;
 
-    @Column(name = "create_at",nullable = false)
-    private LocalDateTime create_at;
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime createAt;
 
     @Column
     private Integer views;
@@ -145,12 +142,12 @@ public class Song implements Serializable {
         this.status = status;
     }
 
-    public LocalDateTime getCreate_at() {
-        return create_at;
+    public LocalDateTime getCreateAt() {
+        return createAt;
     }
 
-    public void setCreate_at(LocalDateTime create_at) {
-        this.create_at = create_at;
+    public void setCreateAt(LocalDateTime create_at) {
+        this.createAt = create_at;
     }
 
     public MultipartFile getImageData() {
