@@ -116,6 +116,7 @@ public class AlbumController {
 
         redirect.addFlashAttribute("globalMessage", "Successfully updated new album: " + album1.getId());
         return "redirect:/admin/albums";
+
     }
 
     @PostMapping("delete")

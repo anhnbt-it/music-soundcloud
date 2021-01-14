@@ -5,6 +5,7 @@ import com.codegym.music.model.Song;
 import com.codegym.music.service.AlbumService;
 import com.codegym.music.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -27,8 +28,15 @@ public class HomeAlbumcontroller {
     @GetMapping("{id}")
     public String show(@PathVariable Long id , Model model){
         Album album = albumService.findById(id).get();
-        model.addAttribute("album",album);
+        model.addAttribute("albums",album);
         model.addAttribute("songs",songService.findAllByAlbums(album));
+        Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "views"));
+        // Lấy ra 5 bài hát nhiều view nhất trả vào list BXH
+        Page<Song> songs = songService.findAll(pageable);
+
+
+
+        model.addAttribute("bxh", songs);
 
         return "web/albums/listsongofalbum";
     }
