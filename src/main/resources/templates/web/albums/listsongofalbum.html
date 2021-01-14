@@ -78,9 +78,17 @@
             <div class="card">
                 <div class="card-header">
                     Bảng xếp hạng
-                    <button type="button" class="btn btn-success">Việt Nam</button>
-                    <button type="button" class="btn btn-light">US/UK</button>
-                    <button type="button" class="btn btn-light">Châu Á</button>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons" id="btn-group">
+                        <button th:onclick="|bxh(1,this)|" type="button" class="btn btn-light active" data-toggle="button"
+                                aria-pressed="false">US/UK
+                        </button>
+                        <button th:onclick="|bxh(2,this)|" type="button" class="btn btn-light" data-toggle="button"
+                                aria-pressed="false">Việt Nam
+                        </button>
+                        <button th:onclick="|bxh(3,this)|" type="button" class="btn btn-light" data-toggle="button"
+                                aria-pressed="false">Châu Á
+                        </button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <ul class="list-unstyled" th:each="song, rowStat :${bxh}">

@@ -16,7 +16,8 @@
                 </div>
                 <div class="card-body p-0">
                     <div class="list-group list-group-flush" th:each="category : ${categories}">
-                        <a th:href="@{/category/{id}(id=${category.id})}" class="list-group-item list-group-item-action" th:text="${category.name}"></a>
+                        <a th:href="@{/category/{id}(id=${category.id})}" class="list-group-item list-group-item-action"
+                           th:text="${category.name}"></a>
                     </div>
                 </div>
             </div>
@@ -26,7 +27,8 @@
                 </div>
                 <div class="card-body p-0">
                     <div class="list-group list-group-flush" th:each="album : ${albums}">
-                        <a th:href="@{/album/{id}(id=${album.id})}" class="list-group-item list-group-item-action" th:text="${album.name}"></a>
+                        <a th:href="@{/album/{id}(id=${album.id})}" class="list-group-item list-group-item-action"
+                           th:text="${album.name}"></a>
                     </div>
                 </div>
             </div>
@@ -36,7 +38,8 @@
                 </div>
                 <div class="card-body p-0">
                     <div class="list-group list-group-flush" th:each="singer : ${singers}">
-                        <a th:href="@{/singer/{id}(id=${singer.id})}" class="list-group-item list-group-item-action" th:text="${singer.name}"></a>
+                        <a th:href="@{/singer/{id}(id=${singer.id})}" class="list-group-item list-group-item-action"
+                           th:text="${singer.name}"></a>
                     </div>
                 </div>
             </div>
@@ -54,14 +57,18 @@
                                 <a th:href="@{/music/{id}(id=${song.id})}">
                                     <img th:src="'./files/' + ${song.image}" class="mr-3 rounded" width="85" alt="...">
                                 </a>
-                                <img src="./assets/images/playing-s.gif" class="position-absolute" style="bottom: 5px; left: 5px;" alt="Playing">
+                                <img src="./assets/images/playing-s.gif" class="position-absolute"
+                                     style="bottom: 5px; left: 5px;" alt="Playing">
                             </div>
                             <div class="media-body">
                                 <h5 class="mt-0 mb-1" th:text="${song.name}"></h5>
                                 <small th:text="${song.singer.name}"></small>
                             </div>
-                            <a th:href="@{/music/{id}(id=${song.id})}" class="px-2 py-1 mr-2 bg-success text-white" title="Play"><i class="fas fa-play"></i></a>
-                            <button type="button" th:onclick="|likeBtn(this, ${song.id})|" class="px-2 py-1 btn btn-danger text-white " song-id="1" title="Thích"><i class="far fa-heart"></i><span th:text="${song.getLikeCount()}"></span></button>
+                            <a th:href="@{/music/{id}(id=${song.id})}" class="px-2 py-1 mr-2 bg-success text-white"
+                               title="Play"><i class="fas fa-play"></i></a>
+                            <a th:onclick="|likeBtn(this, ${song.id})|" class="px-2 py-1 btn btn-danger text-white "
+                               song-id="1" title="Thích"><i class="fas fa-heart"></i><span
+                                    th:text="${song.getLikeCount()}"></span></a>
                         </li>
                     </ul>
                     <!-- phan trang-->
@@ -95,9 +102,17 @@
             <div class="card">
                 <div class="card-header">
                     Bảng xếp hạng
-                    <button th:onclick="|bxh(1)|" type="button" class="btn btn-light">US/UK</button>
-                    <button th:onclick="|bxh(2)|" type="button" class="btn btn-success">Việt Nam</button>
-                    <button th:onclick="|bxh(3)|" type="button" class="btn btn-light">Châu Á</button>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons" id="btn-group">
+                        <button th:onclick="|bxh(1,this)|" type="button" class="btn btn-light active" data-toggle="button"
+                                aria-pressed="false">US/UK
+                        </button>
+                        <button th:onclick="|bxh(2,this)|" type="button" class="btn btn-light" data-toggle="button"
+                                aria-pressed="false">Việt Nam
+                        </button>
+                        <button th:onclick="|bxh(3,this)|" type="button" class="btn btn-light" data-toggle="button"
+                                aria-pressed="false">Châu Á
+                        </button>
+                    </div>
                 </div>
                 <div class="card-body" id="bxhList">
                     <ul class="list-unstyled" th:each="song, rowStat :${bxh}">
@@ -106,7 +121,9 @@
                                 <a th:href="@{/music/{id}(id=${song.id})}">
                                     <img th:src="'./files/' + ${song.image}" class="mr-3 rounded" width="85" alt="...">
                                 </a>
-                                <small class="position-absolute badge badge-dark text-white" style="bottom: 5px; left: 5px;" th:utext="'<i class=\'fas fa-eye\'></i> ' + ${song.views}">
+                                <small class="position-absolute badge badge-dark text-white"
+                                       style="bottom: 5px; left: 5px;"
+                                       th:utext="'<i class=\'fas fa-eye\'></i> ' + ${song.views}">
                                 </small>
                             </div>
                             <div class="media-body">
@@ -122,14 +139,14 @@
     </div>
     <script th:inline="javascript">
         let pageNo = [[${songs.pageable.pageNumber}]];
-        let pageSize = [[${songs.pageable.pageSize}]]
+        let pageSize = [[${songs.pageable.pageSize}]];
         $('#confirmModal').on('show.bs.modal', function (event) {
             let button = $(event.relatedTarget); // Button that triggered the modal
             let recipient = button.data('whatever'); // Extract info from data-* attributes
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             let modal = $(this);
-            modal.find('.modal-body input').val(recipient)
+            modal.find('.modal-body input').val(recipient);
         });
         $('#pageSize').change(function () {
             pageSize = $(this).val();
