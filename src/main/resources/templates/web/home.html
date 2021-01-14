@@ -64,10 +64,31 @@
                             <button type="button" th:onclick="|likeBtn(this, ${song.id})|" class="px-2 py-1 bg-danger text-white" song-id="1" title="Thích"><i class="far fa-heart"></i><span th:text="${song.getLikeCount()}"></span></button>
                         </li>
                     </ul>
+                    <!-- phan trang-->
+                    <div class="clearfix">
+                        <span th:text="${'Showing ' + songs.numberOfElements + ' to ' + songs.pageable.pageSize + ' of ' + songs.totalElements + ' entries'}"></span>
+                        <nav aria-label="Page navigation" class="float-right">
+                            <ul class="pagination" id="pagination">
+                                <li class="page-item" th:if="${songs.hasPrevious()}">
+                                    <a class="page-link"
+                                       th:href="'?page=' + ${songs.pageable.pageNumber - 1}"
+                                       th:text="#{button.previous}">
+                                        Previous
+                                    </a>
+                                </li>
+                                <li class="page-item" th:if="${songs.hasNext()}">
+                                    <a class="page-link"
+                                       th:href="'?page=' + ${songs.pageable.pageNumber + 1}"
+                                       th:text="#{button.next}">Next
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
-
             </div>
         </div>
+
         <!-- BXH -->
         <div class="col-md-3">
             <div class="card">
@@ -98,6 +119,22 @@
             </div>
         </div>
     </div>
+    <script th:inline="javascript">
+        let pageNo = [[${songs.pageable.pageNumber}]];
+        let pageSize = [[${songs.pageable.pageSize}]]
+        $('#confirmModal').on('show.bs.modal', function (event) {
+            let button = $(event.relatedTarget); // Button that triggered the modal
+            let recipient = button.data('whatever'); // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            let modal = $(this);
+            modal.find('.modal-body input').val(recipient)
+        });
+        $('#pageSize').change(function () {
+            pageSize = $(this).val();
+            window.location.href = '/?page=' + pageNo
+        });
+    </script>
 </main>
 </body>
 </html>

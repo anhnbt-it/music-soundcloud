@@ -51,6 +51,16 @@ public class Song implements Serializable {
     @Column
     private Integer views;
 
+    @Column
+    private Integer likeCount;
+
+    public Integer getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(Integer likeCount) {
+        this.likeCount = likeCount;
+    }
 
     public Integer getViews() {
         return views;

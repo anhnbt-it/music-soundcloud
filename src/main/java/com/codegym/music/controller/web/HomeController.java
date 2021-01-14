@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -62,7 +63,7 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public ModelAndView listSongs(@RequestParam("SearchName") Optional<String> search, Pageable pageable) {
+    public ModelAndView listSongs(@RequestParam("SearchName") Optional<String> search, @PageableDefault(size = 10) Pageable pageable) {
         Page<Song> songs; // Tạo đối tượng lưu Page songs;
         ModelAndView modelAndView = new ModelAndView("web/home");
         if (search.isPresent()) {
