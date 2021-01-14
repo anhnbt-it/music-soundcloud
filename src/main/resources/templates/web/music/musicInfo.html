@@ -56,18 +56,32 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-12">
-                            <audio controls>
+                        <div class="col-md-12 clearfix mb-2">
+                            <audio controls class="float-left">
                                 <source th:src="'/files/' + ${song.url}" src="horse.ogg" type="audio/mpeg">
                                 Your browser does not support the audio element.
                             </audio>
+
+                            <!-- Button Download nếu chưa đăng nhập -->
+                            <button type="button"
+                                    sec:authorize="isAnonymous()" th:title="#{label.login.required(${song.name})}"
+                                    class="btn btn-danger float-right"
+                                    data-toggle="modal"
+                                    data-target="#LoginModal"><i class="fas fa-download"></i> Download
+                            </button>
+                            <!-- Button Download nếu đã đăng nhập -->
+                            <a th:if="${#authorization.expression('isAuthenticated()')}"
+                               th:href="'/files/' + ${song.url}" class="btn btn-danger float-right"><i
+                                    class="fas fa-download"></i> Download</a>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">
-                            <img th:src="'/files/' + ${song.image}" class="mx-auto d-block img-fluid mb-2" th:alt="${song.name}">
+                            <img th:src="'/files/' + ${song.image}" class="mx-auto d-block img-fluid mb-2"
+                                 th:alt="${song.name}">
                             <h5 class="mt-0 mb-1" th:text="${song.name}"></h5>
-                            <p><span th:text="'Ca sĩ:'"></span> <a th:href="@{/singer/{id}(id=${song.singer.id})}" th:text="${song.singer.name}"></a></p>
+                            <p><span th:text="'Ca sĩ:'"></span> <a th:href="@{/singer/{id}(id=${song.singer.id})}"
+                                                                   th:text="${song.singer.name}"></a></p>
                         </div>
                         <div class="col-md-8">
                             <h2 class="bg-dark text-white p-2"><i class="fas fa-music"></i> Lyric</h2>
@@ -80,7 +94,9 @@
             <div class="card">
                 <div class="card-header">Bài hát liên quan</div>
                 <div class="card-body">
-                    <div class="alert alert-info" th:if="${#lists.isEmpty(concerning_songs)}">Chưa có bài liên quan nào.</div>
+                    <div class="alert alert-info" th:if="${#lists.isEmpty(concerning_songs)}">Chưa có bài liên quan
+                        nào.
+                    </div>
                     <ul class="list-unstyled" th:each="concerning_song:${concerning_songs}">
                         <li class="media border-bottom py-2">
                             <div class="position-relative">
@@ -137,6 +153,47 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="LoginModal" tabindex="-1" aria-labelledby="LoginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="#" th:action="@{/user/login}" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="LoginModalLabel" th:utext="#{label.login.required('<strong class=\'text-danger\'>' + ${song.name} + '</strong>')}">Please Login</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="loginForm" action="#" th:action="@{/user/login}" method="post">
+                            <fieldset>
+                                <div class="form-group">
+                                    <label for="email" th:text="#{entities.user.email}">Email</label>
+                                    <input type="email" class="form-control" name="email" id="email"
+                                           placeholder="Your email" autofocus="autofocus" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" th:text="#{entities.user.password}">Password</label>
+                                    <input type="password" class="form-control" name="password" id="password"
+                                           placeholder="Your Password" required>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label for="remember-me">
+                                        <input type="checkbox" name="remember-me" id="remember-me"> <span
+                                            th:text="#{form.label.saved}">Keep me logged in</span>
+                                    </label>
+                                    <div class="float-right">
+                                        <button type="submit" class="btn btn-primary btn-block"
+                                                th:text="#{form.button.login}">Sign in
+                                        </button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                        <p>Bạn chưa có tài khoản? <a th:href="@{/user/register}" th:text="#{form.button.registration}">Sign up</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </main>
 </body>
