@@ -63,6 +63,11 @@
                             <a class="dropdown-item" href="/user/logout">
                                 <i class="fas fa-sign-out-alt"></i>&nbsp;<span th:text="#{label.logout}">Logout</span>
                             </a>
+                            <div sec:authorize="hasRole('ADMIN')">
+                                <a  class="dropdown-item fas fa-sign-out-alt" href="/admin/singers">Singer Page</a>
+                                <a class="dropdown-item fas fa-sign-out-alt" href="/admin/albums">Album Page</a>
+                            </div>
+
                         </div>
                     </li>
                 </th:block>
