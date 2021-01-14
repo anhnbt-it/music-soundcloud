@@ -22,7 +22,7 @@ public class HomeAlbumcontroller {
     @GetMapping("{id}")
     public String show(@PathVariable Long id , Model model){
         Album album = albumService.findById(id).get();
-        model.addAttribute("album",album);
+        model.addAttribute("albums",album);
         model.addAttribute("songs",songService.findAllByAlbums(album));
 
         return "web/albums/listsongofalbum";

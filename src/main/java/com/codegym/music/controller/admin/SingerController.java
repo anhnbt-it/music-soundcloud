@@ -1,12 +1,15 @@
 package com.codegym.music.controller.admin;
 
 
+import com.codegym.music.model.Category;
 import com.codegym.music.model.Singer;
 import com.codegym.music.service.SingerService;
 import com.codegym.music.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Locale;
 import java.util.Optional;
 
 @Controller
@@ -26,6 +30,9 @@ public class SingerController {
 
     @Autowired
     private SingerService singerService;
+
+    @Autowired
+    private MessageSource messageSource;
 
     @Autowired
     Environment env;
@@ -47,18 +54,18 @@ public class SingerController {
     }
 
     @GetMapping
-    public ModelAndView listSingers(@RequestParam("searchName") Optional<String> name, @PageableDefault(value = 3) Pageable pageable) {
-        Page<Singer> singers; // Tạo đối tượng lưu Page singers;
-        if (name.isPresent()) {
-            // Kiểm tra xem nếu Parameter search được truyền vào thì gọi service có 2 tham số
-            singers = singerService.findAllByNameContains(name.get(), pageable);
+    public ModelAndView index(@RequestParam("s") Optional<String> s, Pageable pageable) {
+        Page<Singer> singers;
+        if (s.isPresent()) {
+//            Sort sort = Sort.by("id").descending();
+            singers = singerService.findAllByNameContains(s.get(), pageable);
         } else {
-            // Nếu không có search thì gọi service có 1 tham số
             singers = singerService.findAll(pageable);
         }
         ModelAndView modelAndView = new ModelAndView("admin/singer/list");
         modelAndView.addObject("singers", singers);
-
+        modelAndView.addObject("title", messageSource.getMessage("title.singers.list", null, Locale.getDefault()));
+        modelAndView.addObject("txtSearch", s);
         return modelAndView;
     }
 
@@ -70,7 +77,7 @@ public class SingerController {
         return "admin/singer/view";
     }
 
-    @GetMapping("edit-singer/{id}")
+    @GetMapping("edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model, RedirectAttributes redirect) {
         Optional<Singer> singer = singerService.findById(id);
         if (singer.isPresent()) {
@@ -104,7 +111,7 @@ public class SingerController {
         }
     }
 
-    @PostMapping("delete-singer")
+    @PostMapping("delete")
     public String deleteBlog(@ModelAttribute("singer") Singer singer, RedirectAttributes redirect) {
         singerService.deleteById(singer.getId());
         redirect.addFlashAttribute("message", "Deleted successfully.");
