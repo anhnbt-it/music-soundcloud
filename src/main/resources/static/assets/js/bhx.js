@@ -1,4 +1,10 @@
-function bxh(album) {
+function bxh(album, btn) {
+    btn.classList.add("active");
+    for (let i = 0; i < btn.parentElement.children.length ; i++) {
+        if (i!= album){
+            btn.parentElement.children[i].classList.remove("active");
+        }
+    }
     let bxhList = $("#bxhList");
     $.ajax({
         method: "GET",
@@ -38,3 +44,5 @@ function bxh(album) {
             }
         });
 }
+
+// $(".btn-group").button("toggle");
