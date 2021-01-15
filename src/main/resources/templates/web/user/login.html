@@ -10,7 +10,7 @@
     <div class="card">
         <div class="card-header clearfix">
             <span th:text="#{label.login}">Sign in</span>
-            <div class="float-right">or <a th:href="@{/user/register}" th:text="#{label.registration}">create an account</a></div>
+            <div class="float-right">or <a th:href="@{/user/signup}" th:text="#{label.registration}">create an account</a></div>
         </div>
         <div class="card-body">
             <div class="alert alert-danger" th:if="${param.error}" th:text="#{alert.login.failed}">

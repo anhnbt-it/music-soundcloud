@@ -35,9 +35,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/hot/music" th:utext="'<i class=\'fab fa-hotjar\'></i> ' + #{nav.hot}">Bài hát HOT</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/album/list}" th:utext="'<i class=\'fas fa-music\'></i> ' + #{nav.categories}">Albums</a>
-                </li>
             </ul>
             <form class="form-inline" th:action="@{/search}" method="get">
                 <input class="form-control mr-sm-2" name="q" type="search" placeholder="Search ..." aria-label="Search">
@@ -46,7 +43,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <th:block sec:authorize="isAnonymous()">
                     <li class="nav-item" th:classappend="${menu == 'register' ? 'active' : ''}">
-                        <a class="nav-link" href="/user/register" th:utext="'<i class=\'fas fa-user\'></i> ' + #{label.registration}">Create account</a>
+                        <a class="nav-link" href="/user/signup" th:utext="'<i class=\'fas fa-user\'></i> ' + #{label.registration}">Create account</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/user/login" th:utext="'<i class=\'fas fa-sign-in-alt\'></i> ' + #{label.login}">Sign in</a>
