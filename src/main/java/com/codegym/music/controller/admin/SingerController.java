@@ -57,7 +57,7 @@ public class SingerController {
 
     @PostMapping("create")
     public String saveSinger(@Valid @ModelAttribute("singer") Singer singer, BindingResult result, RedirectAttributes redirect) {
-        singerValidator.validate(singer, result);
+//        singerValidator.validate(singer, result);
         if (result.hasErrors()) {
             return "admin/singer/create";
         }
