@@ -85,9 +85,9 @@
     <div class="card">
         <div class="card-header">
             Bảng xếp hạng
-            <button th:onclick="|bxh(1)|" type="button" class="btn btn-light">US/UK</button>
-            <button th:onclick="|bxh(2)|" type="button" class="btn btn-success">Việt Nam</button>
-            <button th:onclick="|bxh(3)|" type="button" class="btn btn-light">Châu Á</button>
+            <button th:onclick="|bxh(1, this)|" type="button" class="btn btn-light">US/UK</button>
+            <button th:onclick="|bxh(2, this)|" type="button" class="btn btn-success">Việt Nam</button>
+            <button th:onclick="|bxh(3, this)|" type="button" class="btn btn-light">Châu Á</button>
         </div>
         <div class="card-body" id="bxhList">
             <ul class="list-unstyled" th:replace="fragments/loop-song :: loopBXH (${bxh})"></ul>
