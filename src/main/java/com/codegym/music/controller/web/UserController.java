@@ -77,18 +77,18 @@ class UserController {
         return "redirect:/";
     }
 
-    @GetMapping("register")
+    @GetMapping("signup")
     public ModelAndView register() {
-        ModelAndView modelAndView = new ModelAndView("web/user/register");
+        ModelAndView modelAndView = new ModelAndView("web/user/signup");
         modelAndView.addObject("user", new User());
         return modelAndView;
     }
 
-    @PostMapping("register")
+    @PostMapping("signup")
     public String register(@Validated @ModelAttribute("user") User user, BindingResult result, RedirectAttributes redirect) {
         registerValidator.validate(user, result);
         if (result.hasErrors()) {
-            return "web/user/register";
+            return "web/user/signup";
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.save(user);

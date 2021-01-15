@@ -32,7 +32,7 @@
                     </div>
                     <form action="#" th:action="@{/admin/categories/create}" th:object="${category}" method="post">
                         <div class="row form-group">
-                            <label class="col-form-label col-md-2" th:text="#{model.category.name}">Name</label>
+                            <label for="name" class="col-form-label col-md-2" th:text="#{model.category.name}">Name</label>
                             <div class="col-md-10">
                                 <input type="text" class="form-control" th:field="*{name}"
                                        th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'">
@@ -40,7 +40,7 @@
                             </div>
                         </div>
                         <div class="row form-group">
-                            <label class="col-form-label col-md-2" th:text="#{model.category.parent}">Parent</label>
+                            <label for="parent" class="col-form-label col-md-2" th:text="#{model.category.parent}">Parent</label>
                             <div class="col-md-10">
                                 <select class="form-control" th:field="*{parent}"
                                         th:classappend="${#fields.hasErrors('parent')} ? 'is-invalid'">

@@ -7,30 +7,6 @@
 </head>
 <body>
 <main role="main" class="pb-3">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-header">Menu</div>
-                <div class="card-body p-0">
-                    <div class="media p-3">
-                        <img src="/static/assets/images/1.jpeg" class="mr-3" alt="Avatar">
-                        <div class="media-body" >
-                            <h5 class="mt-0 mb-1"  >Admin</h5>
-                            <a href="/user/logout">
-                                <i class="fas fa-sign-out-alt"></i>&nbsp;<span th:text="#{label.logout}">Logout</span>
-                            </a>
-                        </div>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <a href="/admin/categories" class="list-group-item">Categories</a>
-                        <a href="/admin/blogs" class="list-group-item">Blogs</a>
-                        <a href="/admin/albums" class="list-group-item">Albums</a>
-                        <a href="/admin/singers" class="list-group-item">Singers</a>
-                        <a href="/admin/songs" class="list-group-item">Songs</a>
-                    </ul>
-                </div>
-            </div>
-        </div>
         <div class="col-md-8">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
@@ -47,7 +23,7 @@
                         New</a>
                 </div>
                 <div class="card-body">
-                    <div th:if="${globalMessage}" th:text="${globalMessage}"></div>
+<!--                    <div th:if="${globalMessage}" th:text="${globalMessage}"></div>-->
 <!--                    <div class="clearfix">-->
 <!--                        <label>Show <select name="pageSize" id="pageSize" th:switch="${songs.pageable.pageSize}">-->
 <!--                            <option value="10" th:selected="${songs.pageable.pageSize} == 10">10</option>-->
@@ -76,9 +52,13 @@
                                      class="img-fluid img-thumbnail"></td>
                             <td th:text="${song.name}"></td>
                             <td th:utext="${song.singer.name}"></td>
-                            <td th:text="${song.albums}"></td>
-                            <td th:text="${song.status}"></td>
-                            <td th:text="${{song.create_at}}"></td>
+                            <td>
+                                <th:block th:each="album : ${song.albums}">
+                                    <small th:text="${album.name}" class="badge badge-dark"></small>
+                                </th:block>
+                            </td>
+                            <td th:text="${song.status} ? #{true} : #{false}" th:class="${song.status} ? 'text-success' : 'text-danger'"></td>
+                            <td th:text="${{song.createAt}}"></td>
                             <td>
                                 <a th:href="@{/admin/songs/edit/{id}(id=${song.id})}" class="btn btn-success btn-sm">
                                     <i class="fas fa-edit"></i>
@@ -91,11 +71,11 @@
                         </tr>
                         </tbody>
                     </table>
-                    <div>
-                        <a th:href="@{'/songs'(page=${songs.number - 1})}" th:if="${songs.hasPrevious()}">Previous</a>
-                        <span th:text="${songs.number + 1}"></span>/<span th:text="${songs.totalPages}"></span>
-                        <a th:href="@{'/songs'(page=${songs.number + 1})}" th:if="${songs.hasNext()}">Next</a>
-                    </div>
+<!--                    <div>-->
+<!--                        <a th:href="@{'/songs'(page=${songs.number - 1})}" th:if="${songs.hasPrevious()}">Previous</a>-->
+<!--                        <span th:text="${songs.number + 1}"></span>/<span th:text="${songs.totalPages}"></span>-->
+<!--                        <a th:href="@{'/songs'(page=${songs.number + 1})}" th:if="${songs.hasNext()}">Next</a>-->
+<!--                    </div>-->
                 </div><!-- /.card-body -->
             </div><!-- /.card -->
         </div>

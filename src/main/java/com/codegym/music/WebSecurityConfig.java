@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                 "/singer/**",
                                 "/album/**",
                                 "/hot/**").permitAll()
-                        .antMatchers("/admin/**").hasRole("ADMIN")
+//                        .antMatchers("/admin/**").hasRole("ADMIN")
                 )
                 .formLogin()
                 .loginPage("/user/login")

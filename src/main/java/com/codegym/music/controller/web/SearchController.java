@@ -1,16 +1,21 @@
 package com.codegym.music.controller.web;
 
 import com.codegym.music.model.Album;
+import com.codegym.music.model.Category;
 import com.codegym.music.model.Singer;
 import com.codegym.music.model.Song;
 import com.codegym.music.service.AlbumService;
+import com.codegym.music.service.CategoryService;
 import com.codegym.music.service.SingerService;
 import com.codegym.music.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,13 +27,31 @@ import java.util.Optional;
 public class SearchController {
 
     @Autowired
-    private AlbumService albumService;
+    private CategoryService categoryService;
+
+    @Autowired
+    private SongService songService;
 
     @Autowired
     private SingerService singerService;
 
     @Autowired
-    private SongService songService;
+    private AlbumService albumService;
+
+    @ModelAttribute("categories")
+    public Iterable<Category> categories() {
+        return categoryService.findAll();
+    }
+
+    @ModelAttribute("albums")
+    public Iterable<Album> albums() {
+        return albumService.findAll();
+    }
+
+    @ModelAttribute("singers")
+    public Iterable<Singer> sings() {
+        return singerService.findAll();
+    }
 
     @GetMapping
     public ModelAndView index(@RequestParam("q") Optional<String> query, Pageable pageable) {
@@ -56,6 +79,13 @@ public class SearchController {
         modelAndView.addObject("songs", songs);
         modelAndView.addObject("title", query);
         return modelAndView;
+    }
+
+    @ModelAttribute("bxh")
+    public Iterable<Song> bxhVn(){
+        Optional<Album> album = albumService.findById(1L);
+        Pageable pageable = PageRequest.of(0,5, Sort.by(Sort.Direction.DESC, "views"));
+        return songService.findAllByAlbums(album.get(),pageable);
     }
 
 }

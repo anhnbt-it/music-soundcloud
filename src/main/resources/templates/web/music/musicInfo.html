@@ -9,41 +9,7 @@
 <main role="main" class="pb-3">
     <div class="row">
         <!--- menu left -->
-        <div class="col-md-3 d-none d-md-block">
-            <div class="card mb-2">
-                <div class="card-header text-white bg-secondary ">
-                    Thể loại âm nhạc
-                </div>
-                <div class="card-body p-0">
-                    <div class="list-group list-group-flush" th:each="category : ${categories}">
-                        <a th:href="@{/category/{id}(id=${category.id})}" class="list-group-item list-group-item-action"
-                           th:text="${category.name}"></a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header text-white bg-secondary">
-                    Album
-                </div>
-                <div class="card-body p-0">
-                    <div class="list-group list-group-flush" th:each="album : ${albums}">
-                        <a th:href="@{/album/{id}(id=${album.id})}" class="list-group-item list-group-item-action"
-                           th:text="${album.name}"></a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header text-white bg-secondary">
-                    Singer
-                </div>
-                <div class="card-body p-0">
-                    <div class="list-group list-group-flush" th:each="singer : ${singers}">
-                        <a th:href="@{/singer/{id}(id=${singer.id})}" class="list-group-item list-group-item-action"
-                           th:text="${singer.name}"></a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="col-md-3 d-none d-md-block" th:replace="fragments/layout-nav :: menuLeft"></div>
         <!-- Moi cap nhat -->
         <div class="col-md-6">
             <div class="card shadow-sm mb-3">
@@ -51,7 +17,7 @@
                     <h1 th:text="${song.name} + ' - ' + ${song.singer.name}" class="float-left display-4"></h1>
                     <div class="float-right text-muted">
                         <span th:utext="'<i class=\'fas fa-headphones\'></i> ' + ${song.views}"></span>
-                        <span th:utext="'<i class=\'far fa-clock\'></i> ' + ${song.create_at}"></span>
+                        <span th:utext="'<i class=\'far fa-clock\'></i> ' + ${song.createAt}"></span>
                     </div>
                 </div>
                 <div class="card-body">
@@ -122,36 +88,7 @@
             </div>
         </div>
         <!-- BXH -->
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-header">
-                    Bảng xếp hạng
-                    <button type="button" class="btn btn-success">Việt Nam</button>
-                    <button type="button" class="btn btn-light">US/UK</button>
-                    <button type="button" class="btn btn-light">Châu Á</button>
-                </div>
-                <div class="card-body">
-                    <ul class="list-unstyled" th:each="song, rowStat :${bxh}">
-                        <li class="media border-bottom py-2">
-                            <div class="position-relative">
-                                <a th:href="@{/music/{id}(id=${song.id})}">
-                                    <img th:src="'/files/' + ${song.image}" class="mr-3 rounded" width="85" alt="...">
-                                </a>
-                                <small class="position-absolute badge badge-dark text-white"
-                                       style="bottom: 5px; left: 5px;"
-                                       th:utext="'<i class=\'fas fa-eye\'></i> ' + ${song.views}">
-                                </small>
-                            </div>
-                            <div class="media-body">
-                                <h5 class="mt-0 mb-1" th:text="${song.name}"></h5>
-                                <small th:text="${song.singer.name}"></small>
-                            </div>
-                            <div class="display-4 text-danger" th:text="${rowStat.count}"></div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <div class="col-md-3" th:replace="fragments/layout-nav :: bxh"></div>
     </div>
     <div class="modal fade" id="LoginModal" tabindex="-1" aria-labelledby="LoginModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -189,7 +126,7 @@
                                 </div>
                             </fieldset>
                         </form>
-                        <p>Bạn chưa có tài khoản? <a th:href="@{/user/register}" th:text="#{form.button.registration}">Sign up</a></p>
+                        <p>Bạn chưa có tài khoản? <a th:href="@{/user/signup}" th:text="#{form.button.registration}">Sign up</a></p>
                     </div>
                 </form>
             </div>
