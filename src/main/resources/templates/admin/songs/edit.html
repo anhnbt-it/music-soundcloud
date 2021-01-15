@@ -14,14 +14,14 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/admin" th:text="#{title.dashboard}">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="/admin/categories" th:text="#{title.categories}">Song</a>
+                    <li class="breadcrumb-item"><a href="/admin/songs" th:text="#{title.songs}">Song</a>
                     </li>
                 </ol>
             </nav>
             <div class="card">
                 <div class="card-header">
                     <span th:text="${title}">Edit Song</span>
-                    <a href="/admin/categories" class="btn btn-secondary btn-sm float-right" th:text="#{button.index}">Back</a>
+                    <a href="/admin/songs" class="btn btn-secondary btn-sm float-right" th:text="#{button.index}">Back</a>
                 </div>
                 <div class="card-body">
                     <th:block th:if="${message}" th:utext="${message}"></th:block>
@@ -109,7 +109,7 @@
                         <div class="row form-group">
                             <div class="col-md-10 offset-2">
                                 <button type="submit" class="btn btn-primary" th:text="#{button.update}">Update</button>
-                                <a href="/admin/categories" class="btn btn-link" th:text="#{button.cancel}">Cancel</a>
+                                <a href="/admin/songs" class="btn btn-link" th:text="#{button.cancel}">Cancel</a>
                             </div>
                         </div>
                     </form>

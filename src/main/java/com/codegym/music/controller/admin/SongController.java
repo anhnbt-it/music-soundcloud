@@ -145,29 +145,28 @@ public class SongController {
 
     @PostMapping("edit")
     public String updateBlog(@Validated @ModelAttribute("song") Song song, BindingResult result) {
-        MultipartFile multipartFile = song.getImageData();
-        String fileName = multipartFile.getOriginalFilename();
-        MultipartFile mp3File = song.getMp3Data();
-        String mp3Name = mp3File.getOriginalFilename();
         Optional<Song> oldSong = songService.findById(song.getId());
         if (song.getViews() == null) {
             song.setViews(oldSong.get().getViews());
         }
-        if (!song.getImageData().isEmpty() && !song.getMp3Data().isEmpty()) {
-
+        System.out.println(1);
+        if (song.getImageData() != null && song.getMp3Data() != null) {
             customFileValidator.validate(song, result);
         }
+
         if (result.hasErrors()) {
             return "admin/songs/edit";
         }
         try {
+            MultipartFile multipartFile = song.getImageData();
+            String fileName = multipartFile.getOriginalFilename();
+            MultipartFile mp3File = song.getMp3Data();
+            String mp3Name = mp3File.getOriginalFilename();
             storageService.store(multipartFile);
             song.setImage(fileName);
             storageService.store(mp3File);
             song.setUrl(mp3Name);
         } catch (StorageException e) {
-//            song.setImage("150.png");
-//            song.setUrl("aaa");
             if (song.getImageData().isEmpty()) {
                 song.setImage(oldSong.get().getImage());
             }
