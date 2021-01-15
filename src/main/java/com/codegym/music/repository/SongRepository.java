@@ -1,11 +1,9 @@
 package com.codegym.music.repository;
 import com.codegym.music.model.Album;
-import com.codegym.music.model.Category;
-import com.codegym.music.model.Singer;
 import com.codegym.music.model.Song;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -25,7 +23,7 @@ public interface SongRepository extends PagingAndSortingRepository<Song, Long> {
 
     Page<Song> findAllByAlbums(Album album,Pageable pageable);
 
-    Iterable<Song> findAllByStatusTrue();
+    Page<Song> findAllByStatusTrue(Integer pageNo, Integer pageSize, String sortBy);
 
     Page<Song> findAllByNameContainsOrAlbumsContainsOrSingerContains(String name, Album album, String singer, Pageable pageable);
 

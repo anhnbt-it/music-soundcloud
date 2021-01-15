@@ -42,7 +42,6 @@
                             <th>Album</th>
                             <th>Status</th>
                             <th>Create</th>
-                            <td>Action</td>
                         </tr>
                         </thead>
                         <tbody id="blogList" th:unless="${#lists.isEmpty(songs)}">
@@ -58,7 +57,7 @@
                                 </th:block>
                             </td>
                             <td th:text="${song.status} ? #{true} : #{false}" th:class="${song.status} ? 'text-success' : 'text-danger'"></td>
-                            <td th:text="${{song.createAt}}"></td>
+                            <td th:text="${{song.create_at}}"></td>
                             <td>
                                 <a th:href="@{/admin/songs/edit/{id}(id=${song.id})}" class="btn btn-success btn-sm">
                                     <i class="fas fa-edit"></i>

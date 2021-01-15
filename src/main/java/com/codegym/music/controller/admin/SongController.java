@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -89,7 +90,8 @@ public class SongController {
         }
         song.setViews(0);
         song.setLikeCount(0);
-        song.setCreateAt(LocalDate.now());
+        song.setLikeCount(0);
+        song.setCreateAt(LocalDateTime.now());
         songService.save(song);
         redirect.addFlashAttribute("message", "<div class=\"alert alert-success\">" + messageSource.getMessage("alert.created", new Object[]{song.getName()}, Locale.getDefault()) + "</div>");
         redirect.addFlashAttribute("globalMessage", "Successfully created a new song: " + song.getId());

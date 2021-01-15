@@ -44,7 +44,8 @@ public interface SongService {
     Page<Song> findAllByNameContains(String name, Pageable pageable);
 
     Optional<Song> findByNameContains(String name);
-    Iterable<Song> findAllByStatusTrue();
+
+    Page<Song> findAllByStatusTrue(Integer pageNo, Integer pageSize, String sortBy);
 
 }
 
