@@ -43,7 +43,6 @@ public class SongController {
 
     @Autowired
     private AlbumService albumService;
-
     @Autowired
     private CustomFileValidator customFileValidator;
 
@@ -104,7 +103,7 @@ public class SongController {
                               @RequestParam(defaultValue = "10") Integer pageSize,
                               @RequestParam(defaultValue = "id") String sortBy, @RequestParam("SearchName") Optional<String> search, Pageable pageable) {
         Page<Song> songs;
-        ModelAndView modelAndView = new ModelAndView("admin/songs/list");
+
         if (s.isPresent() && search.isPresent()) {
             songs = songService.findAllByNameContains(s.get(), pageNo, pageSize, sortBy);
             Optional<Song> song = songService.findByNameContains(search.get());
@@ -114,6 +113,7 @@ public class SongController {
         } else {
             songs = songService.findAll(pageNo, pageSize, sortBy);
         }
+        ModelAndView modelAndView = new ModelAndView("admin/songs/list");
         modelAndView.addObject("songs", songs);
         modelAndView.addObject("txtSearch", s);
         modelAndView.addObject("title", messageSource.getMessage("title.songs.list", null, Locale.getDefault()));
@@ -148,6 +148,7 @@ public class SongController {
     @PostMapping("edit")
     public String updateBlog(@Validated @ModelAttribute("song") Song song, BindingResult result) {
         Optional<Song> oldSong = songService.findById(song.getId());
+
         if (song.getViews() == null) {
             song.setViews(oldSong.get().getViews());
         }
