@@ -101,7 +101,7 @@ public class SongController {
                               @RequestParam(defaultValue = "10") Integer pageSize,
                               @RequestParam(defaultValue = "id") String sortBy, @RequestParam("SearchName") Optional<String> search, Pageable pageable) {
         Page<Song> songs;
-        ModelAndView modelAndView = new ModelAndView("admin/songs/list");
+
         if (s.isPresent() && search.isPresent()) {
             songs = songService.findAllByNameContains(s.get(), pageNo, pageSize, sortBy);
             Optional<Song> song = songService.findByNameContains(search.get());
