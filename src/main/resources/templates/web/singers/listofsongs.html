@@ -31,7 +31,7 @@
                         style="left: 15px; bottom: 15px; text-shadow: 2px 2px 4px #000000;"
                         th:text="${singer.name}"></h1>
                 </div>
-                <div class="card-header">Latest</div>
+                <div class="card-header">Bài hát</div>
                 <div class="card-body">
                     <div class="alert alert-info mb-0" th:if="${#lists.isEmpty(songs)}">No data.</div>
                     <ul class="list-unstyled" th:each="song:${songs}">
