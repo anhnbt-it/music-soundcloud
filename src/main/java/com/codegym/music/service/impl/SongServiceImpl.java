@@ -90,8 +90,8 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public Page<Song> findAllByStatusTrue(Integer pageNo, Integer pageSize, String sortBy) {
-        return songRepository.findAllByStatusTrue(pageNo,pageSize,sortBy);
+    public Page<Song> findAllByStatusTrue(Pageable pageable) {
+        return songRepository.findAllByStatusTrue(pageable);
     }
 
     @Override
