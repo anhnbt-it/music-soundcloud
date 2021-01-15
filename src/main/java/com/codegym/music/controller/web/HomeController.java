@@ -91,9 +91,13 @@ public class HomeController {
     }
 
     @ModelAttribute("bxh")
-    public Iterable<Song> bxhVn(){
+    public Iterable<Song> bxhVn() {
         Optional<Album> album = albumService.findById(1L);
-        Pageable pageable = PageRequest.of(0,5,Sort.by(Sort.Direction.DESC, "views"));
-        return songService.findAllByAlbums(album.get(),pageable);
+        Iterable<Song> bxh = null;
+        if (album.isPresent()) {
+            Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "views"));
+            bxh = songService.findAllByAlbums(album.get(), pageable);
+        }
+        return bxh;
     }
 }
