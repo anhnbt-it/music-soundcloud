@@ -36,11 +36,11 @@
                     <a class="nav-link" href="/hot/music" th:utext="'<i class=\'fab fa-hotjar\'></i> ' + #{nav.hot}">Bài hát HOT</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/category" th:utext="'<i class=\'fas fa-music\'></i> ' + #{nav.categories}">Thể loại</a>
+                    <a class="nav-link" th:href="@{/category/list}" th:utext="'<i class=\'fas fa-music\'></i> ' + #{nav.categories}">Thể loại</a>
                 </li>
             </ul>
-            <form class="form-inline">
-                <input class="form-control mr-sm-2" name="SearchName" type="search" placeholder="Search ..." aria-label="Search">
+            <form class="form-inline" th:action="@{/search}" method="get">
+                <input class="form-control mr-sm-2" name="q" type="search" placeholder="Search ..." aria-label="Search">
                 <button class="btn btn-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
             </form>
             <ul class="nav navbar-nav navbar-right">

@@ -2,6 +2,7 @@ package com.codegym.music.validator;
 
 import com.codegym.music.model.Album;
 import com.codegym.music.model.Blog;
+import com.codegym.music.model.Singer;
 import com.codegym.music.model.Song;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -34,6 +35,9 @@ public class CustomFileValidator implements Validator {
         } else if (target instanceof Song) {
             Song song = (Song) target;
             file = song.getImageData();
+        } else if (target instanceof Singer) {
+            Singer singer = (Singer) target;
+            file = singer.getImageData();
         }
         if (file.isEmpty()) {
             errors.rejectValue("imageData", "label.upload.file.required");

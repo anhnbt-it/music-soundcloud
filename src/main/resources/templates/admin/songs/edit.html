@@ -33,7 +33,9 @@
                     </div>
                     <form th:action="@{/admin/songs/edit}" th:object="${song}" method="post">
                         <input type="hidden" th:field="*{id}">
-                        <input type="hidden" th:field="*{create_at}">
+                        <input type="hidden" th:field="*{createAt}">
+                        <input type="hidden" th:field="*{views}">
+                        <input type="hidden" th:field="*{likeCount}">
                         <div class="row form-group">
                             <label class="col-form-label col-md-2">Song Name <span
                                     class="text-danger">*</span>:</label>

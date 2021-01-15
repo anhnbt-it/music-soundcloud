@@ -23,7 +23,7 @@
                 </div>
                 <div class="card-body">
 
-                    <th:block th:if="${message}" th:utext="${message}"></th:block>
+                    <p th:unless="${message == null}" th:utext="${message}"></p>
 
                     <div class="clearfix">
                         <label for="pageSize">
@@ -51,7 +51,7 @@
                         </form>
                     </div><!-- /.clearfix -->
 
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-striped">
                         <thead class="thead-light">
                         <tr>
                             <th scope="col">#</th>
@@ -61,7 +61,7 @@
                             <th scope="col" th:text="#{table.actions}">Actions</th>
                         </tr>
                         </thead>
-                        <tbody th:unless="${#lists.isEmpty(categories)}">
+                        <tbody>
                         <tr th:each="category : ${categories}">
                             <th scope="row" th:text="${category.id}"></th>
                             <td th:text="${category.name}"></td>

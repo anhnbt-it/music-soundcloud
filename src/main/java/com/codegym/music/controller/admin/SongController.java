@@ -1,6 +1,8 @@
 package com.codegym.music.controller.admin;
 
-import com.codegym.music.model.*;
+import com.codegym.music.model.Album;
+import com.codegym.music.model.Singer;
+import com.codegym.music.model.Song;
 import com.codegym.music.service.AlbumService;
 import com.codegym.music.service.SingerService;
 import com.codegym.music.service.SongService;
@@ -21,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -86,6 +88,7 @@ public class SongController {
             song.setUrl("aaa");
         }
         song.setViews(0);
+        song.setLikeCount(0);
         song.setLikeCount(0);
         song.setCreate_at(LocalDateTime.now());
         songService.save(song);

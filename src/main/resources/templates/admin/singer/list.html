@@ -44,6 +44,7 @@
                         <thead class="thead-light">
                         <tr>
                             <th>ID</th>
+                            <th>Image</th>
                             <th>Name</th>
                             <th>Description</th>
                             <th class="text-center" scope="col" th:text="#{table.actions}">Actions</th>
@@ -52,6 +53,9 @@
                         <tbody th:unless="${#lists.isEmpty(singers)}">
                         <tr th:each="singer : ${singers}">
                             <th scope="row" th:text="${singer.id}"></th>
+                            <td>
+                                <img th:src="'/files/' + ${singer.avatarURL}" th:alt="${singer.name}" class="img-thumbnail" width="85">
+                            </td>
                             <td th:text="${singer.name}"></td>
                             <td><textarea cols="50" rows="5" th:type="text" th:text="${singer.description}"></textarea>
                             </td>

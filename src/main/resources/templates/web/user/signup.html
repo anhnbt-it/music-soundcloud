@@ -18,7 +18,7 @@
                     <li th:each="err : ${#fields.errors('${user.*}')}" th:text="${err}">Input is incorrect</li>
                 </ul>
             </div>
-            <form action="#" th:action="@{/user/register}" th:object="${user}" method="post">
+            <form action="#" th:action="@{/user/signup}" th:object="${user}" method="post">
                 <fieldset>
                     <div class="form-group">
                         <label th:text="#{entities.user.name}">Name</label>
