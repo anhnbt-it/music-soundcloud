@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -42,7 +43,7 @@ public class AlbumController {
     }
 
     @PostMapping("save")
-    public String save(@ModelAttribute("album") Album album, BindingResult result, RedirectAttributes redirect) {
+    public String save(@Valid @ModelAttribute("album") Album album, BindingResult result, RedirectAttributes redirect) {
         MultipartFile multipartFile = album.getImageData();
         String fileName = multipartFile.getOriginalFilename();
         customFileValidator.validate(album, result);
@@ -99,7 +100,7 @@ public class AlbumController {
     }
 
     @PostMapping("edit")
-    public String updateAlbum(@ModelAttribute("album") Album album1 , BindingResult result, RedirectAttributes redirect) {
+    public String updateAlbum(@Valid @ModelAttribute("album") Album album1 , BindingResult result, RedirectAttributes redirect) {
         MultipartFile multipartFile1 = album1.getImageData();
         String fileName = multipartFile1.getOriginalFilename();
         customFileValidator.validate(album1, result);
