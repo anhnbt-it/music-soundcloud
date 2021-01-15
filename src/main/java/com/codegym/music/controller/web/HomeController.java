@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -57,13 +58,14 @@ public class HomeController {
         return "errors/403";
     }
 
-    @ModelAttribute("songs")
-    public Iterable<Song> songs() {
-        return songService.findAllByStatusTrue();
-    }
 
     @GetMapping("/")
-    public ModelAndView listSongs(@RequestParam("SearchName") Optional<String> search, @PageableDefault(size = 10) Pageable pageable) {
+    public ModelAndView listSongs(@RequestParam("SearchName") Optional<String> search,
+                                  @RequestParam(defaultValue = "0") Integer pageNo,
+                                  @RequestParam(defaultValue = "10") Integer pageSize,
+                                  @RequestParam(defaultValue = "id") String sortBy) {
+        Pageable pageable = PageRequest.of(pageNo,pageSize,Sort.by(Sort.Direction.DESC, "views"));
+
         Page<Song> songs; // Tạo đối tượng lưu Page songs;
         ModelAndView modelAndView = new ModelAndView("web/home");
         if (search.isPresent()) {
@@ -83,7 +85,7 @@ public class HomeController {
             System.out.println(1);
         } else {
             // Nếu không có search thì gọi service có 1 tham số
-            songs = songService.findAll(pageable);
+            songs = songService.findAllByStatusTrue(pageable);
         }
         modelAndView.addObject("songs", songs);
 

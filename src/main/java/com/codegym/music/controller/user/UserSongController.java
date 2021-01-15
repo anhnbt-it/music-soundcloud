@@ -11,6 +11,9 @@ import com.codegym.music.storage.StorageService;
 import com.codegym.music.validator.CustomFileValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -85,8 +88,12 @@ public class UserSongController {
     }
 
     @GetMapping
-    public ModelAndView index() {
-            Page<Song> songs = songService.findAllByStatusTrue();
+    public ModelAndView index(@RequestParam(defaultValue = "0") Integer pageNo,
+                              @RequestParam(defaultValue = "10") Integer pageSize,
+                              @RequestParam(defaultValue = "id") String sortBy) {
+        Pageable pageable = PageRequest.of(pageNo,pageSize, Sort.by(Sort.Direction.DESC, "views"));
+
+        Page<Song> songs = songService.findAllByStatusTrue(pageable);
         ModelAndView modelAndView = new ModelAndView("/web/user/UserListSong");
         modelAndView.addObject("songs", songs);
         return modelAndView;

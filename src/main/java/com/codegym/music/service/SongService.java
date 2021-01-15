@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.parameters.P;
 
 import java.util.Optional;
 
@@ -45,7 +46,7 @@ public interface SongService {
 
     Optional<Song> findByNameContains(String name);
 
-    Page<Song> findAllByStatusTrue(Integer pageNo, Integer pageSize, String sortBy);
+    Page<Song> findAllByStatusTrue(Pageable pageable);
 
 }
 
