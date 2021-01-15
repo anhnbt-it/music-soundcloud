@@ -64,7 +64,7 @@ public class HomeController {
                                   @RequestParam(defaultValue = "0") Integer pageNo,
                                   @RequestParam(defaultValue = "10") Integer pageSize,
                                   @RequestParam(defaultValue = "id") String sortBy) {
-        Pageable pageable = PageRequest.of(pageNo,pageSize,Sort.by(Sort.Direction.DESC, "views"));
+        Pageable pageable = PageRequest.of(pageNo,pageSize,Sort.by(Sort.Direction.DESC, sortBy));
 
         Page<Song> songs; // Tạo đối tượng lưu Page songs;
         ModelAndView modelAndView = new ModelAndView("web/home");
