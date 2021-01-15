@@ -52,18 +52,6 @@
 <div class="col-md-3 d-none d-md-block" th:fragment="menuLeft">
     <div class="card mb-2">
         <div class="card-header font-weight-bold bg-dark text-white">
-            Thể loại âm nhạc
-        </div>
-        <div class="card-body p-0">
-            <div class="list-group list-group-flush" th:each="category : ${categories}">
-                <a th:href="@{/category/{id}(id=${category.id})}" class="list-group-item list-group-item-action"
-                   th:text="${category.name}"></a>
-            </div>
-            <div class="alert alert-info mb-0" th:if="${#lists.isEmpty(categories)}">No data.</div>
-        </div>
-    </div>
-    <div class="card mb-2">
-        <div class="card-header font-weight-bold bg-dark text-white">
             Album
         </div>
         <div class="card-body p-0">

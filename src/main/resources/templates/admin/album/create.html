@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      th:replace="~{fragments/layout-admin :: layout (~{::main}, 'blog')}">
+      th:replace="~{fragments/layout-admin :: layout (~{::main}, 'Add New Album')}">
 <head>
     <title>Add New Album :: AnhNBT</title>
 </head>
@@ -30,7 +30,7 @@
                     <label class="col-form-label col-md-2">Album Name <span
                             class="text-danger">*</span>:</label>
                     <div class="col-md-10">
-                        <input type="text" th:field="*{description}" class="form-control"
+                        <input type="text" th:field="*{name}" class="form-control"
                                th:classappend="${#fields.hasErrors('name')}? 'is-invalid'">
                         <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback">Album Name
                             Error</p>
@@ -41,7 +41,7 @@
                             class="text-danger">*</span>:</label>
                     <div class="col-md-10">
                         <textarea cols="50" rows="5" class="form-control" th:field="*{description}"
-                                  th:classappend="${#fields.hasErrors('name')}? 'is-invalid'"></textarea>
+                                  th:classappend="${#fields.hasErrors('description')}? 'is-invalid'"></textarea>
                         <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="invalid-feedback">Description
                             Error</p>
                     </div>
