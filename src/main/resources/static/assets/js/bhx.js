@@ -34,7 +34,7 @@ function bxh(album, btn) {
                             </div>
                             <div class="media-body">
                                 <h5 class="mt-0 mb-1">${msg.data.content[i].name}</h5>
-                                <small>${msg.data.content[i].singer}</small>
+                                <small>${msg.data.content[i].singer.name}</small>
                             </div>
                             <div class="display-4 text-danger">${i+1}</div>
                         </li>`;
