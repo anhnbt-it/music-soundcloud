@@ -76,6 +76,7 @@ public class SongController {
             song.setUrl("aaa");
         }
         song.setViews(0);
+        song.setLikeCount(0);
         songService.save(song);
         redirect.addFlashAttribute("globalMessage", "Successfully created a new song: " + song.getId());
         return "redirect:/admin/songs/create";
