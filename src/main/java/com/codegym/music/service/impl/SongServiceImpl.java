@@ -90,8 +90,8 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public Iterable<Song> findAllByStatusTrue() {
-        return songRepository.findAllByStatusTrue();
+    public Page<Song> findAllByStatusTrue(Integer pageNo, Integer pageSize, String sortBy) {
+        return songRepository.findAllByStatusTrue(pageNo,pageSize,sortBy);
     }
 
     @Override

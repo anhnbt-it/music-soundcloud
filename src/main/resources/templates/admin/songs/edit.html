@@ -31,7 +31,7 @@
                             </li>
                         </ul>
                     </div>
-                    <form th:action="@{/admin/songs/edit}" th:object="${song}" method="post">
+                    <form th:action="@{/admin/songs/edit}" th:object="${song}" method="post" enctype="multipart/form-data">
                         <input type="hidden" th:field="*{id}">
                         <input type="hidden" th:field="*{createAt}">
                         <input type="hidden" th:field="*{views}">
