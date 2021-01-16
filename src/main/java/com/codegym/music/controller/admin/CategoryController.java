@@ -5,6 +5,8 @@ import com.codegym.music.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,26 +36,23 @@ public class CategoryController {
 
 
     @GetMapping
-    public ModelAndView index(@RequestParam("s") Optional<String> s,
-                              @RequestParam(defaultValue = "0") Integer pageNo,
-                              @RequestParam(defaultValue = "5") Integer pageSize,
-                              @RequestParam(defaultValue = "id") String sortBy) {
+    public ModelAndView index(@RequestParam("q") Optional<String> query, Pageable pageable) {
         Page<Category> categories;
-        if (s.isPresent()) {
-//            Sort sort = Sort.by("id").descending();
-            categories = categoryService.findAllByNameContains(s.get(), pageNo, pageSize, sortBy);
+//        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.DESC, sortBy));
+        if (query.isPresent()) {
+            categories = categoryService.findAllByNameContains(query.get(), pageable);
         } else {
-            categories = categoryService.findAll(pageNo, pageSize, sortBy);
+            categories = categoryService.findAll(pageable);
         }
         ModelAndView modelAndView = new ModelAndView("admin/categories/index");
-        modelAndView.addObject("categories", categories);
         modelAndView.addObject("title", messageSource.getMessage("title.categories.index", null, Locale.getDefault()));
-        modelAndView.addObject("txtSearch", s);
+        modelAndView.addObject("query", query);
+        modelAndView.addObject("categories", categories);
         return modelAndView;
     }
 
     @GetMapping("create")
-    public ModelAndView create() {
+    public ModelAndView showCategoryForm() {
         ModelAndView modelAndView = new ModelAndView("admin/categories/create");
         modelAndView.addObject("category", new Category());
         modelAndView.addObject("title", messageSource.getMessage("title.categories.add", null, Locale.getDefault()));
@@ -74,7 +73,7 @@ public class CategoryController {
     }
 
     @GetMapping("edit/{id}")
-    public String edit(@PathVariable("id") Long id, Model model, RedirectAttributes redirect) {
+    public String showCategoryForm(@PathVariable("id") Long id, Model model, RedirectAttributes redirect) {
         if (id == null) {
             redirect.addFlashAttribute("message", "<div class=\"alert alert-danger\">" + messageSource.getMessage("alert.null", null, Locale.getDefault()) + "</div>");
             return "redirect:/admin/categories";
@@ -89,10 +88,6 @@ public class CategoryController {
         model.addAttribute("category", category.get());
         model.addAttribute("title", messageSource.getMessage("title.categories.edit", new Object[]{category.get().getName()}, Locale.getDefault()));
         return "admin/categories/edit";
-    }
-
-    private String notFound(RedirectAttributes redirect) {
-        return "errors/404";
     }
 
     @PostMapping("edit")

@@ -1,14 +1,11 @@
 package com.codegym.music.service.impl;
 
-import com.codegym.music.model.Blog;
 import com.codegym.music.model.Category;
 import com.codegym.music.repository.CategoryRepository;
 import com.codegym.music.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -20,15 +17,13 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
 
     @Override
-    public Page<Category> findAll(Integer pageNo, Integer pageSize, String sortBy) {
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.DESC, sortBy));
-        return categoryRepository.findAll(paging);
+    public Page<Category> findAll(Pageable pageable) {
+        return categoryRepository.findAll(pageable);
     }
 
     @Override
-    public Page<Category> findAllByNameContains(String name, Integer pageNo, Integer pageSize, String sortBy) {
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.DESC, sortBy));
-        return categoryRepository.findAllByNameContains(name, paging);
+    public Page<Category> findAllByNameContains(String name, Pageable pageable) {
+        return categoryRepository.findAllByNameContains(name, pageable);
     }
 
     @Override
