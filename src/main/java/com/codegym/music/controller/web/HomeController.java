@@ -50,7 +50,7 @@ public class HomeController {
 
     @ModelAttribute("singers")
     public Iterable<Singer> sings() {
-        return singerService.findAll();
+        return singerService.findAll(PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "createdAt")));
     }
 
     @GetMapping("/403")
