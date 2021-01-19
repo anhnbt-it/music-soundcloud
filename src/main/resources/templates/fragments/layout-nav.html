@@ -57,7 +57,7 @@
         <div class="card-body p-0">
             <div class="list-group list-group-flush" th:each="album : ${albums}">
                 <div class="list-group-item">
-                    <a th:href="@{/album/{id}(id=${album.id})}" th:text="${album.name}"></a>
+                    <a class="text-dark" th:href="@{/album/{id}(id=${album.id})}" th:text="${album.name}"></a>
                     <span class="badge badge-secondary float-right" th:text="${album.songs.size()}"></span>
                 </div>
             </div>

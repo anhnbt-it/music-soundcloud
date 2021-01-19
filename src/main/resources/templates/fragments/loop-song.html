@@ -18,6 +18,7 @@
         <div class="media-body">
             <h5><a class="mt-0 mb-1 font-weight-bold text-dark" th:href="@{/music/{id}(id=${song.id})}" th:text="${song.name}"></a></h5>
             <a class="text-muted" th:href="@{/singer/{id}(id=${song.singer.id})}" th:text="${song.singer.name}"></a>
+            <span class="text-muted" th:utext="'<i class=\'fas fa-headphones\'></i>&nbsp;' + ${song.views}"></span>
         </div>
         <a th:href="@{/music/{id}(id=${song.id})}" class="px-2 py-1 mr-2 bg-success text-white" title="Play"><i
                 class="fas fa-play"></i></a>
