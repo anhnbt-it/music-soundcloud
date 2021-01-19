@@ -14,7 +14,7 @@
         <div class="col-md-6">
             <div class="card shadow-sm mb-3">
                 <div class="card-header clearfix">
-                    <h1 th:text="${song.name} + ' - ' + ${song.singer.name}" class="float-left display-4"></h1>
+                    <h1 th:text="${song.name} + ' - ' + ${song.singer.name}" class="float-left h4 font-weight-bold"></h1>
                     <div class="float-right text-muted">
                         <span th:utext="'<i class=\'fas fa-headphones\'></i> ' + ${song.views}"></span>
                         <span th:utext="'<i class=\'far fa-clock\'></i> ' + ${song.createAt}"></span>
@@ -45,7 +45,7 @@
                         <div class="col-md-4">
                             <img th:src="'/files/' + ${song.image}" class="mx-auto d-block img-fluid mb-2"
                                  th:alt="${song.name}">
-                            <h5 class="mt-0 mb-1" th:text="${song.name}"></h5>
+                            <h5 class="mt-0 mb-1 font-weight-bold" th:text="${song.name}"></h5>
                             <p><span th:text="'Ca sĩ:'"></span> <a th:href="@{/singer/{id}(id=${song.singer.id})}"
                                                                    th:text="${song.singer.name}"></a></p>
                         </div>
@@ -58,7 +58,7 @@
             </div><!-- /.card -->
 
             <div class="card">
-                <div class="card-header">Bài hát liên quan</div>
+                <div class="card-header">Bài hát cùng ca sĩ</div>
                 <div class="card-body">
                     <div class="alert alert-info" th:if="${#lists.isEmpty(concerning_songs)}">Chưa có bài liên quan
                         nào.
