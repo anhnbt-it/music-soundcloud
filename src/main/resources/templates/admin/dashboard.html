@@ -17,7 +17,7 @@
                          class="rounded mx-auto d-block mb-3"
                          width="300px">
                 </a>
-                <h1>DASHBOARD</h1>
+                <h1>Dashboard v1.0</h1>
             </div>
         </div>
     </div><!-- /.row -->
@@ -29,7 +29,7 @@
                         <div class="card-header bg-primary">
                             <i class="fas fa-music"></i> Songs
                             <a href="/admin/songs" class="btn btn-light btn-sm float-right">View all <small
-                                    class="badge badge-danger" th:text="${countAlbums}">0</small></a>
+                                    class="badge badge-danger" th:text="${countSongs}">0</small></a>
                         </div>
                         <div class="card-body">
                             <div class="alert alert-info" th:if="${#lists.isEmpty(songs)}">
@@ -43,10 +43,10 @@
                 </div>
                 <div class="col-md-4">
                     <div class="card">
-                        <div class="card-header bg-info">
+                        <div class="card-header bg-dark text-white">
                             <i class="fas fa-music"></i> Singers
                             <a href="/admin/singers" class="btn btn-light btn-sm float-right">View all <small
-                                    class="badge badge-danger" th:text="${countAlbums}">0</small></a>
+                                    class="badge badge-danger" th:text="${countSingers}">0</small></a>
                         </div>
                         <div class="card-body">
                             <div class="alert alert-info" th:if="${#lists.isEmpty(singers)}">
@@ -74,15 +74,21 @@
                                 <th>ID</th>
                                 <th>Image</th>
                                 <th>Name</th>
+                                <th>Actions</th>
                                 </thead>
                                 <tbody>
                                 <tr th:each="album : ${albums}">
                                     <td th:text="${album.id}"></td>
-                                    <td><img th:src="@{${'/files/' + album.imageURL}}" width="85px"
-                                             class="img-fluid img-thumbnail"></td>
-                                    <td th:text="${album.name}"></td>
+                                    <td>
+                                        <img th:src="@{${'/files/' + album.imageURL}}" width="85px"
+                                             class="img-fluid img-thumbnail">
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/album/{id}(id=${album.id})}" th:text="${album.name}"></a>
+                                    </td>
                                     <td>
                                         <a th:href="@{/admin/albums/__${album.id}__ }" class="btn btn-secondary btn-sm">View</a>
+                                        <a th:href="@{/admin/albums/edit/__${album.id}__ }" class="btn btn-info btn-sm">Edit</a>
                                     </td>
                                 </tr>
                                 </tbody>
