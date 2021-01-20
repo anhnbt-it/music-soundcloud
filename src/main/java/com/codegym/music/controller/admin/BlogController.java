@@ -138,7 +138,7 @@ public class BlogController {
     public String findById(@PathVariable("id") Long id, Model model, RedirectAttributes redirect) {
         Optional<Blog> blog = blogService.findById(id);
         if (blog.isPresent()) {
-            model.addAttribute("blog", blog);
+            model.addAttribute("blog", blog.get());
             return "admin/blogs/edit";
         } else {
             redirect.addFlashAttribute("Blog with ID " + id + " not found.");
