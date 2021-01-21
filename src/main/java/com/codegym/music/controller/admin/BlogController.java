@@ -10,6 +10,7 @@ import com.codegym.music.validator.CustomFileValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Locale;
 import java.util.Optional;
 
 @Controller
@@ -36,7 +38,10 @@ public class BlogController {
     Logger log = LoggerFactory.getLogger(BlogController.class);
 
     @Autowired
-    CustomFileValidator customFileValidator;
+    private MessageSource messageSource;
+
+    @Autowired
+    private CustomFileValidator customFileValidator;
 
     @Autowired
     private BlogService blogService;
@@ -123,14 +128,14 @@ public class BlogController {
         blog.setUpdatedAt(LocalDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh")));
         blog = blogService.save(blog);
         log.info("Create Blog: " + blog.toString());
-        redirect.addFlashAttribute("globalMessage", "Successfully created a new blog: " + blog.getId());
+        redirect.addFlashAttribute("message", "<div class=\"alert alert-success\">" + messageSource.getMessage("alert.created", new Object[] {blog.getTitle()}, Locale.getDefault()) + "</div>");
         return "redirect:/admin/blogs";
     }
 
     @PostMapping("delete")
     public String deleteById(@RequestParam("id") Long id, RedirectAttributes redirect) {
         blogService.deleteById(id);
-        redirect.addFlashAttribute("globalMessage", "Successfully deleted a blog");
+        redirect.addFlashAttribute("message", "<div class=\"alert alert-success\">" + messageSource.getMessage("alert.deleted", new Object[] {id}, Locale.getDefault()) + "</div>");
         return "redirect:/admin/blogs";
     }
 
@@ -141,17 +146,36 @@ public class BlogController {
             model.addAttribute("blog", blog.get());
             return "admin/blogs/edit";
         } else {
-            redirect.addFlashAttribute("Blog with ID " + id + " not found.");
+            redirect.addFlashAttribute("message", "<div class=\"alert alert-danger\">" + messageSource.getMessage("alert.notfound", new Object[] {id}, Locale.getDefault()) + "</div>");
             return "redirect:/admin/blogs";
         }
     }
 
-    @GetMapping("/files/{filename:.+}")
-    @ResponseBody
-    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+    @PostMapping("update")
+    public String updateBlog(@Validated @ModelAttribute("blog") Blog blog, BindingResult result, RedirectAttributes redirect) {
 
-        Resource file = storageService.loadAsResource(filename);
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+        MultipartFile file = blog.getImageData();
+        if (blog.getImageURL() == null) {
+            customFileValidator.validate(blog, result);
+        }
+        if (result.hasErrors()) {
+            return "admin/blogs/create";
+        }
+        try {
+            storageService.store(file);
+            log.info("ANHNBT: " + file.getOriginalFilename());
+            blog.setImageURL(file.getOriginalFilename());
+        } catch (StorageException e) {
+            if (blog.getImageURL() == null) {
+                blog.setImageURL("150.png");
+            }
+            log.info("ANHNBT: ", e);
+        }
+        blog.setCreatedAt(LocalDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh")));
+        blog.setUpdatedAt(LocalDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh")));
+        blog = blogService.save(blog);
+        log.info("Create Blog: " + blog.toString());
+        redirect.addFlashAttribute("message", "<div class=\"alert alert-success\">" + messageSource.getMessage("alert.updated", new Object[] {blog.getTitle()}, Locale.getDefault()) + "</div>");
+        return "redirect:/admin/blogs";
     }
 }

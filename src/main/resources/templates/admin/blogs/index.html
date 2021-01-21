@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      th:replace="~{fragments/layout-admin :: layout (~{::main}, 'blog')}">
+      th:replace="~{fragments/layout-admin :: layout (~{::main}, 'List of Blogs')}">
 <head>
     <title>List of Blogs</title>
 </head>
@@ -16,7 +16,9 @@
                 New</a>
         </div>
         <div class="card-body">
-            <div th:if="${globalMessage}" th:text="${globalMessage}"></div>
+
+            <th:block th:if="${message}" th:utext="${message}"></th:block>
+
             <div class="clearfix">
                 <label>Show <select name="example_length">
                     <option value="10">10</option>
@@ -50,7 +52,7 @@
                 <tbody id="blogList" th:unless="${#lists.isEmpty(blogs)}">
                 <tr th:each="blog : ${blogs}">
                     <th scope="row" th:text="${blog.id}"></th>
-                    <td><img th:src="@{${'/admin/blogs/files/' + blog.imageURL}}" width="85px"
+                    <td><img th:src="@{${'/files/' + blog.imageURL}}" width="85px"
                              class="img-fluid img-thumbnail"></td>
                     <td th:text="${blog.title}"></td>
                     <td th:text="${blog.category.name}"></td>

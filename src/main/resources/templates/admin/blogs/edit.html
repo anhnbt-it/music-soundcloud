@@ -12,8 +12,9 @@
             <li th:each="err : ${#fields.errors('${blog.*}')}" th:text="${err}">Input is incorrect</li>
         </ul>
     </div>
-    <form action="#" th:action="@{/admin/blogs}" th:object="${blog}" enctype="multipart/form-data" method="post">
+    <form action="#" th:action="@{/admin/blogs/update}" th:object="${blog}" enctype="multipart/form-data" method="post">
         <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{createdAt}">
         <div class="row form-group">
             <label class="col-form-label col-md-2">Title <span
                     class="text-danger">*</span>:</label>
@@ -37,6 +38,8 @@
         <div class="row form-group">
             <label class="col-form-label col-md-2">Image:</label>
             <div class="col-md-10">
+                <img th:src="@{${'/files/' + blog.imageURL}}" width="85px"
+                     class="img-fluid img-thumbnail mb-2">
                 <input type="file" th:field="*{imageData}" class="form-control"
                        th:classappend="${#fields.hasErrors('imageData')}? 'is-invalid'">
                 <input type="hidden" th:field="*{imageURL}">
@@ -59,8 +62,8 @@
             <label class="col-form-label col-md-2">Status</label>
             <div class="col-md-10">
                 <select th:field="*{active}" class="form-control">
-                    <option th:value="1" selected>Enabled</option>
-                    <option th:value="0">Disabled</option>
+                    <option th:value="1" th:selected="${blog.active} == 1">Enabled</option>
+                    <option th:value="0" th:selected="${blog.active} == 0">Disabled</option>
                 </select>
             </div>
         </div>
