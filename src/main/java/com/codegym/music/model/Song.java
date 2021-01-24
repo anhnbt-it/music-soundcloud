@@ -166,3 +166,8 @@ public class Song implements Serializable {
         this.mp3Data = mp3Data;
     }
 }
+
+//        alter table song_album drop foreign key FKgfsx6baqva734me9d6vjbifoa;
+//        alter table song_album add foreign key (song_id) references  songs (id) on delete cascade ;
+//        alter table song_album drop foreign key FKon2dgde3ffuw98fb7tgcfjx5e;
+//        alter table song_album add foreign key (album_id) references  albums(id) on delete cascade ;
