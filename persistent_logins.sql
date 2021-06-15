@@ -1,4 +1,4 @@
-use musicapp_db;
+use zingmp3;
 create table persistent_logins
 (
     username  varchar(64) not null,
