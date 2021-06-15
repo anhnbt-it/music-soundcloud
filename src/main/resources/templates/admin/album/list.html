@@ -21,7 +21,8 @@
                 New</a>
         </div>
         <div class="card-body">
-            <div th:if="${globalMessage}" th:text="${globalMessage}"></div>
+            <div class="alert alert-success" th:if="${globalMessage}" th:text="${globalMessage}"></div>
+<!--            <div th:if="${globalMessage}" th:text="${globalMessage}"></div>-->
             <div class="clearfix">
                 <form class="form-inline float-right" method="get">
                     <div class="form-group mx-sm-3 mb-2">
@@ -37,8 +38,9 @@
                 <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Image</th>
+
                     <th>Description</th>
+                    <th>Image</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -49,7 +51,8 @@
                     <td><img th:src="@{${'/files/' + album.imageURL}}" width="85px"
                              class="img-fluid img-thumbnail"></td>
                     <td>
-                        <a th:href="@{/admin/albums/__${album.id}__ }" class="btn btn-secondary btn-sm">View</a>
+<!--                        th:href="@{/album/{id}(id=${album.id})}"-->
+                        <a th:href="@{/album/__${album.id}__ }" class="btn btn-secondary btn-sm">View</a>
                         <a th:href="@{/admin/albums/edit/__${album.id}__ }" class="btn btn-info btn-sm">Edit</a>
                         <button type="button" data-toggle="modal" data-target="#confirmModal"
                                 th:attr="data-whatever=${album.id}" class="btn btn-danger btn-sm">

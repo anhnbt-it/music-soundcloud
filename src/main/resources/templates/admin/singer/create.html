@@ -1,45 +1,89 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/admin/singer/layout::head">
-    <meta charset="UTF-8">
-    <title>Create New Singer!!!</title>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      th:replace="~{fragments/layout-admin :: layout (~{::main}, 'singers')}">
+<head>
+    <title>Add New Song :: AnhNBT</title>
 </head>
 <body>
+<main role="main" class="pb-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin" th:text="#{title.dashboard}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/admin/singers" th:text="#{title.singers.list}">Singers</a></li>
+        </ol>
+    </nav>
 
-<div class="container-fluid">
     <div class="card">
-        <h1 class="text-center card-header">Create New Singer
-            <p><a href="/admin/singers" class="float-right btn btn-success btn-sm">Singer List</a></p>
-        </h1>
-
+        <div class="card-header">
+            <span th:text="#{button.create}">Add New Singers</span>
+            <a href="/admin/singers" class="btn btn-link btn-sm float-right" th:text="#{label.back}">Back</a>
+        </div>
         <div class="card-body">
+            <div class="alert alert-success" th:if="${globalMessage}" th:text="${globalMessage}"></div>
+            <div th:if="${#fields.hasErrors('${singer.*}')}" class="alert alert-danger">
+                <ul>
+                    <li th:each="err : ${#fields.errors('${singer.*}')}" th:text="${err}">Input is incorrect</li>
+                </ul>
+            </div>
             <div class="alert alert-primary" th:if="${message}" th:text="${message}"></div>
 
             <form th:action="@{/admin/singers/create}" th:object="${singer}" method="post" enctype="multipart/form-data">
-                <table id="singers" class="table table-success">
-                    <tr>
-                        <td >Singer Name:</td>
-                        <td><input required placeholder="Enter singer name" class="form-control mb-2" type="text" th:field="*{name}"/></td>
-                    </tr>
+                <div class="row form-group">
+                    <label class="col-form-label col-md-2 " th:text="#{title.singername}">Singer name</span>:
 
-                    <tr>
-                        <td>Description:</td>
-                        <!--            <td><input type="text" th:field="*{description}"/></td>-->
-                        <td><textarea required placeholder="description" class="form-control mb-2" cols="50" rows="5" th:type="text"
-                                      th:field="*{description}"></textarea></td>
-                    </tr>
+                    </label>
+                    <div class="col-md-10">
+                        <input type="text" th:field="*{name}" class="form-control" required
+                               th:classappend="${#fields.hasErrors('name')}? 'is-invalid'">
+                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback" th:text="#{title.singername}">
+                        Singer Name
+                            Error</p>
+                    </div>
 
-                    <tr>
-                        <td></td>
-                        <td><input type="submit" class="form-control mb-2 btn btn-success" value="Create Singer"></td>
-                    </tr>
-                </table>
+                </div>
+                <div class="row form-group">
+                    <label class="col-form-label col-md-2" th:text="#{title.description}">Description <span
+                            class="text-danger">*</span>:</label>
+                    <div class="col-md-10">
+                        <textarea  class="form-control" th:field="*{description}"
+                                   th:classappend="${#fields.hasErrors('description')}? 'is-invalid'"
+                                  cols="30" rows="10" required>
+
+                        </textarea>
+                        <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="invalid-feedback">Description
+                            Error</p>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <label class="col-form-label col-md-2">Avatar:</label>
+                    <div class="col-md-10">
+                        <input type="file" th:field="*{imageData}" class="form-control"
+                               th:classappend="${#fields.hasErrors('imageData')}? 'is-invalid'">
+                        <input type="hidden" th:field="*{avatarURL}">
+                        <p th:if="${#fields.hasErrors('imageData')}" th:errors="*{imageData}" class="invalid-feedback">Image
+                            Error</p>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <label class="col-form-label col-md-2">Cover:</label>
+                    <div class="col-md-10">
+                        <input type="file" th:field="*{coverFile}" class="form-control"
+                               th:classappend="${#fields.hasErrors('coverFile')}? 'is-invalid'">
+                        <input type="hidden" th:field="*{coverURL}">
+                        <p th:if="${#fields.hasErrors('coverFile')}" th:errors="*{coverFile}" class="invalid-feedback">Image
+                            Error</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" th:text="#{button.create}" >Create singer</button>
+                    <a href="/admin/singers" class="btn btn-link" th:text="#{button.cancel}">Cancel</a>
+                </div>
             </form>
 
         </div>
-
-
-
 
     </div>
 
@@ -47,6 +91,7 @@
 
 
 <footer th:replace="/admin/singer/layout :: footer"></footer>
-</div>
+
+</main>
 </body>
 </html>

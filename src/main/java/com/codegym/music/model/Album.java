@@ -1,16 +1,19 @@
 package com.codegym.music.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 import java.util.Collection;
 
-
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "albums")
-public class Album {
+public class Album implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,17 +21,11 @@ public class Album {
     @Column(nullable = false)
     @NotEmpty
     private String name;
-    @NotEmpty
+
     private String description;
-    @NotEmpty
     private String imageURL;
     @Transient
-    MultipartFile imageData;
-
-
-    @ManyToOne
-    @JoinColumn(name = "singer_id", referencedColumnName = "id")
-    Singer singer;
+    private MultipartFile imageData;
 
     @ManyToMany(mappedBy = "albums")
     private Collection<Song> songs;
@@ -62,10 +59,6 @@ public class Album {
         return imageData;
     }
 
-    public Singer getSinger() {
-        return singer;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -86,7 +79,4 @@ public class Album {
         this.imageData = imageData;
     }
 
-    public void setSinger(Singer singer) {
-        this.singer = singer;
-    }
 }

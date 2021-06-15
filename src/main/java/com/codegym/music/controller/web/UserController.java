@@ -1,6 +1,8 @@
 package com.codegym.music.controller.web;
 
+import com.codegym.music.model.Song;
 import com.codegym.music.model.User;
+import com.codegym.music.repository.SongRepository;
 import com.codegym.music.service.UserService;
 import com.codegym.music.validator.RegisterValidator;
 import com.codegym.music.validator.UserValidator;
@@ -41,6 +43,14 @@ class UserController {
     @Autowired
     private UserValidator userValidator;
 
+    @Autowired
+    private SongRepository songRepository;
+
+    @ModelAttribute("songs")
+    public Iterable<Song> sings() {
+        return songRepository.findAll();
+    }
+
     private String getPrincipal() {
         String username = null;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -67,18 +77,18 @@ class UserController {
         return "redirect:/";
     }
 
-    @GetMapping("register")
+    @GetMapping("signup")
     public ModelAndView register() {
-        ModelAndView modelAndView = new ModelAndView("web/user/register");
+        ModelAndView modelAndView = new ModelAndView("web/user/signup");
         modelAndView.addObject("user", new User());
         return modelAndView;
     }
 
-    @PostMapping("register")
+    @PostMapping("signup")
     public String register(@Validated @ModelAttribute("user") User user, BindingResult result, RedirectAttributes redirect) {
         registerValidator.validate(user, result);
         if (result.hasErrors()) {
-            return "web/user/register";
+            return "web/user/signup";
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.save(user);
@@ -95,6 +105,7 @@ class UserController {
         }
         return "redirect:/user/login";
     }
+
     @PostMapping("profile")
     public String profile(@Validated @ModelAttribute("user") User user, BindingResult result, RedirectAttributes redirect) {
         userValidator.validate(user, result);
@@ -106,4 +117,5 @@ class UserController {
         redirect.addFlashAttribute("globalMessage", "Updated profile successfully.");
         return "redirect:/user/profile";
     }
+
 }

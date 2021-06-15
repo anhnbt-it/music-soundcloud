@@ -41,18 +41,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests(a -> a
-                                .antMatchers(
-                                        "/",
-                                        "/assets/**",
-                                        "/files/**",
-                                        "/favicon.ico",
-                                        "/music/**",
-                                        "/singer/**",
-                                        "/album/**",
-                                        "/hot/**").permitAll()
+                        .antMatchers(
+                                "/",
+                                "/assets/**",
+                                "/files/**",
+                                "/favicon.ico",
+                                "/music/**",
+                                "/singer/**",
+                                "/album/**",
+                                "/hot/**").permitAll()
 //                        .antMatchers("/admin/**").hasRole("ADMIN")
-                                .antMatchers("/admin/**", "/user/**").permitAll()
-                                .anyRequest().authenticated()
                 )
                 .formLogin()
                 .loginPage("/user/login")
@@ -60,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout(l -> l
-                        .logoutSuccessUrl("/").permitAll()
+//                        .logoutSuccessUrl("/").permitAll()
                         .deleteCookies("my-remember-me-cookie")
                         .permitAll()
                 )
