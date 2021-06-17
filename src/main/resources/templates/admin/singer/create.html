@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/admin/singer/layout::head">
+<head th:replace="/admin/artist/layout::head">
     <meta charset="UTF-8">
     <title>Create New Singer!!!</title>
 </head>
@@ -15,11 +15,11 @@
         <div class="card-body">
             <div class="alert alert-primary" th:if="${message}" th:text="${message}"></div>
 
-            <form th:action="@{/admin/singers/create}" th:object="${singer}" method="post" enctype="multipart/form-data">
+            <form th:action="@{/admin/singers/create}" th:object="${artist}" method="post" enctype="multipart/form-data">
                 <table id="singers" class="table table-success">
                     <tr>
                         <td >Singer Name:</td>
-                        <td><input required placeholder="Enter singer name" class="form-control mb-2" type="text" th:field="*{name}"/></td>
+                        <td><input required placeholder="Enter artist name" class="form-control mb-2" type="text" th:field="*{name}"/></td>
                     </tr>
 
                     <tr>
@@ -46,7 +46,7 @@
 
 
 
-<footer th:replace="/admin/singer/layout :: footer"></footer>
+<footer th:replace="/admin/artist/layout :: footer"></footer>
 </div>
 </body>
 </html>

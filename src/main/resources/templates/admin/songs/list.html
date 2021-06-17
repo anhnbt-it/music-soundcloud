@@ -75,7 +75,7 @@
                             <td><img th:src="@{${'/files/' + song.image}}" width="85px"
                                      class="img-fluid img-thumbnail"></td>
                             <td th:text="${song.name}"></td>
-                            <td th:utext="${song.singer.name}"></td>
+                            <td th:utext="${song.artist.name}"></td>
                             <td th:text="${song.albums}"></td>
                             <td th:text="${song.status}"></td>
                             <td th:text="${{song.create_at}}"></td>

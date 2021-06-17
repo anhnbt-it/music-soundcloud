@@ -52,8 +52,8 @@
                             <div class="alert alert-info" th:if="${#lists.isEmpty(singers)}">
                                 No data.
                             </div>
-                            <ul th:unless="${#lists.isEmpty(albums)}" th:each="singer : ${singers}">
-                                <li th:each="song : ${songs}" th:text="${singer.name}"></li>
+                            <ul th:unless="${#lists.isEmpty(albums)}" th:each="artist : ${singers}">
+                                <li th:each="song : ${songs}" th:text="${artist.name}"></li>
                             </ul>
                         </div>
                     </div>

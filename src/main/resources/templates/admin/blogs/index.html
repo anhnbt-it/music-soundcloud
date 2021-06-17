@@ -53,7 +53,7 @@
                     <td><img th:src="@{${'/admin/blogs/files/' + blog.imageURL}}" width="85px"
                              class="img-fluid img-thumbnail"></td>
                     <td th:text="${blog.title}"></td>
-                    <td th:text="${blog.category.name}"></td>
+                    <td th:text="${blog.genre.name}"></td>
                     <td>
                         <span th:class="${blog.active} ? 'badge badge-success' : 'badge badge-danger'"
                               th:text="${blog.active} ? 'Enabled' : 'Disabled'"></span>
@@ -152,7 +152,7 @@
                     <td><img src="${'/admin/blogs/files/' + blog.imageURL}" width="85px"
                              class="img-fluid img-thumbnail"></td>
                     <td>${blog.title}</td>
-                    <td>${blog.category.name}</td>
+                    <td>${blog.genre.name}</td>
                     <td>
                         <span class="${blog.active ? 'badge badge-success' : 'badge badge-danger'}">${blog.active ? 'Enabled' : 'Disabled'}</span>
                     </td>

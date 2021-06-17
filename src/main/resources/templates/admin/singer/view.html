@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/admin/singer/layout :: head"></head>
+<head th:replace="/admin/artist/layout :: head"></head>
 <body>
 <div class="container-fluid">
     <div class="card">
             <div class="card-header p-3 mb-2 bg-primary text-white"  >
-                <h1 class="text-center text-black "> View singer
+                <h1 class="text-center text-black "> View artist
                 </h1>
                 <p><a class="float-right btn btn-danger btn-sm" th:href="@{/admin/singers}">
                     Back to singers list
@@ -14,7 +14,7 @@
 
             <div class="card-body">
                 <div id="form">
-                    <form action="#"  th:object="${singer}" novalidate="novalidate" enctype="multipart/form-data">
+                    <form action="#"  th:object="${artist}" novalidate="novalidate" enctype="multipart/form-data">
 
 
                         <table class="table table-striped table-hover table table-primary">
@@ -38,7 +38,7 @@
 
                     </form>
                 </div>
-                <footer th:replace="/admin/singer/layout :: footer"></footer>
+                <footer th:replace="/admin/artist/layout :: footer"></footer>
             </div>
 
 

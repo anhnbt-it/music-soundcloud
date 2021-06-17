@@ -15,8 +15,8 @@
                     Thể loại âm nhạc
                 </div>
                 <div class="card-body p-0">
-                    <div class="list-group list-group-flush" th:each="category : ${categories}">
-                        <a th:href="@{/category/{id}(id=${category.id})}" class="list-group-item list-group-item-action" th:text="${category.name}"></a>
+                    <div class="list-group list-group-flush" th:each="genre : ${categories}">
+                        <a th:href="@{/genre/{id}(id=${genre.id})}" class="list-group-item list-group-item-action" th:text="${genre.name}"></a>
                     </div>
                 </div>
             </div>
@@ -35,8 +35,8 @@
                     Singer
                 </div>
                 <div class="card-body p-0">
-                    <div class="list-group list-group-flush" th:each="singer : ${singers}">
-                        <a th:href="@{/singer/{id}(id=${singer.id})}" class="list-group-item list-group-item-action" th:text="${singer.name}"></a>
+                    <div class="list-group list-group-flush" th:each="artist : ${singers}">
+                        <a th:href="@{/artist/{id}(id=${artist.id})}" class="list-group-item list-group-item-action" th:text="${artist.name}"></a>
                     </div>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                         <li class="list-group-item">
                             <div class="media-body">
                                 <h5 class="mt-0 mb-1" th:text="${song.name}"></h5>
-                                <small th:text="${song.singer.name}"></small>
+                                <small th:text="${song.artist.name}"></small>
                             </div>
                         </li>
 
@@ -99,7 +99,7 @@
                             </div>
                             <div class="media-body">
                                 <h5 class="mt-0 mb-1" th:text="${concerning_song.name}"></h5>
-                                <small th:text="${concerning_song.singer.name}"></small>
+                                <small th:text="${concerning_song.artist.name}"></small>
                             </div>
                             <a th:href="@{/music/{id}(id=${concerning_song.id})}" class="px-2 py-1 mr-2 bg-success text-white" title="Play"><i class="fas fa-play"></i></a>
                             <a href="#" class="px-2 py-1 bg-danger text-white" song-id="1" title="Thích"><i class="far fa-heart"></i></a>
@@ -130,7 +130,7 @@
                             </div>
                             <div class="media-body">
                                 <h5 class="mt-0 mb-1" th:text="${song.name}"></h5>
-                                <small th:text="${song.singer.name}"></small>
+                                <small th:text="${song.artist.name}"></small>
                             </div>
                             <div class="display-4 text-danger" th:text="${rowStat.count}"></div>
                         </li>

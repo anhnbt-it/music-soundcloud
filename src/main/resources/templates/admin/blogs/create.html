@@ -25,11 +25,11 @@
         <div class="row form-group">
             <label class="col-form-label col-md-2">Category</label>
             <div class="col-md-10">
-                <select th:field="*{category}" class="form-control"
-                        th:classappend="${#fields.hasErrors('category')}? 'is-invalid'">
+                <select th:field="*{genre}" class="form-control"
+                        th:classappend="${#fields.hasErrors('genre')}? 'is-invalid'">
                     <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
                 </select>
-                <p th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="invalid-feedback">Title
+                <p th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}" class="invalid-feedback">Title
                     Error</p>
             </div>
         </div>

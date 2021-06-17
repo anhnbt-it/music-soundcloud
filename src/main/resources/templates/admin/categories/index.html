@@ -50,18 +50,18 @@
                         </tr>
                         </thead>
                         <tbody id="categoryList" th:unless="${#lists.isEmpty(categories)}">
-                        <tr th:each="category : ${categories}">
-                            <th scope="row" th:text="${category.id}"></th>
-                            <td th:text="${category.name}"></td>
-                            <td th:if="${category.parent}" th:text="${category.parent.name}"></td>
-                            <td th:unless="${category.parent}">NULL</td>
-                            <td th:text="${category.createdAt}"></td>
+                        <tr th:each="genre : ${categories}">
+                            <th scope="row" th:text="${genre.id}"></th>
+                            <td th:text="${genre.name}"></td>
+                            <td th:if="${genre.parent}" th:text="${genre.parent.name}"></td>
+                            <td th:unless="${genre.parent}">NULL</td>
+                            <td th:text="${genre.createdAt}"></td>
                             <td>
-                                <a th:href="@{/admin/categories/edit/{id}(id=${category.id})}"
+                                <a th:href="@{/admin/categories/edit/{id}(id=${genre.id})}"
                                    class="btn btn-success btn-sm"
                                    th:utext="'<i class=\'fas fa-edit\'></i> ' + #{button.edit}">Edit</a>
                                 <button type="button" data-toggle="modal" data-target="#confirmModal"
-                                        th:attr="data-whatever=${category.id}" class="btn btn-danger btn-sm" th:utext="'<i class=\'fas fa-trash\'></i> ' + #{button.delete}">Delete</button>
+                                        th:attr="data-whatever=${genre.id}" class="btn btn-danger btn-sm" th:utext="'<i class=\'fas fa-trash\'></i> ' + #{button.delete}">Delete</button>
                             </td>
                         </tr>
                         </tbody>

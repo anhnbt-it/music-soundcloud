@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/admin/singer/layout::head">
+<head th:replace="/admin/artist/layout::head">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
@@ -16,7 +16,7 @@
             <div class="alert alert-primary" th:if="${message}" th:text="${message}"></div>
             <form>
                 <div>
-                    Search singer by name:
+                    Search artist by name:
                     <input name="searchName" type="text"/>
                     <button type="submit"><i class="fa fa-search"></i></button>
                     <a href="/admin/singers" class="float-right btn btn-dark" >Singer List</a>
@@ -36,18 +36,18 @@
 
                 </tr>
 
-                <tr th:each="singer : ${singers}">
+                <tr th:each="artist : ${singers}">
 
 
-                    <td th:text="${singer.name}"></td>
-                    <!--            <td th:text="${singer.description}"></td>-->
-                    <td><textarea cols="50" rows="5" th:type="text" th:text="${singer.description}"></textarea></td>
+                    <td th:text="${artist.name}"></td>
+                    <!--            <td th:text="${artist.description}"></td>-->
+                    <td><textarea cols="50" rows="5" th:type="text" th:text="${artist.description}"></textarea></td>
 
-                    <td><a class="btn btn-primary" th:href="@{/admin/singers/__${singer.id}__ }">View</a></td>
-                    <td><a class="btn btn-primary" th:href="@{/admin/singers/edit-singer/__${singer.id}__ }">Edit</a>
+                    <td><a class="btn btn-primary" th:href="@{/admin/singers/__${artist.id}__ }">View</a></td>
+                    <td><a class="btn btn-primary" th:href="@{/admin/singers/edit-artist/__${artist.id}__ }">Edit</a>
                     </td>
                     <td><a class="btn btn-primary"
-                           th:href="@{/admin/singers/delete-singer/__${singer.id}__ }">Delete</a>
+                           th:href="@{/admin/singers/delete-artist/__${artist.id}__ }">Delete</a>
                     </td>
                 </tr>
             </table>
@@ -62,7 +62,7 @@
         </ul>
     </nav>
 
-    <footer th:replace="/admin/singer/layout :: footer"></footer>
+    <footer th:replace="/admin/artist/layout :: footer"></footer>
 </div>
 </body>
 

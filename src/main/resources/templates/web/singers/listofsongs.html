@@ -35,8 +35,8 @@
                     Singer
                 </div>
                 <div class="card-body p-0">
-                    <div class="list-group list-group-flush" th:each="singer : ${singers}">
-                        <a th:href="@{/singer/{id}(id=${singer.id})}" class="list-group-item list-group-item-action" th:text="${singer.name}"></a>
+                    <div class="list-group list-group-flush" th:each="artist : ${singers}">
+                        <a th:href="@{/artist/{id}(id=${artist.id})}" class="list-group-item list-group-item-action" th:text="${artist.name}"></a>
                     </div>
                 </div>
             </div>
@@ -45,7 +45,7 @@
         <div class="col-md-6">
             <div class="card shadow-sm mb-3">
                 <div class="card-header">
-                    <h1 th:text="${singer.name}"></h1>
+                    <h1 th:text="${artist.name}"></h1>
                 </div>
                 <div class="card-body">
                     <ul class="list-unstyled" th:each="song:${songs}">
