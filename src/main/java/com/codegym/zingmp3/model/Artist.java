@@ -21,7 +21,6 @@ public class Artist {
     @NotEmpty
     private String description;
 
-    public Artist() {
     private String avatarURL;
     private String coverURL;
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -32,7 +31,7 @@ public class Artist {
     @Transient
     private MultipartFile coverFile;
 
-    public Singer() {
+    public Artist() {
     }
 
     public Artist(Long id, @NotEmpty String name, @NotEmpty String description) {

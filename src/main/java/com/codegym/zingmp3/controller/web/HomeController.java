@@ -70,7 +70,7 @@ public class HomeController {
         ModelAndView modelAndView = new ModelAndView("web/home");
         if (search.isPresent()) {
             Optional<Album> album = albumService.findByNameContains(search.get());
-            Optional<Singer> singer = singerService.findByNameContains(search.get());
+            Optional<Artist> singer = singerService.findByNameContains(search.get());
 
             if (album.isPresent() && singer.isPresent()) {
                 // Kiểm tra xem nếu Parameter search được truyền vào thì gọi service có 2 tham số
