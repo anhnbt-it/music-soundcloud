@@ -25,6 +25,14 @@ public class HomeSingerController {
     @Autowired
     SongService songService;
 
+    @Autowired
+    AlbumService albumService;
+
+    @ModelAttribute("albums")
+    public Iterable<Album> albums() {
+        return albumService.findAll();
+    }
+
     @ModelAttribute("singers")
     public Iterable<Artist> sings() {
         return singerService.findAll();
@@ -35,8 +43,10 @@ public class HomeSingerController {
     public String show(@PathVariable Long id, Model model) {
         Artist singers = singerService.findById(id).get();
         Pageable pageable = PageRequest.of(0,5, Sort.by(Sort.Direction.DESC, "views"));
+        Iterable<Album> albums = albumService.findAll();
         Page<Song> songs = songService.findAll(pageable);
         model.addAttribute("singer", singers);
+        model.addAttribute("albums",albums);
         model.addAttribute("songs",songService.findAllBySingerId(id));
         model.addAttribute("bxh",songs);
         return "web/singers/listofsongs";

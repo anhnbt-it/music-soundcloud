@@ -1,25 +1,31 @@
 package com.codegym.zingmp3.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Set;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Size(min = 2, max = 30, message = "{label.title.size}")
-    @NotEmpty(message = "{label.title.empty}")
+
+    @Size(min = 2, max = 30, message = "{user.name.length}")
+    @NotEmpty(message = "{name.required}")
     private String name;
+
     @Email
-    @NotEmpty
+    @NotEmpty(message = "{user.email.empty}")
     @Column(nullable = false, unique = true)
     private String email;
 
-    @NotEmpty
+    @NotEmpty(message = "{user.password.empty}")
     private String password;
 
     @Transient

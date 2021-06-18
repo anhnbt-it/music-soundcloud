@@ -58,5 +58,7 @@ public class HotSongController {
         model.addAttribute("hot",hotSongs);
         model.addAttribute("bxh",songs);
         return "web/music/hotSong";
+
+
     }
 }

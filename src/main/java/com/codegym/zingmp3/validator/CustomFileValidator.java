@@ -34,6 +34,9 @@ public class CustomFileValidator implements Validator {
         } else if (target instanceof Song) {
             Song song = (Song) target;
             file = song.getImageData();
+        } else if (target instanceof Singer) {
+            Singer singer = (Singer) target;
+            file = singer.getImageData();
         }
         if (file.isEmpty()) {
             errors.rejectValue("imageData", "label.upload.file.required");

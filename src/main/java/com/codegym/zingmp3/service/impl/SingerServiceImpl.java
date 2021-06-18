@@ -59,4 +59,9 @@ public class SingerServiceImpl implements SingerService {
     public Page<Artist> findAll(Pageable pageable) {
         return singerRepository.findAll(pageable);
     }
+
+    @Override
+    public Optional<Singer> findByNameContains(String name) {
+        return singerRepository.findByNameContains(name);
+    }
 }

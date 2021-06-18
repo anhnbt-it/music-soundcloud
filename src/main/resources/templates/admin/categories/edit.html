@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      th:replace="~{fragments/layout-admin :: layout (~{::main}, 'Edit Category')}">
+      th:replace="~{fragments/layout-admin :: layout (~{::main}, ${title})}">
 <head>
     <title>Edit Category</title>
 </head>
@@ -10,59 +10,64 @@
     <div class="row">
         <div class="col-md-3" th:replace="~{fragments/layout-nav :: admin}"></div>
         <div class="col-md-9">
-            <nav aria-label="breadcrumb"
-                 th:replace="~{fragments/layout-nav :: breadcrumb('/admin/categories', 'Categories')}"/>
+
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/admin" th:text="#{title.dashboard}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="/admin/categories" th:text="#{title.categories}">Categories</a>
+                    </li>
+                </ol>
+            </nav>
             <div class="card">
                 <div class="card-header">
-                    <span>Edit Category</span>
-                    <a href="/admin/categories" class="btn btn-link btn-sm float-right"
-                       th:text="#{button.index}">Back</a>
+                    <span th:text="${title}">Edit Category</span>
+                    <a href="/admin/categories" class="btn btn-secondary btn-sm float-right" th:text="#{button.index}">Back</a>
                 </div>
                 <div class="card-body">
-                    <div class="alert alert-success" th:if="${message}" th:text="${message}"></div>
-                    <div th:if="${#fields.hasErrors('${genre.*}')}" class="alert alert-danger">
+                    <th:block th:if="${message}" th:utext="${message}"></th:block>
+                    <div th:if="${#fields.hasErrors('${category.*}')}" class="alert alert-danger">
                         <ul>
-                            <li th:each="err : ${#fields.errors('${genre.*}')}" th:text="${err}">Input is incorrect
+                            <li th:each="err : ${#fields.errors('${category.*}')}" th:text="${err}">Input is incorrect
                             </li>
                         </ul>
                     </div>
-                    <form action="#" th:action="@{/admin/categories/edit}" th:object="${genre}" method="post">
+                    <form th:action="@{/admin/categories/edit}" th:object="${category}" method="post">
                         <input type="hidden" th:field="*{id}">
                         <input type="hidden" th:field="*{createdAt}">
                         <div class="row form-group">
-                            <label class="col-form-label col-md-2">Name <span
-                                    class="text-danger">*</span>:</label>
+                            <label class="col-form-label col-md-2">Name <span class="text-danger">*</span>:</label>
                             <div class="col-md-10">
-                                <input type="text" th:field="*{name}" class="form-control"
+                                <input type="text" class="form-control" th:field="*{name}"
                                        th:classappend="${#fields.hasErrors('name')}? 'is-invalid'">
-                                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback">
-                                    Name
-                                    Error</p>
+                                <p class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                                    Name Error</p>
                             </div>
                         </div>
                         <div class="row form-group">
-                            <label class="col-form-label col-md-2">Parent: </label>
+                            <label class="col-form-label col-md-2">Parent:</label>
                             <div class="col-md-10">
-                                <select th:field="*{parent}" class="form-control"
-                                        th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'">
-                                    <option value="0">--Parent--</option>
-                                    <option th:each="c : ${categories}" th:value="${c.id}"
-                                            th:text="${c.name}" th:disabled="${c.id} == ${genre.id}"></option>
+                                <select class="form-control" th:field="*{parent}"
+                                        th:classappend="${#fields.hasErrors('parent')} ? 'is-invalid'">
+                                    <option value="">--Parent--</option>
+                                    <option th:each="c : ${categories}"
+                                            th:value="${c.id}"
+                                            th:text="${c.name}" th:disabled="${c.id} == ${category.id}"></option>
                                 </select>
-                                <p th:if="${#fields.hasErrors('parent')}" th:errors="*{parent}"
-                                   class="invalid-feedback"></p>
+                                <p class="invalid-feedback" th:if="${#fields.hasErrors('parent')}"
+                                   th:errors="*{parent}"></p>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary" th:text="#{button.update}">Update</button>
-                            <a href="/admin/categories" class="btn btn-link" th:text="#{button.cancel}">Cancel</a>
+                        <div class="row form-group">
+                            <div class="col-md-10 offset-2">
+                                <button type="submit" class="btn btn-primary" th:text="#{button.update}">Update</button>
+                                <a href="/admin/categories" class="btn btn-link" th:text="#{button.cancel}">Cancel</a>
+                            </div>
                         </div>
                     </form>
                 </div><!-- /.card-body -->
             </div><!-- /.card -->
         </div><!-- /.col-md-9 -->
     </div><!-- /.row -->
-</main>
 </main>
 </body>
 </html>

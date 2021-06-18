@@ -68,8 +68,8 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public Iterable<Song> findAllBy5BySingerId(Long singer_id ,Long id){
-        return songRepository.findFirst5BySingerIdAndIdNot(singer_id,id);
+    public Iterable<Song> findAllBy5BySingerId(Long singer_id, Long id) {
+        return songRepository.findFirst5BySingerIdAndIdNot(singer_id, id);
     }
 
     @Override
@@ -77,5 +77,39 @@ public class SongServiceImpl implements SongService {
         return songRepository.findAllByAlbums(album);
     }
 
+    @Override
+    public Page<Song> findAllByAlbums(Album album, Pageable pageable) {
+        return songRepository.findAllByAlbums(album, pageable);
+    }
+
+    @Override
+    public Page<Song> findAllByNameContainsOrAlbumsContainsSingerNameContains(String name, Album album, String singer, Pageable pageable) {
+        return songRepository.findAllByNameContainsOrAlbumsContainsOrSingerContains(name, album, singer, pageable);
+    }
+
+    @Override
+    public Page<Song> findAllByStatusTrue(Pageable pageable) {
+        return songRepository.findAllByStatusTrue(pageable);
+    }
+
+    @Override
+    public Page<Song> findAllByNameContainsOrAlbumsContains(String name, Album album, Pageable pageable) {
+        return songRepository.findAllByNameContainsOrAlbumsContains(name, album, pageable);
+    }
+
+    @Override
+    public Page<Song> findAllByNameContainsOrSingerNameContains(String name, String singer, Pageable pageable) {
+        return songRepository.findAllByNameContainsOrSingerNameContains(name, singer, pageable);
+    }
+
+    @Override
+    public Page<Song> findAllByNameContains(String name, Pageable pageable) {
+        return songRepository.findAllByNameContains(name, pageable);
+    }
+
+    @Override
+    public Optional<Song> findByNameContains(String name) {
+        return songRepository.findByNameContains(name);
+    }
 
 }

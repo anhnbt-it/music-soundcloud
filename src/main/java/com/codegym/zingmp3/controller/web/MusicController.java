@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("music")
 public class MusicController {
@@ -53,17 +55,25 @@ public class MusicController {
 
 
     @GetMapping("{id}")
-    public String SongInfo(@PathVariable Long id, Model model){
-        Song song = songService.findById(id).get();
-        Iterable<Song> concerning_song = songService.findAllBy5BySingerId(song.getSinger().getId(),id);
-        Pageable pageable = PageRequest.of(0,5, Sort.by(Sort.Direction.DESC, "views"));
+    public String SongInfo(@PathVariable("id") Long id, Model model) {
+        Optional<Song> song = songService.findById(id);
+        if (!song.isPresent()) throw new SongNotFoundException(id);
+
+        // Lấy ra 5 bài hát cùng thể loại
+        Iterable<Song> concerning_song = songService.findAllBy5BySingerId(song.get().getSinger().getId(), id);
+
+        Pageable pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "views"));
+
+        // Lấy ra 5 bài hát nhiều view nhất trả vào list BXH
         Page<Song> songs = songService.findAll(pageable);
-        song.setViews(song.getViews()+1);
-        songService.save(song);
-//        System.out.println(song.getViews());
-        model.addAttribute("song",song);
+
+        // Cập nhật view > tăng view lên 1
+        song.get().setViews(song.get().getViews() + 1);
+        songService.save(song.get());
+
+        model.addAttribute("song", song.get());
         model.addAttribute("concerning_songs", concerning_song);
-        model.addAttribute("bxh",songs);
+        model.addAttribute("bxh", songs);
         return "web/music/musicInfo";
     }
 }

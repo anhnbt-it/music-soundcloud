@@ -4,6 +4,8 @@ import com.codegym.zingmp3.model.Album;
 import com.codegym.zingmp3.model.Song;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.core.parameters.P;
 
 import java.util.Optional;
 
@@ -30,7 +32,19 @@ public interface SongService {
 
     Iterable<Song> findAllByAlbums(Album album);
 
+    Page<Song> findAllByAlbums(Album album,Pageable pageable);
 
+    Page<Song> findAllByNameContainsOrAlbumsContainsSingerNameContains(String name, Album album, String singer, Pageable pageable);
+
+    Page<Song> findAllByNameContainsOrAlbumsContains(String name, Album album, Pageable pageable);
+
+    Page<Song> findAllByNameContainsOrSingerNameContains(String name, String singer, Pageable pageable);
+
+    Page<Song> findAllByNameContains(String name, Pageable pageable);
+
+    Optional<Song> findByNameContains(String name);
+
+    Page<Song> findAllByStatusTrue(Pageable pageable);
 
 }
 

@@ -5,21 +5,28 @@ import com.codegym.zingmp3.model.Artist;
 import com.codegym.zingmp3.service.SingerService;
 import com.codegym.zingmp3.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Locale;
 import java.util.Optional;
 
 @Controller
 @RequestMapping("admin/singers")
 public class SingerController {
+
+    Logger logger = LoggerFactory.getLogger(SingerController.class);
 
     @Autowired
     private SongService songService;
@@ -28,7 +35,13 @@ public class SingerController {
     private SingerService singerService;
 
     @Autowired
-    Environment env;
+    private MessageSource messageSource;
+
+    @Autowired
+    private StorageService storageService;
+
+    @Autowired
+    private SingerValidator singerValidator;
 
     @GetMapping("create")
     public ModelAndView showCreateForm() {
@@ -38,27 +51,42 @@ public class SingerController {
     }
 
     @PostMapping("create")
-    public ModelAndView saveSinger(@ModelAttribute("singer") Artist artist) {
-        singerService.save(artist);
-        ModelAndView modelAndView = new ModelAndView("admin/singer/create");
-        modelAndView.addObject("singer", new Artist());
-        modelAndView.addObject("message", "New Singer Created Successfully");
-        return modelAndView;
+    public String saveSinger(@Valid @ModelAttribute("singer") Singer singer, BindingResult result, RedirectAttributes redirect) {
+        singerValidator.validate(singer, result);
+        if (result.hasErrors()) {
+            return "admin/singer/create";
+        }
+        MultipartFile avatarFile = singer.getImageData();
+        MultipartFile coverFile = singer.getCoverFile();
+        try {
+            storageService.store(avatarFile);
+            storageService.store(coverFile);
+            singer.setAvatarURL(avatarFile.getOriginalFilename());
+            singer.setCoverURL(coverFile.getOriginalFilename());
+        } catch (StorageException ex) {
+            logger.error("ANHNBT EXCEPTION: " + ex.getMessage());
+            singer.setAvatarURL("150.png");
+            singer.setCoverURL("150.png");
+        }
+        singer.setCreatedAt(LocalDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh")));
+        singerService.save(singer);
+        redirect.addFlashAttribute("message", messageSource.getMessage("alert.created", new Object[]{singer.getName()}, Locale.getDefault()));
+        return "redirect:/admin/singers";
     }
 
     @GetMapping
-    public ModelAndView listSingers(@RequestParam("searchName") Optional<String> name, @PageableDefault(value = 3) Pageable pageable) {
-        Page<Artist> singers; // Tạo đối tượng lưu Page singers;
-        if (name.isPresent()) {
-            // Kiểm tra xem nếu Parameter search được truyền vào thì gọi service có 2 tham số
-            singers = singerService.findAllByNameContains(name.get(), pageable);
+    public ModelAndView index(@RequestParam("s") Optional<String> s, Pageable pageable) {
+        Page<Singer> singers;
+        if (s.isPresent()) {
+//            Sort sort = Sort.by("id").descending();
+            singers = singerService.findAllByNameContains(s.get(), pageable);
         } else {
-            // Nếu không có search thì gọi service có 1 tham số
             singers = singerService.findAll(pageable);
         }
         ModelAndView modelAndView = new ModelAndView("admin/singer/list");
         modelAndView.addObject("singers", singers);
-
+        modelAndView.addObject("title", messageSource.getMessage("title.singers.list", null, Locale.getDefault()));
+        modelAndView.addObject("txtSearch", s);
         return modelAndView;
     }
 
@@ -66,11 +94,11 @@ public class SingerController {
     public String show(@PathVariable Long id, Model model) {
         Artist singers = singerService.findById(id).get();
         model.addAttribute("singer", singers);
-        model.addAttribute("songs",songService.findAllBySingerId(id));
+        model.addAttribute("songs", songService.findAllBySingerId(id));
         return "admin/singer/view";
     }
 
-    @GetMapping("edit-singer/{id}")
+    @GetMapping("edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model, RedirectAttributes redirect) {
         Optional<Artist> singer = singerService.findById(id);
         if (singer.isPresent()) {
@@ -83,13 +111,36 @@ public class SingerController {
     }
 
     @PostMapping("edit-singer")
-    public ModelAndView updateBlog(@ModelAttribute("singer") Artist artist) {
-        singerService.save(artist);
-        System.out.println(artist.toString());
-        ModelAndView modelAndView = new ModelAndView("/admin/singer/edit");
-        modelAndView.addObject("singer", artist);
-        modelAndView.addObject("message", "Singer updated sucessfully");
-        return modelAndView;
+    public String updateBlog(@Valid @ModelAttribute("singer") Singer singer, BindingResult result, RedirectAttributes redirect) {
+        Optional<Singer> oldSingger = singerService.findById(singer.getId());
+        if (oldSingger.get().getAvatarURL() == null) {
+            singerValidator.validate(singer, result);
+        }
+        if (result.hasErrors()) {
+            return "admin/singer/edit";
+        }
+        try {
+            MultipartFile avatarFile = singer.getImageData();
+            MultipartFile coverFile = singer.getCoverFile();
+
+            storageService.store(avatarFile);
+            storageService.store(coverFile);
+            singer.setAvatarURL(avatarFile.getOriginalFilename());
+            singer.setCoverURL(coverFile.getOriginalFilename());
+        } catch (StorageException ex) {
+            logger.error("ANHNBT EXCEPTION: " + ex.getMessage());
+            singer.setAvatarURL("150.png");
+            singer.setCoverURL("150.png");
+            if (singer.getAvatarURL().isEmpty()) {
+                singer.setAvatarURL(oldSingger.get().getAvatarURL());
+            }
+            if (singer.getCoverURL().isEmpty()) {
+                singer.setCoverURL(oldSingger.get().getCoverURL());
+            }
+        }
+        singerService.save(singer);
+        redirect.addFlashAttribute("message", messageSource.getMessage("alert.updated", new Object[]{singer.getName()}, Locale.getDefault()));
+        return "redirect:/admin/singers";
     }
 
     @GetMapping("delete-singer/{id}")
@@ -104,9 +155,9 @@ public class SingerController {
         }
     }
 
-    @PostMapping("delete-singer")
-    public String deleteBlog(@ModelAttribute("singer") Artist artist, RedirectAttributes redirect) {
-        singerService.deleteById(artist.getId());
+    @PostMapping("delete")
+    public String deleteBlog(@ModelAttribute("singer") Singer singer, RedirectAttributes redirect) {
+        singerService.deleteById(singer.getId());
         redirect.addFlashAttribute("message", "Deleted successfully.");
         return "redirect:/admin/singers";
     }

@@ -30,6 +30,11 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    public Optional<Album> findByNameContains(String name) {
+        return albumRepository.findByNameContains(name);
+    }
+
+    @Override
     public Iterable<Album> findAll() {
         return albumRepository.findAll();
     }

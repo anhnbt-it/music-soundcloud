@@ -15,4 +15,6 @@ public interface UserService extends UserDetailsService {
     Optional<User> findById(Long id);
 
     boolean existByEmail(String email);
+
+    Page<Song> findAll(Pageable pageable);
 }
